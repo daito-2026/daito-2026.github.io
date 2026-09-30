@@ -114,7 +114,7 @@ footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;j
 
 <script>
 /* 申込フォーム共通 */
-const API_URL = "__API_URL__"; // GASのウェブアプリURL（/exec）
+const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6W4dcP5zB88keT2JBWh9n_c5UZNZ_qO8_p5A7sWeiC75mjA/exec"; // GASのウェブアプリURL（/exec）
 const NAVY = "#1F2A44";
 const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
 const PAY = {
@@ -222,12 +222,12 @@ function payBlock(o) {
   if (o.pay === "paypay") return `<div class="box">${head}
     <p><b>PayPayで送金してください</b></p>
     <ol class="hint" style="padding-left:1.2em;color:var(--ink);font-size:13px">
-      <li>下の「メッセージに入れる文」をコピー</li>
-      <li>ボタンでPayPayを開き、金額 <b>${yen(o.total)}</b> を入力</li>
-      <li>メッセージにコピーした文を貼り付けて送金</li></ol>
-    <span class="label" style="display:block;margin-top:12px">メッセージに入れる文（管理番号・クラス・お子さまの名前）</span>
-    <div class="copy" style="margin-top:4px"><code>${esc(msg)}</code><button type="button" data-copy="${esc(msg)}">コピー</button></div>
+      <li>下のボタンでPayPayを開く</li>
+      <li>金額 <b>${yen(o.total)}</b> を入力</li>
+      <li>メッセージに下の文（管理番号・クラス・お子さまの名前）を貼り付けて送金</li></ol>
     ${o.paypayUrl ? `<a class="btn" style="background:#FF0033;margin-top:10px" href="${esc(o.paypayUrl)}" target="_blank" rel="noopener">PayPayを開いて送金する</a>` : `<p class="hint err">送金先は準備中です。少し時間をおいて再度開いてください。</p>`}
+    <span class="label" style="display:block;margin-top:12px">メッセージに入れる文</span>
+    <div class="copy" style="margin-top:4px"><code>${esc(msg)}</code><button type="button" data-copy="${esc(msg)}">コピー</button></div>
     <p class="hint">期限：運動会当日まで。担当が入金を確認すると、このページが「お支払い確認済み」に変わります。</p></div>`;
   if (o.pay === "square") return `<div class="box">${head}
     <button type="button" class="btn" id="payBtn">カード・Apple Pay等で支払う</button>

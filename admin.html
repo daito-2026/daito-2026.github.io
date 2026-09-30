@@ -115,7 +115,7 @@ th{font-weight:500;background:var(--plate)}
 
 <form id="login" class="step hidden" novalidate>
   <h2>管理ページ</h2>
-  <div class="field"><input id="pin" type="password" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="PIN"></div>
+  <div class="field"><input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN"></div>
   <p class="hint err hidden" id="lgErr"></p>
   <div style="margin-top:12px"><button class="btn">開く</button></div>
 </form>
@@ -138,7 +138,7 @@ th{font-weight:500;background:var(--plate)}
 
 <script>
 /* 申込フォーム共通 */
-const API_URL = "__API_URL__"; // GASのウェブアプリURL（/exec）
+const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6W4dcP5zB88keT2JBWh9n_c5UZNZ_qO8_p5A7sWeiC75mjA/exec"; // GASのウェブアプリURL（/exec）
 const NAVY = "#1F2A44";
 const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
 const PAY = {
