@@ -123,8 +123,8 @@ dialog::backdrop{background:var(--plate)}
 <main>
   <div class="step">
     <span class="label">01</span>
-    <h2><span class="jp">デザイン</span><small>3 types</small></h2>
-    <div class="opts c3" id="designOpts"></div>
+    <h2><span class="jp">デザイン</span><small>2 types</small></h2>
+    <div class="opts c2" id="designOpts"></div>
     <p class="hint jp" id="designDesc"></p>
   </div>
   <div class="step">
@@ -232,6 +232,7 @@ const CONFIG = {
       name:  { side: "back", type: "block", hRatio: 0.1511, gap: 0.0177, pad: 0.44, track: 0.42, scale: 0.85, refName: "RINTAROU" },  // 全幅の白帯・中央揃え。帯の高さ＝RINTAROUが横幅85％になる高さで全員共通
     },
     C: {
+      hidden: true,  // サイトには出さない（別途画像で案内）。出すときは false に
       title: "Photo", jp: "写真系",
       desc: "左胸：Team＋クラス名＋名前／背面：写真2パターンから選択（全員共通）",
       front: { img: c => `images/parts/c_front_${c}.png`, box: [62.5, 180, 85, 20.2] },
@@ -418,7 +419,7 @@ function optBtn(wrap, k, v, html, cls = "opt") {
 }
 
 function build() {
-  Object.entries(CONFIG.designs).forEach(([k, d]) => optBtn($("designOpts"), "design", k, `<b>${k}</b><span class="jp">${d.jp}</span>`));
+  Object.entries(CONFIG.designs).filter(([k, d]) => !d.hidden).forEach(([k, d]) => optBtn($("designOpts"), "design", k, `<b>${k}</b><span class="jp">${d.jp}</span>`));
   CONFIG.colors.forEach(c => optBtn($("colorOpts"), "color", c.id, `<span class="sw"><i style="background:${c.hex}"></i><b>${c.label}</b></span><span class="jp">${c.jp}</span>`));
   CONFIG.classes.forEach(c => optBtn($("classOpts"), "cls", c.id, `<b>${c.label}</b><span class="jp">${c.jp}</span>`));
   CONFIG.designs.C.backs.forEach((b, i) => optBtn($("cbackOpts"), "cback", i, `<span class="cbthumb"><img src="${b.img()}" alt="${b.label}"></span><b class="jp">${b.label}</b>`));
