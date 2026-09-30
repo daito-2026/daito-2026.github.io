@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<title>大東幼稚園 運動会Tシャツ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=Oxanium:wght@800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--ink:#111111;--muted:#8A8A8A;--line:#E6E6E6;--plate:#F2F2F0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:#FAFAF8}
+body{background:var(--bg);color:var(--ink);font-family:"Archivo","Zen Kaku Gothic New",sans-serif;font-size:14px;letter-spacing:.02em;-webkit-font-smoothing:antialiased;
+  max-width:480px;margin:0 auto;min-height:100vh;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.jp{font-family:"Zen Kaku Gothic New",sans-serif}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+button{font:inherit;color:inherit}
+
+/* header */
+header{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--bg)}
+.logo{font-weight:500;font-size:14px}
+
+/* stage (sticky preview) */
+.stage{position:sticky;top:0;z-index:20;background:var(--plate);border-bottom:1px solid var(--line)}
+.pair{display:grid;grid-template-columns:1fr 1fr}
+.face{margin:0;position:relative;min-width:0}
+.face svg{display:block;width:100%;height:32vh;max-height:280px;min-height:180px;cursor:zoom-in}
+.face figcaption{position:absolute;left:12px;top:12px;font-size:10px;font-weight:500;letter-spacing:.1em;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--ink);background:var(--bg)}
+.seg button{all:unset;cursor:pointer;padding:6px 12px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.zoomBtn{all:unset;cursor:pointer;position:absolute;right:12px;top:12px;background:var(--bg);border:1px solid var(--ink);padding:6px 10px;font-size:11px;font-weight:500;letter-spacing:.08em;display:flex;align-items:center;gap:6px}
+.stage .meta{position:absolute;left:12px;bottom:10px;right:12px;display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;pointer-events:none}
+
+/* steps */
+.step{padding:20px 16px;border-bottom:1px solid var(--line)}
+.step h2{font-weight:400;font-size:17px;margin:4px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+.step h2 small{font-size:11px;color:var(--muted);font-family:"Archivo"}
+.opts{display:grid;gap:8px}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c2{grid-template-columns:repeat(2,1fr)}
+.opt{all:unset;cursor:pointer;border:1px solid var(--line);padding:12px;min-height:44px;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.opt[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt b{font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.opt span{font-size:11px;color:var(--muted);line-height:1.45}
+.sw{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;color:var(--ink)!important}
+.sw i{width:18px;height:18px;display:block;flex:none}
+
+/* character carousel */
+.rail{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 4px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.chara{all:unset;cursor:pointer;flex:0 0 27%;scroll-snap-align:start;aspect-ratio:1/1;background:var(--body,var(--plate));border:1px solid var(--line);position:relative;display:grid;place-items:center}
+.chara img{width:82%;height:82%;object-fit:contain;display:block}
+.chara em{position:absolute;left:6px;top:4px;font-style:normal;font-size:10px;color:rgba(255,255,255,.75)}
+.chara[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.railFoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--muted)}
+.link{all:unset;cursor:pointer;color:var(--ink);text-decoration:underline;text-underline-offset:3px;font-size:12px}
+
+/* name */
+.field{display:flex;border:1px solid var(--line)}
+.field:focus-within{border-color:var(--ink)}
+.field input{all:unset;flex:1;padding:14px 12px;font-size:20px;font-weight:500;letter-spacing:.06em;min-width:0}
+.field input::placeholder{color:#C8C8C8}
+.field .count{padding:0 12px;display:flex;align-items:center;font-size:11px;color:var(--muted)}
+.hint{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.7}
+.hint.err{color:#B3261E}
+.hidden{display:none!important}
+
+.summary{display:grid;grid-template-columns:92px 1fr;row-gap:8px;font-size:13px;margin-top:10px}
+.summary dt{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding-top:3px}
+footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;gap:12px;flex-wrap:wrap}
+
+/* fullscreen viewer */
+dialog{border:none;padding:0;margin:0;width:100%;max-width:100%;height:100%;max-height:100%;background:var(--plate)}
+dialog[open]{display:flex;flex-direction:column}
+dialog::backdrop{background:var(--plate)}
+.vh{display:flex;justify-content:space-between;align-items:center;height:52px;padding:0 16px;padding-top:env(safe-area-inset-top);background:var(--bg);border-bottom:1px solid var(--line)}
+.close{all:unset;cursor:pointer;font-size:13px;font-weight:500;letter-spacing:.06em;padding:9px 14px;background:var(--ink);color:var(--bg);display:inline-flex;align-items:center;gap:6px}
+.close:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.vbody{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;max-width:720px;width:100%;margin:0 auto}
+#viewSvg{width:100%;height:100%;display:block;transition:all .25s ease;touch-action:pan-y}
+.vf{background:var(--bg);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+.vrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.vf .rail{margin:0 -16px}
+.vf .seg{flex:none;white-space:nowrap}
+#vMeta{text-transform:none;text-align:right;line-height:1.5}
+.vf .chara{flex-basis:18%}
+.cbthumb{display:block;aspect-ratio:1/1;background:var(--body,var(--plate));margin-bottom:6px;overflow:hidden}
+.cbthumb img{width:100%;height:100%;object-fit:contain;display:block}
+/* size chart */
+.sizewrap{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:start}
+.sizewrap svg{width:100%;height:auto;display:block}
+.stable{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.stable th,.stable td{padding:7px 4px;text-align:center;border-bottom:1px solid var(--line)}
+.stable thead th{font-size:11px;font-weight:500;color:var(--muted)}
+.stable thead th b{display:block;color:var(--ink);font-size:12px}
+.stable tbody th{font-weight:500;text-align:left;padding-left:8px}
+.stable tr.cur{background:var(--plate)}
+.stable tr.cur th::after{content:"プレビュー";display:block;font-size:9px;color:var(--muted);font-weight:400}
+@media (max-width:360px){.sizewrap{grid-template-columns:1fr}.sizewrap svg{max-width:160px;margin:0 auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" id="school"></div>
+  <span class="label">Preview</span>
+</header>
+
+<section class="stage" id="stage">
+  <div class="pair">
+    <figure class="face"><svg id="stageFront" viewBox="-440 -40 880 780" role="img" aria-label="前面のプレビュー。タップで拡大"></svg><figcaption>FRONT</figcaption></figure>
+    <figure class="face"><svg id="stageBack" viewBox="-440 -40 880 780" role="img" aria-label="背面のプレビュー。タップで拡大"></svg><figcaption>BACK</figcaption></figure>
+  </div>
+  <button type="button" class="zoomBtn" id="openViewer" aria-label="拡大表示">
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="5" cy="5" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 8l3.2 3.2" stroke="currentColor" stroke-width="1.4"/></svg>ZOOM
+  </button>
+  <div class="meta"><span id="metaL"></span><span class="jp">タップで拡大</span></div>
+</section>
+
+<main>
+  <div class="step">
+    <span class="label">01</span>
+    <h2><span class="jp">デザイン</span><small>3 types</small></h2>
+    <div class="opts c3" id="designOpts"></div>
+    <p class="hint jp" id="designDesc"></p>
+  </div>
+  <div class="step">
+    <span class="label">02</span>
+    <h2><span class="jp">生地色</span></h2>
+    <div class="opts c2" id="colorOpts"></div>
+  </div>
+  <div class="step">
+    <span class="label">03</span>
+    <h2><span class="jp">クラス</span></h2>
+    <div class="opts c2" id="classOpts"></div>
+  </div>
+  <div class="step" id="cbackStep">
+    <span class="label">04</span>
+    <h2><span class="jp">背面のデザイン</span><small>2 types</small></h2>
+    <div class="opts c2" id="cbackOpts"></div>
+  </div>
+  <div class="step" id="charaStep">
+    <span class="label">04</span>
+    <h2><span class="jp">左胸のキャラクター</span><small id="charaNow"></small></h2>
+    <div class="rail" id="charaRail"></div>
+    <div class="railFoot"><span class="jp">横にスクロールできます</span><button type="button" class="link jp" id="charaZoom">大きく見る</button></div>
+  </div>
+  <div class="step">
+    <span class="label" id="nameNo">05</span>
+    <h2><span class="jp">お子さまの名前（ローマ字）</span></h2>
+    <div class="field"><input id="name" type="text" inputmode="latin" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="HANAKO"><span class="count" id="count"></span></div>
+    <p class="hint jp" id="nameHint"></p>
+  </div>
+  <div class="step">
+    <span class="label">Summary</span>
+    <dl class="summary jp" id="summary"></dl>
+  </div>
+  <div class="step" id="sizeStep">
+    <span class="label">Size</span>
+    <h2><span class="jp">サイズ表</span><small>単位 cm</small></h2>
+    <div class="sizewrap">
+      <svg id="sizeFig" viewBox="-440 -120 880 860" role="img" aria-label="測る場所の図"></svg>
+      <table class="stable">
+        <thead><tr><th></th><th><b>A</b>身丈</th><th><b>B</b>身幅</th><th><b>C</b>肩幅</th><th><b>D</b>袖丈</th></tr></thead>
+        <tbody id="sizeRows"></tbody>
+      </table>
+    </div>
+    <p class="hint jp">手持ちのTシャツを平らに置き、B（脇の下の幅）を測って近いサイズを選ぶと選びやすいです。大人サイズのみです。</p>
+  </div>
+</main>
+
+<footer><span id="school2"></span></footer>
+
+<dialog id="viewer" aria-label="拡大表示">
+  <div class="vh">
+    <div class="seg" role="group" aria-label="表示面"><button type="button" data-side="front">Front</button><button type="button" data-side="back">Back</button></div>
+    <button type="button" class="close" id="closeViewer" aria-label="拡大表示を閉じる"><span class="jp">閉じる</span><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="vbody"><svg id="viewSvg" viewBox="-470 -120 940 880" role="img" aria-label="拡大プレビュー"></svg></div>
+  <div class="vf">
+    <div class="vrow">
+      <div class="seg" role="group" aria-label="拡大率"><button type="button" data-zoom="full">全体</button><button type="button" data-zoom="up">プリント部分</button></div>
+      <span class="label" id="vMeta"></span>
+    </div>
+    <div class="rail" id="vRail"></div>
+  </div>
+</dialog>
+
+<script>
+/* =========================================================
+   設定 — 画像を差し替える時はここのファイル名だけ変える
+   box = [x, y, 幅, 高さ]（Tシャツ図 480×520 上の座標）
+   ========================================================= */
+const CONFIG = {
+  school: "大東幼稚園",
+  body:   "Printstar 00148-HVT 7.4oz／大人サイズ XS〜3XL（予定）",
+  bLogoYuri: true,   // ゆり組のBロゴ（b_logo_yuri.png）あり
+  nameMax: 9,  // ローマ字の上限（Bの白帯で文字の大きさ・間隔を固定して収まる9文字まで）
+  // 名前のフォント：Mac・iPhoneは本体に入っているKrungthep、
+  // それ以外（Android・Windows）はKrungthepに一番近い無料フォント Oxanium で表示
+  nameFont: 'Krungthep, Oxanium, sans-serif',
+  nameWeight: 800,
+  colors: [
+    { id: "khaki", label: "Khaki", jp: "カーキ（037 アーミーグリーン）",   hex: "#6F6A4B", nameColor: "#FFFFFF" },
+    { id: "navy",  label: "Navy",  jp: "ネイビー（031）", hex: "#1F2A44", nameColor: "#FFFFFF" },
+  ],
+  classes: [
+    { id: "himawari", label: "Himawari", jp: "ひまわり組" },
+    { id: "yuri",     label: "Yuri",     jp: "ゆり組" },
+  ],
+  designs: {
+    A: {
+      title: "Original Character", jp: "オリジナルキャラクター系",
+      desc: "左胸：キャラ8種から選択／背面：共通キャラ＋クラス名＋名前",
+      front: { type: "chara", box: [62.5, 180, 85, 85] },
+      back:  { img: c => `images/parts/a_back_${c}.png`, box: [-140, 125, 280, 125.4] },
+      // 名前：背面画像のすぐ下（画像の下端 y=202 から少し空けて配置）
+      name:  { side: "back", x: 0, y: 290, size: 33.5, maxW: 280 },
+      charas: Array.from({length: 8}, (_, i) => `images/parts/a_chara${i+1}.png`),
+    },
+    B: {
+      title: "Typography", jp: "文字系",
+      desc: "左胸：共通ロゴ＋文字／背面：共通デザイン＋名前",
+      front: { img: c => `images/parts/b_logo_${c === "yuri" && !CONFIG.bLogoYuri ? "himawari" : c}.png`, box: [62.5, 180, 85, 85] },  // ゆり組版が届くまでは、ひまわり版を表示
+      back:  { img: () => "images/parts/b_back.png", box: [-140, 125, 280, 185.5] },
+      // 名前：白帯＋黒文字（見本「IORI」から計測した比率。単位はデザイン横幅W・文字の高さH）
+      //   帯の高さ=文字の高さH=W×0.1514／土台との間隔=W×0.0177（土台v4：横幅4017px基準）
+      //   左右の余白=H×0.44／文字の間隔=H×0.42／帯が横幅Wを超える長い名前は全体を縮小
+      name:  { side: "back", type: "block", hRatio: 0.1511, gap: 0.0177, pad: 0.44, track: 0.42, scale: 0.85, refName: "RINTAROU" },  // 全幅の白帯・中央揃え。帯の高さ＝RINTAROUが横幅85％になる高さで全員共通
+    },
+    C: {
+      title: "Photo", jp: "写真系",
+      desc: "左胸：Team＋クラス名＋名前／背面：写真2パターンから選択（全員共通）",
+      front: { img: c => `images/parts/c_front_${c}.png`, box: [62.5, 180, 85, 20.2] },
+      // 背面は2パターンから選ぶ（box＝実寸mm。①縦360、②幅280）
+      backs: [
+        { img: () => "images/parts/c_back.png",  box: [-122.5, 125, 245, 360], label: "パターン1" },
+        { img: () => "images/parts/c_back2.jpg", box: [-140, 125, 280, 306.4], label: "パターン2" },
+      ],
+      get back() { return this.backs[state.cback]; },
+      name:  { side: "front", x: 105, y: 213.8, size: 11.9, maxW: 85 },
+    },
+  },
+};
+/* ========================================================= */
+
+const NS = "http://www.w3.org/2000/svg";
+/* Tシャツ図は実寸（mm）で描く：00148-HVT Mサイズ 身丈700・身幅520・肩幅470・袖丈200
+   原点＝首の付け根（肩の一番高い所）の中央。x＝左右（着る人の左胸は図の右側）、y＝下方向
+   平置きの形：袖は肩から約32°下がり、袖口の幅185、脇の下は肩から245下 */
+const BODY = "M-90 0 Q-160 18 -235 42 L-405 148 L-307 305 Q-276 268 -260 245 L-262 700 L262 700 L260 245 Q276 268 307 305 L405 148 L235 42 Q160 18 90 0 ";
+const NECK = {
+  front: "C88 50 50 75 0 75 C-50 75 -88 50 -90 0",   // 前の襟ぐり 深さ75mm
+  back:  "C80 16 40 20 0 20 C-40 20 -80 16 -90 0",    // 後ろの襟ぐり 深さ20mm
+};
+const PATH = { front: BODY + NECK.front + " Z", back: BODY + NECK.back + " Z" };
+const FULL_VB = "-470 -120 940 880";
+/* プリント位置の基準（M・mm）
+   左胸：幅85、上端＝首の付け根から180（前襟の下 約105）、中心＝体の中心から105
+   背面：幅280（園長は縦360）、上端＝首の付け根から125（後ろ襟の下 約105） */
+const state = { cback: 0, design: "A", color: "khaki", cls: "himawari", chara: 0, name: "", side: "front", zoom: "up" };
+const $ = id => document.getElementById(id);
+const pad2 = n => String(n).padStart(2, "0");
+
+function el(tag, attrs = {}) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function shade(hex, amt) {
+  const n = parseInt(hex.slice(1), 16), f = v => Math.max(0, Math.min(255, Math.round(v + amt)));
+  return "#" + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(f).map(v => v.toString(16).padStart(2, "0")).join("");
+}
+
+/* 1面ぶんを描く */
+function draw(svg, side) {
+  const d = CONFIG.designs[state.design];
+  const col = CONFIG.colors.find(c => c.id === state.color);
+  svg.innerHTML = "";
+  svg.appendChild(el("path", { d: PATH[side], fill: col.hex }));
+  const dk = a => shade(col.hex, a);
+  if (side === "front") {
+    // 襟ぐりから見える後ろ身頃の内側と、後ろ襟のリブ
+    svg.appendChild(el("path", { d: "M90 0 " + NECK.back.replace(/-90 0$/, "-90 0") + " " + "C-88 50 -50 75 0 75 C50 75 88 50 90 0 Z", fill: dk(-34) }));
+    svg.appendChild(el("path", { d: "M90 0 " + NECK.back, fill: "none", stroke: dk(-22), "stroke-width": 12 }));
+  }
+  // 襟のリブ（幅18mm）と縫い目
+  svg.appendChild(el("path", { d: "M90 0 " + NECK[side], fill: "none", stroke: dk(-8), "stroke-width": 18 }));
+  svg.appendChild(el("path", { d: "M90 0 " + NECK[side], fill: "none", stroke: dk(-24), "stroke-width": 1.6, transform: "translate(0 9.5)" }));
+  // 肩・袖付け・袖口・裾の縫い目
+  const seam = "M90 0 Q160 18 235 42 M-90 0 Q-160 18 -235 42 M235 42 Q252 150 260 245 M-235 42 Q-252 150 -260 245 "
+             + "M384 135 L286 292 M-384 135 L-286 292 M-262 675 L262 675";
+  const cid = svg.id + "-clip", cp = el("clipPath", { id: cid });
+  cp.appendChild(el("path", { d: PATH[side] })); svg.appendChild(cp);
+  svg.appendChild(el("path", { d: seam, stroke: dk(-16), "stroke-width": 2.2, fill: "none", "clip-path": `url(#${cid})` }));
+
+  const part = d[side];
+  const href = part.type === "chara" ? d.charas[state.chara] : part.img(state.cls);
+  const [x, y, w, h] = part.box;
+  svg.appendChild(el("image", { href, x, y, width: w, height: h, preserveAspectRatio: "xMidYMid meet" }));
+
+  if (d.name && d.name.side === side && d.name.type === "block") {
+    nameBlock(svg, d.name, part.box);
+  } else if (d.name && d.name.side === side) {
+    const n = d.name, t = el("text", {
+      x: n.x, y: n.y, "text-anchor": "middle", fill: col.nameColor,
+      "font-family": CONFIG.nameFont, "font-weight": CONFIG.nameWeight,
+      "font-size": n.size, "letter-spacing": n.size * 0.02, style: "font-synthesis:none", "text-rendering": "geometricPrecision", opacity: state.name ? 1 : 0.35,
+    });
+    t.textContent = state.name || "NAME";
+    svg.appendChild(t);
+    try { if (t.getComputedTextLength() > n.maxW) { t.setAttribute("textLength", n.maxW); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (e) {}
+  }
+}
+
+/* デザインBの名前：白帯＋黒文字。文字の実際の形（インク幅）を測って並べる */
+const _cv = document.createElement("canvas").getContext("2d");
+function nameBlock(svg, n, box) {
+  const [bx, by, W, bh] = box;
+  const txt = (state.name || "NAME").toUpperCase();
+  const F = 100;
+  _cv.font = `${CONFIG.nameWeight} ${F}px ${CONFIG.nameFont}`;
+  const capH = _cv.measureText("H").actualBoundingBoxAscent || F * 0.7;
+  const measure = str => [...str].map(c => { const m = _cv.measureText(c); return { c, l: m.actualBoundingBoxLeft, r: m.actualBoundingBoxRight }; });
+  // 文字の高さ1あたりの中身の幅（左右余白なし）
+  const inner1 = chs => chs.reduce((a, ch) => a + (ch.c === " " ? 0 : (ch.l + ch.r) / capH), 0) + n.track * (chs.length - 1);
+  // 帯の高さ＝基準名（RINTAROU）が横幅の85％になる文字の高さ。全員この高さで固定
+  const refChars = measure(n.refName || "RINTAROU");
+  const bandH = W * (n.scale || 1) / (inner1(refChars) + 2 * n.pad);
+  const chars = measure(txt);
+  // 文字の高さは帯と同じ。基準より長い名前は横幅95％に収まるまで文字だけ縮める（帯の高さは変えない）
+  let H = bandH;
+  const maxInner = W * 0.95 - 2 * n.pad * bandH;
+  if (H * inner1(chars) > maxInner) H = maxInner / inner1(chars);
+  const s = H / capH, top = by + bh + W * n.gap;
+  const g = el("g", { opacity: state.name ? 1 : 0.35 });
+  g.appendChild(el("rect", { x: bx, y: top, width: W, height: bandH, fill: "#FFFFFF" }));
+  let cx = bx + (W - H * inner1(chars)) / 2;
+  const base = top + (bandH + H) / 2;
+  chars.forEach(ch => {
+    if (ch.c !== " ") {
+      const t = el("text", { x: cx + ch.l * s, y: base, "font-size": F * s, "font-family": CONFIG.nameFont,
+        "font-weight": CONFIG.nameWeight, fill: "#111111", style: "font-synthesis:none", "text-rendering": "geometricPrecision" });
+      t.textContent = ch.c; g.appendChild(t);
+      cx += (ch.l + ch.r) * s;
+    }
+    cx += n.track * H;
+  });
+  svg.appendChild(g);
+}
+
+/* プリント部分アップ用の表示範囲 */
+function upViewBox(side) {
+  const d = CONFIG.designs[state.design];
+  let [x, y, w, h] = d[side].box;
+  if (d.name && d.name.side === side && d.name.type === "block") {
+    h += w * (d.name.gap + d.name.hRatio);
+  } else if (d.name && d.name.side === side) {
+    const n = d.name;
+    x = Math.min(x, n.x - n.maxW / 2); w = Math.max(x + w, n.x + n.maxW / 2) - x;
+    h = Math.max(y + h, n.y + n.size * 0.4) - y;
+  }
+  const p = Math.max(w, h) * 0.14;
+  return [x - p, y - p, w + p * 2, h + p * 2].map(v => Math.round(v)).join(" ");
+}
+
+function render() {
+  const d = CONFIG.designs[state.design];
+  const col = CONFIG.colors.find(c => c.id === state.color);
+  const cls = CONFIG.classes.find(c => c.id === state.cls);
+
+  document.documentElement.style.setProperty("--body", col.hex);  // キャラ一覧の背景をボディ色に
+  draw($("stageFront"), "front");
+  draw($("stageBack"), "back");
+  if ($("viewer").open) {
+    draw($("viewSvg"), state.side);
+    $("viewSvg").setAttribute("viewBox", state.zoom === "up" ? upViewBox(state.side) : FULL_VB);
+    $("vMeta").innerHTML = `Mサイズ・幅${CONFIG.designs[state.design][state.side].box[2] / 10}cm<br>${col.label.toUpperCase()}${state.design === "A" && state.side === "front" ? " / CHARA " + pad2(state.chara + 1) : ""}`;
+    $("vRail").classList.toggle("hidden", !(state.design === "A" && state.side === "front"));
+  }
+
+  $("metaL").textContent = `${state.design} — ${d.title.toUpperCase()} / ${col.label.toUpperCase()}`;
+  $("designDesc").textContent = d.desc;
+  $("charaStep").classList.toggle("hidden", state.design !== "A");
+  $("cbackStep").classList.toggle("hidden", state.design !== "C");
+  $("nameNo").textContent = state.design === "B" ? "04" : "05";
+  $("charaNow").textContent = `No. ${pad2(state.chara + 1)} / ${pad2(CONFIG.designs.A.charas.length)}`;
+
+  const rows = [
+    ["Design", `${state.design}：${d.jp}`],
+    ["Color", col.jp],
+    ["Class", cls.jp],
+    ...(state.design === "A" ? [["Character", pad2(state.chara + 1)]] : []),
+    ...(state.design === "C" ? [["Back", CONFIG.designs.C.backs[state.cback].label]] : []),
+    ["Name", state.name || "—"],
+  ];
+  $("summary").innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+
+  document.querySelectorAll("[data-k]").forEach(b => b.setAttribute("aria-pressed", String(String(state[b.dataset.k]) === b.dataset.v)));
+  document.querySelectorAll("[data-side]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.side === state.side)));
+  document.querySelectorAll("[data-zoom]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.zoom === state.zoom)));
+}
+
+function set(k, v) {
+  state[k] = (k === "chara" || k === "cback") ? Number(v) : v;
+  // 変更した箇所が見える面へ自動で切り替える
+  if (k === "chara") state.side = "front";
+  if (k === "cback") state.side = "back";
+  if (k === "cls" && state.design === "A") state.side = "back";   // Aはクラス名が背面
+  if (k === "cls" && state.design === "C") state.side = "front";  // Cはクラス名が左胸
+  render();
+}
+
+function optBtn(wrap, k, v, html, cls = "opt") {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = cls; b.dataset.k = k; b.dataset.v = String(v); b.innerHTML = html;
+  b.onclick = () => set(k, v);
+  wrap.appendChild(b);
+}
+
+function build() {
+  Object.entries(CONFIG.designs).forEach(([k, d]) => optBtn($("designOpts"), "design", k, `<b>${k}</b><span class="jp">${d.jp}</span>`));
+  CONFIG.colors.forEach(c => optBtn($("colorOpts"), "color", c.id, `<span class="sw"><i style="background:${c.hex}"></i><b>${c.label}</b></span><span class="jp">${c.jp}</span>`));
+  CONFIG.classes.forEach(c => optBtn($("classOpts"), "cls", c.id, `<b>${c.label}</b><span class="jp">${c.jp}</span>`));
+  CONFIG.designs.C.backs.forEach((b, i) => optBtn($("cbackOpts"), "cback", i, `<span class="cbthumb"><img src="${b.img()}" alt="${b.label}"></span><b class="jp">${b.label}</b>`));
+  CONFIG.designs.A.charas.forEach((src, i) => {
+    const html = `<em>${pad2(i + 1)}</em><img src="${src}" alt="キャラクター${i + 1}">`;
+    optBtn($("charaRail"), "chara", i, html, "chara");
+    optBtn($("vRail"), "chara", i, html, "chara");
+  });
+}
+
+/* 拡大ビューア */
+function openViewer(zoom) {
+  state.zoom = zoom || state.zoom;
+  $("viewer").showModal();
+  document.body.style.overflow = "hidden";
+  render();
+}
+$("openViewer").onclick = () => openViewer("up");
+$("stageFront").addEventListener("click", () => { state.side = "front"; openViewer("up"); });
+$("stageBack").addEventListener("click", () => { state.side = "back"; openViewer("up"); });
+$("charaZoom").onclick = () => { state.side = "front"; openViewer("up"); };
+$("closeViewer").onclick = () => $("viewer").close();
+$("viewer").addEventListener("close", () => { document.body.style.overflow = ""; });
+document.querySelectorAll("[data-side]").forEach(b => b.onclick = e => { e.stopPropagation(); state.side = b.dataset.side; render(); });
+document.querySelectorAll("[data-zoom]").forEach(b => b.onclick = () => { state.zoom = b.dataset.zoom; render(); });
+
+/* 左右スワイプで表裏切り替え */
+function swipe(target) {
+  let sx = null, sy = null;
+  target.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  target.addEventListener("touchend", e => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      state.side = state.side === "front" ? "back" : "front"; render();
+      e.preventDefault();
+    }
+    sx = null;
+  });
+}
+swipe($("viewSvg"));
+
+/* 名前入力 */
+const input = $("name");
+const okHint = () => `半角英字・${CONFIG.nameMax}文字まで。入力した通りにプリントされます。`;
+input.maxLength = CONFIG.nameMax;
+input.addEventListener("focus", () => { const n = CONFIG.designs[state.design].name; if (n) { state.side = n.side; render(); } });
+input.addEventListener("input", () => {
+  const raw = input.value, clean = raw.replace(/[^A-Za-z .\-]/g, "").slice(0, CONFIG.nameMax);
+  const bad = clean !== raw;
+  if (bad) input.value = clean;
+  $("nameHint").textContent = bad ? "ローマ字（半角英字）で入力してください。" : okHint();
+  $("nameHint").classList.toggle("err", bad);
+  state.name = clean;
+  $("count").textContent = `${clean.length}/${CONFIG.nameMax}`;
+  render();
+});
+
+$("school").textContent = CONFIG.school;
+$("school2").textContent = CONFIG.school;
+$("nameHint").textContent = okHint();
+$("count").textContent = `0/${CONFIG.nameMax}`;
+build();
+/* サイズ表（Printstar 00148-HVT メーカー寸法・cm） */
+const SIZES = [["XS",63,46,41,18],["S",66,49,44,19],["M",70,52,47,20],["L",74,55,50,22],["XL",78,58,53,24],["2XL",82,61,56,26],["3XL",84,64,59,26]];
+$("sizeRows").innerHTML = SIZES.map(r => `<tr${r[0] === "M" ? ' class="cur"' : ""}><th>${r[0]}</th>${r.slice(1).map(v => `<td>${v}</td>`).join("")}</tr>`).join("");
+(function sizeFig() {
+  const f = $("sizeFig"), ink = "#111111", fab = "#E6E3DC";
+  f.appendChild(el("path", { d: PATH.front, fill: fab, stroke: "#B9B4A8", "stroke-width": 4 }));
+  const arrow = (d, lx, ly, t) => {
+    f.appendChild(el("path", { d, stroke: ink, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }));
+    const c = el("text", { x: lx, y: ly, "font-size": 70, "font-weight": 700, "text-anchor": "middle", fill: ink, "font-family": "Archivo, sans-serif" }); c.textContent = t; f.appendChild(c);
+  };
+  arrow("M-60 0 L-60 700", -120, 560, "A");        // 身丈：首の付け根〜裾
+  arrow("M-260 330 L260 330", 120, 310, "B");       // 身幅：脇の下
+  arrow("M-235 -20 L235 -20", 0, -40, "C");       // 肩幅
+  arrow("M250 30 L405 128", 370, 30, "D");        // 袖丈
+})();
+if (document.fonts) document.fonts.ready.then(render);
+render();
+</script>
+</body>
+</html>
