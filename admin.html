@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>管理 | 大東幼稚園 運動会Tシャツ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Oxanium:wght@800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--ink:#111111;--muted:#8A8A8A;--line:#E6E6E6;--plate:#F2F2F0;--navy:#1F2A44;--err:#B3261E;--ok:#1B6B3A}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:#FAFAF8}
+body{background:var(--bg);color:var(--ink);font-family:"Archivo","Zen Kaku Gothic New",sans-serif;font-size:14px;letter-spacing:.02em;-webkit-font-smoothing:antialiased;line-height:1.6;
+  max-width:480px;margin:0 auto;min-height:100vh;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.jp{font-family:"Zen Kaku Gothic New",sans-serif}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 16px;border-bottom:1px solid var(--line)}
+.logo{font-weight:500;font-size:14px;text-decoration:none}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.hero{padding:28px 16px 22px;border-bottom:1px solid var(--line)}
+.hero h1{font-weight:400;font-size:30px;line-height:1.1;letter-spacing:-.01em;margin:6px 0 14px}
+.spec{display:grid;grid-template-columns:84px 1fr;row-gap:6px;font-size:13px}
+.spec dt{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding-top:3px}
+.step{padding:20px 16px;border-bottom:1px solid var(--line)}
+.step h2{font-weight:400;font-size:17px;margin:4px 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.step h2 small{font-size:11px;color:var(--muted)}
+.opts{display:grid;gap:8px}
+.c2{grid-template-columns:repeat(2,1fr)}
+.c3{grid-template-columns:repeat(3,1fr)}
+.opt{all:unset;cursor:pointer;border:1px solid var(--line);padding:12px;min-height:44px;display:flex;flex-direction:column;justify-content:center;gap:3px;box-sizing:border-box}
+.opt[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt[disabled]{opacity:.35;cursor:not-allowed}
+.opt b{font-weight:500;font-size:14px}
+.opt span{font-size:11px;color:var(--muted);line-height:1.5}
+.sz{grid-template-columns:repeat(6,1fr)}
+.sz .opt{padding:10px 0;align-items:center;min-height:40px}
+.field{display:flex;border:1px solid var(--line);background:var(--bg)}
+.field:focus-within{border-color:var(--ink)}
+.field input{all:unset;flex:1;padding:13px 12px;font-size:16px;min-width:0}
+.field input.big{font-size:20px;font-weight:500;letter-spacing:.06em}
+.field input::placeholder{color:#C8C8C8}
+.field .count{padding:0 12px;display:flex;align-items:center;font-size:11px;color:var(--muted)}
+.fl{display:block;font-size:12px;margin:14px 0 6px}
+.fl:first-child{margin-top:0}
+.hint{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.7}
+.hint.err,.err{color:var(--err)}
+.hidden{display:none!important}
+/* shirt card */
+.shirt{border:1px solid var(--ink);margin-bottom:12px}
+.shirt .hd{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12px;font-weight:500;letter-spacing:.08em}
+.shirt .bd{padding:12px}
+.rail{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 4px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.chara{all:unset;cursor:pointer;flex:0 0 23%;scroll-snap-align:start;aspect-ratio:1/1;background:var(--navy);border:1px solid var(--line);position:relative;display:grid;place-items:center}
+.chara img{width:80%;height:80%;object-fit:contain;display:block}
+.chara em{position:absolute;left:5px;top:3px;font-style:normal;font-size:10px;color:rgba(255,255,255,.75)}
+.chara[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:-2px;box-shadow:inset 0 0 0 3px #fff}
+.mini{display:block;width:100%;background:var(--navy);margin-top:10px}
+.link{all:unset;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:12px}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;width:100%;min-height:52px;padding:0 16px;background:var(--ink);color:#fff;font-weight:500;font-size:15px;letter-spacing:.04em;text-align:center}
+.btn.line{background:#06C755}
+.btn.ghost{background:var(--bg);color:var(--ink);border:1px solid var(--ink)}
+.btn.danger{background:var(--bg);color:var(--err);border:1px solid var(--err)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn+.btn{margin-top:8px}
+.add{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;border:1px dashed var(--ink);padding:14px;text-align:center;font-size:14px}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:14px}
+.total b{font-size:26px;font-weight:500}
+.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--ink);margin:12px 0;cursor:pointer;font-size:13px;line-height:1.6}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--ink)}
+.names{list-style:none;border:1px solid var(--line);margin-top:8px}
+.names li{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-top:1px solid var(--line);gap:10px}
+.names li:first-child{border-top:none}
+.names .nm{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:22px;letter-spacing:.04em;word-break:break-all}
+.names .sub{font-size:11px;color:var(--muted);white-space:nowrap}
+.box{border:1px solid var(--ink);padding:16px;margin-bottom:12px}
+.box.ok{border-color:var(--ok);color:var(--ok)}
+.box.warn{border-color:var(--err)}
+.big-id{font-size:40px;font-weight:500;letter-spacing:.02em;line-height:1.1}
+.pill{display:inline-block;border:1px solid currentColor;padding:1px 8px;font-size:11px}
+.copy{display:flex;border:1px solid var(--line);align-items:center;margin-top:8px}
+.copy code{flex:1;padding:10px 12px;font-size:15px;font-family:inherit;word-break:break-all}
+.copy button{all:unset;cursor:pointer;padding:10px 14px;border-left:1px solid var(--line);font-size:12px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;font-size:13px;z-index:50;max-width:90vw}
+.loading{padding:60px 16px;text-align:center;color:var(--muted)}
+footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;gap:12px;flex-wrap:wrap}
+</style>
+<style>
+.kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.kpi div{background:var(--bg);padding:12px}
+.kpi b{display:block;font-size:22px;font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+th,td{border:1px solid var(--line);padding:6px;text-align:center}
+th{font-weight:500;background:var(--plate)}
+.ord{border:1px solid var(--line);padding:12px;margin-bottom:8px}
+.ord.paid{border-left:4px solid var(--ok)}
+.ord.unpaid{border-left:4px solid var(--err)}
+.ord.cxl{opacity:.45}
+.ord .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.ord .top b{font-size:17px;font-weight:500}
+.ord ul{list-style:none;font-size:12px;margin:6px 0;color:#444}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.acts button{all:unset;cursor:pointer;border:1px solid var(--ink);padding:6px 10px;font-size:12px}
+.acts button.on{background:var(--ink);color:#fff}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.filter button{all:unset;cursor:pointer;border:1px solid var(--line);padding:6px 10px;font-size:12px}
+.filter button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+</style>
+</head>
+<body class="jp">
+<header><span class="logo">大東幼稚園</span><span class="label">Admin</span></header>
+
+<form id="login" class="step hidden" novalidate>
+  <h2>管理ページ</h2>
+  <div class="field"><input id="pin" type="password" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="PIN"></div>
+  <p class="hint err hidden" id="lgErr"></p>
+  <div style="margin-top:12px"><button class="btn">開く</button></div>
+</form>
+
+<main id="app" class="hidden">
+  <section class="step"><div class="kpi" id="kpi"></div>
+    <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button type="button" class="btn ghost" id="syncBtn" style="min-height:44px;font-size:13px">Square入金を確認</button>
+      <button type="button" class="btn ghost" id="csvBtn" style="min-height:44px;font-size:13px">印刷リストCSV</button>
+    </div>
+    <p class="hint">Squareの入金は10分おきに自動で反映されます。PayPayと現金は下のボタンで記録してください。</p></section>
+  <section class="step"><h2>サイズ集計 <small>有効な申込のみ</small></h2><div id="sizeTbl"></div>
+    <h2 style="margin-top:18px">キャラ集計</h2><div id="charaTbl"></div></section>
+  <section class="step"><h2>申込一覧</h2>
+    <div class="filter" id="filter"></div>
+    <div class="field" style="margin-bottom:10px"><input id="q" placeholder="名前・管理番号で検索"></div>
+    <div id="list"></div></section>
+</main>
+<div class="loading hidden" id="loading">読み込み中…</div>
+
+<script>
+/* 申込フォーム共通 */
+const API_URL = "__API_URL__"; // GASのウェブアプリURL（/exec）
+const NAVY = "#1F2A44";
+const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
+const PAY = {
+  paypay: { jp: "PayPay送金", sub: "おすすめ。申込後の画面に送金先を表示します" },
+  square: { jp: "カード・Apple Pay・Google Pay", sub: "申込後の画面から支払えます" },
+  cash:   { jp: "現金（当日）", sub: "Tシャツのお渡し時に担当へ" },
+};
+const IMG_BASE = "https://daito-2026.github.io/images/parts/"; // 公開済みの画像を直接参照（どこで開いても表示される）
+const charaImg = n => `${IMG_BASE}a_chara${n}.png`;
+const backImg = cls => `${IMG_BASE}a_back_${cls}.png`;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
+
+/* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
+const DEMO = API_URL.startsWith("__");
+const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", parent: "大東 花子", child: "だいとう たろう",
+  items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
+  count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
+  open: true, paypayUrl: "#demo", squareUrl: "" };
+async function demoApi(action, data) {
+  await new Promise(r => setTimeout(r, 250));
+  const fail = m => { throw new Error(m); };
+  if (action === "config") return { ok: true, open: true };
+  if (action === "get") return { ok: true, order: DEMO_ORDER };
+  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "さくら はな", parent: "桜 太郎", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
+  fail("デモ表示のため、送信・変更はできません（本番の設定後に使えます）。");
+}
+function demoBanner() {
+  if (!DEMO) return;
+  const d = document.createElement("div");
+  d.style.cssText = "background:#FFF4CC;color:#5A4500;font-size:12px;padding:8px 16px;border-bottom:1px solid #E6D38A";
+  d.textContent = "デモ表示中：まだ本番の受付につながっていません。送信しても保存されません。";
+  document.body.prepend(d);
+}
+document.addEventListener("DOMContentLoaded", demoBanner);
+
+async function api(action, data = {}) {
+  if (DEMO) return demoApi(action, data);
+  let res;
+  try {
+    res = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action, ...data }) });
+  } catch (e) { throw new Error("通信できませんでした。電波の良いところで再度お試しください。"); }
+  const d = await res.json().catch(() => ({ ok: false, error: "通信エラーが起きました。" }));
+  if (!d.ok) throw new Error(d.error || "エラーが起きました。");
+  return d;
+}
+
+function toast(msg) {
+  const t = document.createElement("div"); t.className = "toast"; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+async function copyText(s) {
+  try { await navigator.clipboard.writeText(s); toast("コピーしました"); }
+  catch (e) { prompt("コピーしてください", s); }
+}
+
+/* 背面の名前プレビュー（デザインA・ネイビー、実寸mm座標）*/
+const SVGNS = "http://www.w3.org/2000/svg";
+function miniBack(cls, name) {
+  const svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("viewBox", "-160 105 320 205");
+  svg.setAttribute("class", "mini");
+  svg.innerHTML = `<rect x="-160" y="105" width="320" height="205" fill="${NAVY}"/>
+    <image href="${backImg(cls || "himawari")}" x="-140" y="125" width="280" height="125.4" preserveAspectRatio="xMidYMid meet"/>`;
+  const t = document.createElementNS(SVGNS, "text");
+  Object.entries({ x: 0, y: 290, "text-anchor": "middle", fill: "#FFFFFF", "font-family": "Krungthep, Oxanium, sans-serif",
+    "font-weight": 800, "font-size": 33.5, "letter-spacing": 0.67, style: "font-synthesis:none", "text-rendering": "geometricPrecision",
+    opacity: name ? 1 : 0.35 }).forEach(([k, v]) => t.setAttribute(k, v));
+  t.textContent = name || "NAME";
+  svg.appendChild(t);
+  requestAnimationFrame(() => { try { if (t.getComputedTextLength() > 280) { t.setAttribute("textLength", 280); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (e) {} });
+  return svg;
+}
+function lineShareUrl(text) { return "https://line.me/R/share?text=" + encodeURIComponent(text); }
+</script>
+<script>
+let PIN = "", data = null, flt = "all";
+try { PIN = sessionStorage.getItem("daito_admin") || ""; } catch (e) {}
+const SIZES = ["S", "M", "L", "XL", "2XL", "3XL"];
+const isPaid = o => o.paid !== "未入金";
+
+async function load() {
+  $("loading").classList.remove("hidden");
+  try {
+    data = await api("admin_list", { pin: PIN });
+    try { sessionStorage.setItem("daito_admin", PIN); } catch (e) {}
+    $("login").classList.add("hidden"); $("app").classList.remove("hidden"); render();
+  } catch (ex) {
+    try { sessionStorage.removeItem("daito_admin"); } catch (e) {}
+    $("app").classList.add("hidden"); $("login").classList.remove("hidden");
+    if (PIN) { $("lgErr").textContent = ex.message; $("lgErr").classList.remove("hidden"); }
+  } finally { $("loading").classList.add("hidden"); }
+}
+
+function render() {
+  const act = data.orders.filter(o => o.status === "有効");
+  const shirts = act.reduce((a, o) => a + o.count, 0), total = act.reduce((a, o) => a + o.total, 0);
+  const paid = act.filter(isPaid).reduce((a, o) => a + o.total, 0);
+  const by = k => act.filter(o => o.payJp.startsWith(k)).length;
+  $("kpi").innerHTML = `<div><span class="label">申込</span><b>${act.length}件</b><span class="hint">ひまわり ${act.filter(o => o.clsJp === "ひまわり組").length}／ゆり ${act.filter(o => o.clsJp === "ゆり組").length}</span></div>
+    <div><span class="label">枚数</span><b>${shirts}枚</b></div>
+    <div><span class="label">合計</span><b>${yen(total)}</b></div>
+    <div><span class="label">入金済み</span><b>${yen(paid)}</b><span class="hint">未入金 ${yen(total - paid)}</span></div>
+    <div style="grid-column:1/-1"><span class="hint" style="margin:0">支払方法：PayPay ${by("PayPay")}件／カード等 ${by("カード")}件／現金 ${by("現金")}件　締切 ${data.open ? "受付中" : "終了"}</span></div>`;
+  const rows = [["大人", SIZES], ["子ども", ["120"]]];
+  const cnt = (kind, size, cls) => act.filter(o => !cls || o.clsJp === cls).reduce((a, o) => a + o.items.filter(i => (i.kind === "kids" ? "子ども" : "大人") === kind && String(i.size) === size).length, 0);
+  $("sizeTbl").innerHTML = `<table><tr><th>区分</th><th>サイズ</th><th>ひまわり</th><th>ゆり</th><th>計</th></tr>${rows.flatMap(([k, ss]) => ss.map(s => `<tr><td>${k}</td><td>${s}</td><td>${cnt(k, s, "ひまわり組")}</td><td>${cnt(k, s, "ゆり組")}</td><td><b>${cnt(k, s)}</b></td></tr>`)).join("")}</table>`;
+  const cc = n => act.reduce((a, o) => a + o.items.filter(i => Number(i.chara) === n).length, 0);
+  $("charaTbl").innerHTML = `<table><tr>${Array.from({ length: 8 }, (_, i) => `<th>${i + 1}</th>`).join("")}</tr><tr>${Array.from({ length: 8 }, (_, i) => `<td>${cc(i + 1)}</td>`).join("")}</tr></table>`;
+  const F = [["all", "すべて"], ["unpaid", "未入金"], ["paid", "入金済み"], ["himawari", "ひまわり"], ["yuri", "ゆり"], ["cxl", "取消"]];
+  $("filter").innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${flt === k}">${l}</button>`).join("");
+  $("filter").querySelectorAll("button").forEach(b => b.onclick = () => { flt = b.dataset.f; render(); });
+  renderList();
+}
+
+function renderList() {
+  const q = $("q").value.trim();
+  const list = data.orders.filter(o => {
+    if (flt === "cxl") { if (o.status === "有効") return false; } else if (o.status !== "有効") return false;
+    if (flt === "unpaid" && isPaid(o)) return false;
+    if (flt === "paid" && !isPaid(o)) return false;
+    if (flt === "himawari" && o.clsJp !== "ひまわり組") return false;
+    if (flt === "yuri" && o.clsJp !== "ゆり組") return false;
+    return !q || [o.id, o.child, o.parent, ...o.items.map(i => i.name)].join(" ").toLowerCase().includes(q.toLowerCase());
+  });
+  $("list").innerHTML = list.map(o => `<div class="ord ${o.status !== "有効" ? "cxl" : isPaid(o) ? "paid" : "unpaid"}">
+    <div class="top"><b>${esc(o.id)} ${esc(o.child)}</b><span class="hint" style="margin:0">${esc(o.clsJp)}</span></div>
+    <div class="hint" style="margin:2px 0">${esc(o.parent)}／${esc(o.payJp)}／${o.count}枚 ${yen(o.total)}／${esc(o.createdAt)}</div>
+    <ul>${o.items.map((i, n) => `<li>${n + 1}. ${i.kind === "kids" ? "子ども" : "大人"} ${esc(i.size)}・キャラ${i.chara}・<b style="font-family:Krungthep,Oxanium,sans-serif">${esc(i.name)}</b></li>`).join("")}</ul>
+    <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span></div>
+    ${o.status === "有効" ? `<div class="acts">
+      <button type="button" data-id="${esc(o.id)}" data-s="paypay" class="${o.paid === "入金済み（PayPay）" ? "on" : ""}">PayPay入金</button>
+      <button type="button" data-id="${esc(o.id)}" data-s="cash" class="${o.paid === "現金受領" ? "on" : ""}">現金受領</button>
+      ${isPaid(o) ? `<button type="button" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}</div>` : ""}
+  </div>`).join("") || `<p class="hint">該当なし</p>`;
+  $("list").querySelectorAll("[data-s]").forEach(b => b.onclick = async () => {
+    const s = b.dataset.s, id = b.dataset.id;
+    if (s === "unpaid" && !confirm(`${id} を未入金に戻しますか？`)) return;
+    b.disabled = true;
+    try { await api("admin_mark", { pin: PIN, id, status: s }); toast(`${id} を記録しました`); await load(); } catch (ex) { toast(ex.message); b.disabled = false; }
+  });
+}
+
+$("q").addEventListener("input", renderList);
+$("pin").addEventListener("input", e => e.target.value = e.target.value.replace(/\s/g, ""));
+$("login").addEventListener("submit", e => { e.preventDefault(); PIN = $("pin").value; load(); });
+$("syncBtn").onclick = async e => {
+  const b = e.currentTarget; b.disabled = true; b.textContent = "確認中…";
+  try { const d = await api("admin_sync", { pin: PIN }); toast(`${d.changed}件を入金済みにしました`); await load(); } catch (ex) { toast(ex.message); }
+  b.disabled = false; b.textContent = "Square入金を確認";
+};
+$("csvBtn").onclick = () => {
+  const head = ["管理番号", "クラス", "子どもの名前", "No", "区分", "サイズ", "左胸キャラ", "背面の名前", "支払方法", "入金状況"];
+  const rows = data.orders.filter(o => o.status === "有効").flatMap(o => o.items.map((i, n) => [o.id, o.clsJp, o.child, n + 1, i.kind === "kids" ? "子ども" : "大人", i.size, i.chara, i.name, o.payJp, o.paid]));
+  const csv = "﻿" + [head, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = `daito_tee_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+};
+
+if (PIN) load(); else $("login").classList.remove("hidden");
+</script>
+</body>
+</html>

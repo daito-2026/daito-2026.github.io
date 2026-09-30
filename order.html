@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>申込 | 大東幼稚園 運動会Tシャツ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Oxanium:wght@800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--ink:#111111;--muted:#8A8A8A;--line:#E6E6E6;--plate:#F2F2F0;--navy:#1F2A44;--err:#B3261E;--ok:#1B6B3A}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:#FAFAF8}
+body{background:var(--bg);color:var(--ink);font-family:"Archivo","Zen Kaku Gothic New",sans-serif;font-size:14px;letter-spacing:.02em;-webkit-font-smoothing:antialiased;line-height:1.6;
+  max-width:480px;margin:0 auto;min-height:100vh;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.jp{font-family:"Zen Kaku Gothic New",sans-serif}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 16px;border-bottom:1px solid var(--line)}
+.logo{font-weight:500;font-size:14px;text-decoration:none}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.hero{padding:28px 16px 22px;border-bottom:1px solid var(--line)}
+.hero h1{font-weight:400;font-size:30px;line-height:1.1;letter-spacing:-.01em;margin:6px 0 14px}
+.spec{display:grid;grid-template-columns:84px 1fr;row-gap:6px;font-size:13px}
+.spec dt{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding-top:3px}
+.step{padding:20px 16px;border-bottom:1px solid var(--line)}
+.step h2{font-weight:400;font-size:17px;margin:4px 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.step h2 small{font-size:11px;color:var(--muted)}
+.opts{display:grid;gap:8px}
+.c2{grid-template-columns:repeat(2,1fr)}
+.c3{grid-template-columns:repeat(3,1fr)}
+.opt{all:unset;cursor:pointer;border:1px solid var(--line);padding:12px;min-height:44px;display:flex;flex-direction:column;justify-content:center;gap:3px;box-sizing:border-box}
+.opt[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt[disabled]{opacity:.35;cursor:not-allowed}
+.opt b{font-weight:500;font-size:14px}
+.opt span{font-size:11px;color:var(--muted);line-height:1.5}
+.sz{grid-template-columns:repeat(6,1fr)}
+.sz .opt{padding:10px 0;align-items:center;min-height:40px}
+.field{display:flex;border:1px solid var(--line);background:var(--bg)}
+.field:focus-within{border-color:var(--ink)}
+.field input{all:unset;flex:1;padding:13px 12px;font-size:16px;min-width:0}
+.field input.big{font-size:20px;font-weight:500;letter-spacing:.06em}
+.field input::placeholder{color:#C8C8C8}
+.field .count{padding:0 12px;display:flex;align-items:center;font-size:11px;color:var(--muted)}
+.fl{display:block;font-size:12px;margin:14px 0 6px}
+.fl:first-child{margin-top:0}
+.hint{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.7}
+.hint.err,.err{color:var(--err)}
+.hidden{display:none!important}
+/* shirt card */
+.shirt{border:1px solid var(--ink);margin-bottom:12px}
+.shirt .hd{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12px;font-weight:500;letter-spacing:.08em}
+.shirt .bd{padding:12px}
+.rail{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 4px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.chara{all:unset;cursor:pointer;flex:0 0 23%;scroll-snap-align:start;aspect-ratio:1/1;background:var(--navy);border:1px solid var(--line);position:relative;display:grid;place-items:center}
+.chara img{width:80%;height:80%;object-fit:contain;display:block}
+.chara em{position:absolute;left:5px;top:3px;font-style:normal;font-size:10px;color:rgba(255,255,255,.75)}
+.chara[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:-2px;box-shadow:inset 0 0 0 3px #fff}
+.mini{display:block;width:100%;background:var(--navy);margin-top:10px}
+.link{all:unset;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:12px}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;width:100%;min-height:52px;padding:0 16px;background:var(--ink);color:#fff;font-weight:500;font-size:15px;letter-spacing:.04em;text-align:center}
+.btn.line{background:#06C755}
+.btn.ghost{background:var(--bg);color:var(--ink);border:1px solid var(--ink)}
+.btn.danger{background:var(--bg);color:var(--err);border:1px solid var(--err)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn+.btn{margin-top:8px}
+.add{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;border:1px dashed var(--ink);padding:14px;text-align:center;font-size:14px}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:14px}
+.total b{font-size:26px;font-weight:500}
+.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--ink);margin:12px 0;cursor:pointer;font-size:13px;line-height:1.6}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--ink)}
+.names{list-style:none;border:1px solid var(--line);margin-top:8px}
+.names li{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-top:1px solid var(--line);gap:10px}
+.names li:first-child{border-top:none}
+.names .nm{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:22px;letter-spacing:.04em;word-break:break-all}
+.names .sub{font-size:11px;color:var(--muted);white-space:nowrap}
+.box{border:1px solid var(--ink);padding:16px;margin-bottom:12px}
+.box.ok{border-color:var(--ok);color:var(--ok)}
+.box.warn{border-color:var(--err)}
+.big-id{font-size:40px;font-weight:500;letter-spacing:.02em;line-height:1.1}
+.pill{display:inline-block;border:1px solid currentColor;padding:1px 8px;font-size:11px}
+.copy{display:flex;border:1px solid var(--line);align-items:center;margin-top:8px}
+.copy code{flex:1;padding:10px 12px;font-size:15px;font-family:inherit;word-break:break-all}
+.copy button{all:unset;cursor:pointer;padding:10px 14px;border-left:1px solid var(--line);font-size:12px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;font-size:13px;z-index:50;max-width:90vw}
+.loading{padding:60px 16px;text-align:center;color:var(--muted)}
+footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body class="jp">
+<header><a class="logo" href="./">大東幼稚園</a><span class="label">Order</span></header>
+
+<div id="closed" class="hidden">
+  <section class="hero"><span class="label">Closed</span><h1>申込の受付は<br>終了しました</h1>
+  <p>変更・追加のご相談は、各クラスの役員に直接ご連絡ください。</p>
+  <p style="margin-top:14px"><a class="link" href="status.html">申込内容の確認はこちら</a></p></section>
+</div>
+
+<form id="form" class="hidden" novalidate>
+  <section class="hero">
+    <span class="label" id="modeLabel">Sports Day Tee 2026</span>
+    <h1 id="title">運動会Tシャツ<br>申込フォーム</h1>
+    <dl class="spec">
+      <dt>Design</dt><dd>A オリジナルキャラクター／ネイビー</dd>
+      <dt>Price</dt><dd>1枚 ¥3,000（大人・子ども共通）<br><span class="hint" style="margin:0">先生2名分の制作費を含みます</span></dd>
+      <dt>Deadline</dt><dd>10月2日（金）23:59</dd>
+      <dt>Delivery</dt><dd>運動会当日にお渡し（場所・時間は追ってご連絡します）</dd>
+    </dl>
+    <p class="hint">デザインの見え方は <a class="link" href="./">プレビュー</a> で確認できます。</p>
+  </section>
+
+  <section class="step">
+    <span class="label">01</span><h2>クラス</h2>
+    <div class="opts c2" id="clsOpts"></div>
+    <p class="hint hidden" id="clsLock">クラスは変更できません。変更する場合は、取り消してから申込み直してください。</p>
+  </section>
+
+  <section class="step">
+    <span class="label">02</span><h2>お名前</h2>
+    <label class="fl" for="parent">保護者のお名前</label>
+    <div class="field"><input id="parent" autocomplete="name" placeholder="例：大東 花子"></div>
+    <label class="fl" for="child">お子さまのお名前（ひらがな）</label>
+    <div class="field"><input id="child" placeholder="例：だいとう たろう"></div>
+    <p class="hint">申込内容の確認や、当日のお渡しに使います。</p>
+  </section>
+
+  <section class="step">
+    <span class="label">03</span><h2>Tシャツ <small id="countLabel"></small></h2>
+    <div id="shirts"></div>
+    <button type="button" class="add" id="addShirt">＋ もう1枚追加</button>
+    <p class="hint">大人：S〜3XL／子ども：120のみ。サイズ表は <a class="link" href="./#sizeStep">プレビュー</a> にあります。<br>
+    背面の名前は半角ローマ字12文字まで。10文字以上は文字の幅を詰めて印刷します。</p>
+  </section>
+
+  <section class="step">
+    <span class="label">04</span><h2>お支払い方法</h2>
+    <div class="opts" id="payOpts"></div>
+    <p class="hint">PayPay・カードは運動会当日までにお支払いください。</p>
+  </section>
+
+  <section class="step">
+    <span class="label">05</span><h2>暗証番号（数字4桁）</h2>
+    <div class="field"><input id="pin" inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="off" placeholder="0000"></div>
+    <p class="hint" id="pinHint">申込後のURLをなくした時に、クラス・お子さまのお名前とこの番号で申込内容を確認できます。</p>
+  </section>
+
+  <section class="step">
+    <span class="label">06</span><h2>確認</h2>
+    <div class="total"><span id="totalSub">合計</span><b id="total">¥0</b></div>
+    <span class="label">背面の名前（このつづりで印刷します）</span>
+    <ul class="names" id="nameList"></ul>
+    <label class="check"><input type="checkbox" id="spellOk"><span>背面の名前のつづり（大文字・小文字も含む）を確認しました。このつづりのまま印刷されることに同意します。</span></label>
+    <p class="hint err hidden" id="formErr" role="alert"></p>
+    <button type="submit" class="btn" id="submit">この内容で申し込む</button>
+    <button type="button" class="btn danger hidden" id="cancelEdit">変更せずに戻る</button>
+  </section>
+</form>
+
+<div class="loading" id="loading">読み込み中…</div>
+<footer><span>大東幼稚園 運動会Tシャツ 2026</span><a class="link" style="font-size:10px" href="status.html">申込内容の確認</a></footer>
+
+<script>
+/* 申込フォーム共通 */
+const API_URL = "__API_URL__"; // GASのウェブアプリURL（/exec）
+const NAVY = "#1F2A44";
+const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
+const PAY = {
+  paypay: { jp: "PayPay送金", sub: "おすすめ。申込後の画面に送金先を表示します" },
+  square: { jp: "カード・Apple Pay・Google Pay", sub: "申込後の画面から支払えます" },
+  cash:   { jp: "現金（当日）", sub: "Tシャツのお渡し時に担当へ" },
+};
+const IMG_BASE = "https://daito-2026.github.io/images/parts/"; // 公開済みの画像を直接参照（どこで開いても表示される）
+const charaImg = n => `${IMG_BASE}a_chara${n}.png`;
+const backImg = cls => `${IMG_BASE}a_back_${cls}.png`;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
+
+/* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
+const DEMO = API_URL.startsWith("__");
+const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", parent: "大東 花子", child: "だいとう たろう",
+  items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
+  count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
+  open: true, paypayUrl: "#demo", squareUrl: "" };
+async function demoApi(action, data) {
+  await new Promise(r => setTimeout(r, 250));
+  const fail = m => { throw new Error(m); };
+  if (action === "config") return { ok: true, open: true };
+  if (action === "get") return { ok: true, order: DEMO_ORDER };
+  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "さくら はな", parent: "桜 太郎", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
+  fail("デモ表示のため、送信・変更はできません（本番の設定後に使えます）。");
+}
+function demoBanner() {
+  if (!DEMO) return;
+  const d = document.createElement("div");
+  d.style.cssText = "background:#FFF4CC;color:#5A4500;font-size:12px;padding:8px 16px;border-bottom:1px solid #E6D38A";
+  d.textContent = "デモ表示中：まだ本番の受付につながっていません。送信しても保存されません。";
+  document.body.prepend(d);
+}
+document.addEventListener("DOMContentLoaded", demoBanner);
+
+async function api(action, data = {}) {
+  if (DEMO) return demoApi(action, data);
+  let res;
+  try {
+    res = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action, ...data }) });
+  } catch (e) { throw new Error("通信できませんでした。電波の良いところで再度お試しください。"); }
+  const d = await res.json().catch(() => ({ ok: false, error: "通信エラーが起きました。" }));
+  if (!d.ok) throw new Error(d.error || "エラーが起きました。");
+  return d;
+}
+
+function toast(msg) {
+  const t = document.createElement("div"); t.className = "toast"; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+async function copyText(s) {
+  try { await navigator.clipboard.writeText(s); toast("コピーしました"); }
+  catch (e) { prompt("コピーしてください", s); }
+}
+
+/* 背面の名前プレビュー（デザインA・ネイビー、実寸mm座標）*/
+const SVGNS = "http://www.w3.org/2000/svg";
+function miniBack(cls, name) {
+  const svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("viewBox", "-160 105 320 205");
+  svg.setAttribute("class", "mini");
+  svg.innerHTML = `<rect x="-160" y="105" width="320" height="205" fill="${NAVY}"/>
+    <image href="${backImg(cls || "himawari")}" x="-140" y="125" width="280" height="125.4" preserveAspectRatio="xMidYMid meet"/>`;
+  const t = document.createElementNS(SVGNS, "text");
+  Object.entries({ x: 0, y: 290, "text-anchor": "middle", fill: "#FFFFFF", "font-family": "Krungthep, Oxanium, sans-serif",
+    "font-weight": 800, "font-size": 33.5, "letter-spacing": 0.67, style: "font-synthesis:none", "text-rendering": "geometricPrecision",
+    opacity: name ? 1 : 0.35 }).forEach(([k, v]) => t.setAttribute(k, v));
+  t.textContent = name || "NAME";
+  svg.appendChild(t);
+  requestAnimationFrame(() => { try { if (t.getComputedTextLength() > 280) { t.setAttribute("textLength", 280); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (e) {} });
+  return svg;
+}
+function lineShareUrl(text) { return "https://line.me/R/share?text=" + encodeURIComponent(text); }
+</script>
+<script>
+const MAX = 10, NAME_MAX = 12;
+const ADULT = ["S", "M", "L", "XL", "2XL", "3XL"], KIDS = ["120"];
+const params = new URLSearchParams(location.search);
+const editToken = params.get("t");
+const st = { cls: "", pay: "", items: [] };
+const blank = () => ({ kind: "adult", size: "", chara: 0, name: "" });
+
+function renderCls() {
+  $("clsOpts").innerHTML = Object.entries(CLASSES).map(([k, v]) =>
+    `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.cls === k}" ${editToken ? "disabled" : ""}><b>${v}</b></button>`).join("");
+  $("clsOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.cls = b.dataset.k; renderCls(); renderShirts(); });
+}
+function renderPay() {
+  $("payOpts").innerHTML = Object.entries(PAY).map(([k, v]) =>
+    `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.pay === k}"><b>${v.jp}</b><span>${v.sub}</span></button>`).join("");
+  $("payOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.pay = b.dataset.k; renderPay(); });
+}
+
+function renderShirts() {
+  const wrap = $("shirts"); wrap.innerHTML = "";
+  st.items.forEach((it, i) => {
+    const sizes = it.kind === "kids" ? KIDS : ADULT;
+    const card = document.createElement("div"); card.className = "shirt";
+    card.innerHTML = `<div class="hd"><span>${String(i + 1).padStart(2, "0")} 枚目</span>${st.items.length > 1 ? `<button type="button" class="link" data-rm>削除</button>` : ""}</div>
+      <div class="bd">
+        <label class="fl">大人・子ども</label>
+        <div class="opts c2">${[["adult", "大人"], ["kids", "子ども（120）"]].map(([k, l]) => `<button type="button" class="opt" data-kind="${k}" aria-pressed="${it.kind === k}"><b>${l}</b></button>`).join("")}</div>
+        <label class="fl">サイズ</label>
+        <div class="opts sz">${sizes.map(s => `<button type="button" class="opt" data-size="${s}" aria-pressed="${it.size === s}"><b>${s}</b></button>`).join("")}</div>
+        <label class="fl">左胸のキャラクター ${it.chara ? `<span class="hint">（${it.chara}番）</span>` : ""}</label>
+        <div class="rail">${Array.from({ length: 8 }, (_, n) => `<button type="button" class="chara" data-chara="${n + 1}" aria-pressed="${it.chara === n + 1}" aria-label="キャラクター${n + 1}"><em>${n + 1}</em><img src="${charaImg(n + 1)}" alt=""></button>`).join("")}</div>
+        <label class="fl">背面の名前（半角ローマ字）</label>
+        <div class="field"><input class="big" data-name value="${esc(it.name)}" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="RINTAROU" maxlength="${NAME_MAX}"><span class="count">${it.name.length}/${NAME_MAX}</span></div>
+        <div data-mini></div>
+      </div>`;
+    card.querySelector("[data-rm]")?.addEventListener("click", () => { st.items.splice(i, 1); renderShirts(); });
+    card.querySelectorAll("[data-kind]").forEach(b => b.onclick = () => { it.kind = b.dataset.kind; it.size = it.kind === "kids" ? "120" : ""; renderShirts(); });
+    card.querySelectorAll("[data-size]").forEach(b => b.onclick = () => { it.size = b.dataset.size; renderShirts(); });
+    card.querySelectorAll("[data-chara]").forEach(b => b.onclick = () => { it.chara = Number(b.dataset.chara); renderShirts(); });
+    const inp = card.querySelector("[data-name]"), mini = card.querySelector("[data-mini]"), cnt = card.querySelector(".count");
+    const upd = () => {
+      const clean = inp.value.replace(/[^A-Za-z .\-]/g, "").replace(/^\s+/, "").slice(0, NAME_MAX);
+      if (clean !== inp.value) inp.value = clean;
+      it.name = clean; cnt.textContent = `${clean.length}/${NAME_MAX}`;
+      mini.innerHTML = ""; mini.appendChild(miniBack(st.cls, clean.trim())); renderSummary();
+    };
+    inp.addEventListener("input", upd); upd();
+    wrap.appendChild(card);
+    const sel = card.querySelector('.chara[aria-pressed="true"]'); if (sel) sel.scrollIntoView({ block: "nearest", inline: "nearest" });
+  });
+  $("addShirt").classList.toggle("hidden", st.items.length >= MAX);
+  $("countLabel").textContent = `${st.items.length}枚`;
+  renderSummary();
+}
+
+function renderSummary() {
+  const n = st.items.length;
+  $("total").textContent = yen(n * 3000);
+  $("totalSub").textContent = `合計（${n}枚 × ¥3,000）`;
+  $("nameList").innerHTML = st.items.map((it, i) =>
+    `<li><span class="nm">${esc(it.name.trim()) || '<span class="err" style="font-size:13px;font-family:inherit">未入力</span>'}</span><span class="sub">${i + 1}枚目・${it.kind === "kids" ? "子ども" : "大人"} ${it.size || "—"}・キャラ${it.chara || "—"}</span></li>`).join("");
+  $("spellOk").checked = false;
+}
+
+function collect() {
+  return { cls: st.cls, parent: $("parent").value.trim(), child: $("child").value.trim(), pin: $("pin").value.trim(), pay: st.pay,
+    items: st.items.map(it => ({ ...it, name: it.name.trim() })), spellOk: $("spellOk").checked };
+}
+function check(o) {
+  if (!o.cls) return "クラスを選んでください。";
+  if (!o.parent) return "保護者のお名前を入力してください。";
+  if (!o.child) return "お子さまのお名前を入力してください。";
+  for (const [i, it] of o.items.entries()) {
+    if (!it.size) return `${i + 1}枚目：サイズを選んでください。`;
+    if (!it.chara) return `${i + 1}枚目：左胸のキャラクターを選んでください。`;
+    if (!/^[A-Za-z]/.test(it.name)) return `${i + 1}枚目：背面の名前を入力してください。`;
+  }
+  if (!o.pay) return "お支払い方法を選んでください。";
+  if ((!editToken || o.pin) && !/^\d{4}$/.test(o.pin)) return "暗証番号を数字4桁で入力してください。";
+  if (!o.spellOk) return "背面の名前のつづり確認にチェックを入れてください。";
+  return "";
+}
+
+$("spellOk").addEventListener("change", () => $("formErr").classList.add("hidden"));
+$("addShirt").onclick = () => { st.items.push(blank()); renderShirts(); };
+$("pin").addEventListener("input", e => e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4));
+$("form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const o = collect(), msg = check(o), err = $("formErr");
+  err.classList.toggle("hidden", !msg); err.textContent = msg;
+  if (msg) return;
+  const btn = $("submit"); btn.disabled = true; btn.textContent = "送信中…";
+  try {
+    if (editToken) { await api("update", { token: editToken, order: o }); location.href = `status.html?t=${editToken}&updated=1`; }
+    else { const d = await api("create", { order: o }); location.href = `status.html?t=${d.token}&new=1`; }
+  } catch (ex) {
+    err.textContent = ex.message; err.classList.remove("hidden");
+    btn.disabled = false; btn.textContent = editToken ? "この内容で変更する" : "この内容で申し込む";
+  }
+});
+
+(async () => {
+  try {
+    const cfg = await api("config");
+    if (!cfg.open) { $("closed").classList.remove("hidden"); return; }
+    if (editToken) {
+      const { order } = await api("get", { token: editToken });
+      if (order.status !== "有効" || order.paid !== "未入金") { location.href = `status.html?t=${editToken}`; return; }
+      Object.assign(st, { cls: order.cls, pay: order.pay, items: order.items.map(it => ({ ...it, chara: Number(it.chara) })) });
+      $("parent").value = order.parent; $("child").value = order.child;
+      $("title").innerHTML = "申込内容の<br>変更"; $("modeLabel").textContent = `Edit — ${order.id}`;
+      $("clsLock").classList.remove("hidden");
+      $("pinHint").textContent = "変更する場合だけ入力してください（空欄のままなら今の番号のままです）。";
+      $("submit").textContent = "この内容で変更する";
+      $("cancelEdit").classList.remove("hidden"); $("cancelEdit").onclick = () => location.href = `status.html?t=${editToken}`;
+    } else st.items = [blank()];
+    renderCls(); renderPay(); renderShirts();
+    $("form").classList.remove("hidden");
+  } catch (ex) {
+    $("closed").classList.remove("hidden");
+    $("closed").querySelector("h1").textContent = "読み込めませんでした"; $("closed").querySelector("p").textContent = ex.message;
+  } finally { $("loading").classList.add("hidden"); }
+})();
+</script>
+</body>
+</html>
