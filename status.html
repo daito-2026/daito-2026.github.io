@@ -95,11 +95,11 @@ footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;j
 <!-- 照会フォーム（URLをなくした時） -->
 <form id="lookup" class="hidden" novalidate>
   <section class="hero"><span class="label">Lookup</span><h1>申込内容の確認</h1>
-    <p class="hint">申込時のクラス・お子さまのお名前・暗証番号（4桁）を入力してください。</p></section>
+    <p class="hint">申込時のクラス・ふりがな・暗証番号（4桁）を入力してください。</p></section>
   <section class="step">
     <label class="fl">クラス</label><div class="opts c2" id="lkCls"></div>
-    <label class="fl" for="lkChild">お子さまのお名前（ひらがな）</label>
-    <div class="field"><input id="lkChild" placeholder="例：だいとう たろう"></div>
+    <label class="fl" for="lkKana">お子さまのお名前（ふりがな）</label>
+    <div class="field"><input id="lkKana" placeholder="例：だいとう たろう"></div>
     <label class="fl" for="lkPin">暗証番号（数字4桁）</label>
     <div class="field"><input id="lkPin" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="0000"></div>
     <p class="hint err hidden" id="lkErr" role="alert"></p>
@@ -131,7 +131,7 @@ const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
 
 /* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
 const DEMO = API_URL.startsWith("__");
-const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", parent: "大東 花子", child: "だいとう たろう",
+const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
   items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
   open: true, paypayUrl: "#demo", squareUrl: "" };
@@ -140,7 +140,7 @@ async function demoApi(action, data) {
   const fail = m => { throw new Error(m); };
   if (action === "config") return { ok: true, open: true };
   if (action === "get") return { ok: true, order: DEMO_ORDER };
-  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "さくら はな", parent: "桜 太郎", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
+  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "桜 はな", kana: "さくら はな", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
   fail("デモ表示のため、送信・変更はできません（本番の設定後に使えます）。");
 }
 function demoBanner() {
@@ -205,11 +205,11 @@ $("lkPin").addEventListener("input", e => e.target.value = e.target.value.replac
 $("lookup").addEventListener("submit", async e => {
   e.preventDefault();
   const err = $("lkErr"), btn = $("lkBtn");
-  const child = $("lkChild").value.trim(), pin = $("lkPin").value;
-  const msg = !lkCls ? "クラスを選んでください。" : !child ? "お子さまのお名前を入力してください。" : !/^\d{4}$/.test(pin) ? "暗証番号を数字4桁で入力してください。" : "";
+  const kana = $("lkKana").value.trim(), pin = $("lkPin").value;
+  const msg = !lkCls ? "クラスを選んでください。" : !kana ? "ふりがなを入力してください。" : !/^\d{4}$/.test(pin) ? "暗証番号を数字4桁で入力してください。" : "";
   err.textContent = msg; err.classList.toggle("hidden", !msg); if (msg) return;
   btn.disabled = true; btn.textContent = "確認中…";
-  try { const d = await api("lookup", { cls: lkCls, child, pin }); location.href = `status.html?t=${d.token}`; }
+  try { const d = await api("lookup", { cls: lkCls, kana, pin }); location.href = `status.html?t=${d.token}`; }
   catch (ex) { err.textContent = ex.message; err.classList.remove("hidden"); btn.disabled = false; btn.textContent = "確認する"; }
 });
 
@@ -222,12 +222,12 @@ function payBlock(o) {
   if (o.pay === "paypay") return `<div class="box">${head}
     <p><b>PayPayで送金してください</b></p>
     <ol class="hint" style="padding-left:1.2em;color:var(--ink);font-size:13px">
-      <li>下のボタンでPayPayを開く</li>
-      <li>金額 <b>${yen(o.total)}</b> を入力</li>
-      <li>メッセージに下の文（管理番号・クラス・お子さまの名前）を貼り付けて送金</li></ol>
-    ${o.paypayUrl ? `<a class="btn" style="background:#FF0033;margin-top:10px" href="${esc(o.paypayUrl)}" target="_blank" rel="noopener">PayPayを開いて送金する</a>` : `<p class="hint err">送金先は準備中です。少し時間をおいて再度開いてください。</p>`}
-    <span class="label" style="display:block;margin-top:12px">メッセージに入れる文</span>
+      <li>下の「メッセージに入れる文」をコピー</li>
+      <li>ボタンでPayPayを開き、金額 <b>${yen(o.total)}</b> を入力</li>
+      <li>メッセージにコピーした文を貼り付けて送金</li></ol>
+    <span class="label" style="display:block;margin-top:12px">メッセージに入れる文（管理番号・クラス・お子さまの名前）</span>
     <div class="copy" style="margin-top:4px"><code>${esc(msg)}</code><button type="button" data-copy="${esc(msg)}">コピー</button></div>
+    ${o.paypayUrl ? `<a class="btn" style="background:#FF0033;margin-top:10px" href="${esc(o.paypayUrl)}" target="_blank" rel="noopener">PayPayを開いて送金する</a>` : `<p class="hint err">送金先は準備中です。少し時間をおいて再度開いてください。</p>`}
     <p class="hint">期限：運動会当日まで。担当が入金を確認すると、このページが「お支払い確認済み」に変わります。</p></div>`;
   if (o.pay === "square") return `<div class="box">${head}
     <button type="button" class="btn" id="payBtn">カード・Apple Pay等で支払う</button>
@@ -243,12 +243,12 @@ function render(o) {
     : params.get("updated") ? `<div class="box ok"><b>変更を保存しました。</b></div>` : "";
   $("view").innerHTML = `
     <section class="hero"><span class="label">${esc(o.clsJp)} ／ 管理番号</span><div class="big-id" style="margin:6px 0 12px">${esc(o.id)}</div>
-      <dl class="spec"><dt>Name</dt><dd>${esc(o.child)}（${esc(o.parent)}）</dd><dt>Payment</dt><dd>${esc(o.payJp)}</dd><dt>Date</dt><dd>${esc(o.createdAt)}${o.updatedAt && o.updatedAt !== o.createdAt ? `（変更 ${esc(o.updatedAt)}）` : ""}</dd></dl></section>
+      <dl class="spec"><dt>Name</dt><dd>${esc(o.child)}（${esc(o.kana)}）</dd><dt>Payment</dt><dd>${esc(o.payJp)}</dd><dt>Date</dt><dd>${esc(o.createdAt)}${o.updatedAt && o.updatedAt !== o.createdAt ? `（変更 ${esc(o.updatedAt)}）` : ""}</dd></dl></section>
     <section class="step">${banner}${payBlock(o)}</section>
     <section class="step"><span class="label">Save</span><h2>このページを保存</h2>
       <a class="btn line" href="${lineShareUrl(shareText)}" target="_blank" rel="noopener">LINEで保存する</a>
       <button type="button" class="btn ghost" data-copy="${esc(url)}">URLをコピー</button>
-      <p class="hint">LINEの「Keepメモ」か自分とのトークに送っておくと便利です。URLをなくした場合は <a class="link" href="status.html">こちら</a> から、クラス・お名前・暗証番号で確認できます。</p></section>
+      <p class="hint">LINEの「Keepメモ」か自分とのトークに送っておくと便利です。URLをなくした場合は <a class="link" href="status.html">こちら</a> から、クラス・ふりがな・暗証番号で確認できます。</p></section>
     <section class="step"><span class="label">Items</span><h2>申込内容 <small>${o.count}枚・${yen(o.total)}</small></h2><div id="items"></div></section>
     ${editable ? `<section class="step"><span class="label">Edit</span><h2>変更・取り消し <small>10/2 23:59まで</small></h2>
       <a class="btn ghost" href="order.html?t=${token}">内容を変更する</a>
@@ -282,7 +282,7 @@ function render(o) {
 
 async function load() {
   try { const { order } = await api("get", { token }); render(order); }
-  catch (ex) { $("view").innerHTML = `<section class="hero"><h1>表示できません</h1><p>${esc(ex.message)}</p><p style="margin-top:14px"><a class="link" href="status.html">クラス・お名前・暗証番号で確認する</a></p></section>`; $("view").classList.remove("hidden"); }
+  catch (ex) { $("view").innerHTML = `<section class="hero"><h1>表示できません</h1><p>${esc(ex.message)}</p><p style="margin-top:14px"><a class="link" href="status.html">クラス・ふりがな・暗証番号で確認する</a></p></section>`; $("view").classList.remove("hidden"); }
   finally { $("loading").classList.add("hidden"); }
 }
 

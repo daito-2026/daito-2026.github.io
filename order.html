@@ -118,12 +118,12 @@ footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;j
   </section>
 
   <section class="step">
-    <span class="label">02</span><h2>お名前</h2>
-    <label class="fl" for="parent">保護者のお名前</label>
-    <div class="field"><input id="parent" autocomplete="name" placeholder="例：大東 花子"></div>
-    <label class="fl" for="child">お子さまのお名前（ひらがな）</label>
-    <div class="field"><input id="child" placeholder="例：だいとう たろう"></div>
-    <p class="hint">申込内容の確認や、当日のお渡しに使います。</p>
+    <span class="label">02</span><h2>お子さまのお名前</h2>
+    <label class="fl" for="child">お子さまのお名前</label>
+    <div class="field"><input id="child" autocomplete="off" placeholder="例：大東 太郎"></div>
+    <label class="fl" for="kana">ふりがな</label>
+    <div class="field"><input id="kana" autocomplete="off" placeholder="例：だいとう たろう"></div>
+    <p class="hint">当日のお渡しと、申込内容の確認（ふりがな＋暗証番号）に使います。</p>
   </section>
 
   <section class="step">
@@ -143,7 +143,7 @@ footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;j
   <section class="step">
     <span class="label">05</span><h2>暗証番号（数字4桁）</h2>
     <div class="field"><input id="pin" inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="off" placeholder="0000"></div>
-    <p class="hint" id="pinHint">申込後のURLをなくした時に、クラス・お子さまのお名前とこの番号で申込内容を確認できます。</p>
+    <p class="hint" id="pinHint">申込後のURLをなくした時に、クラス・ふりがな・この番号で申込内容を確認できます。</p>
   </section>
 
   <section class="step">
@@ -180,7 +180,7 @@ const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
 
 /* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
 const DEMO = API_URL.startsWith("__");
-const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", parent: "大東 花子", child: "だいとう たろう",
+const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
   items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
   open: true, paypayUrl: "#demo", squareUrl: "" };
@@ -189,7 +189,7 @@ async function demoApi(action, data) {
   const fail = m => { throw new Error(m); };
   if (action === "config") return { ok: true, open: true };
   if (action === "get") return { ok: true, order: DEMO_ORDER };
-  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "さくら はな", parent: "桜 太郎", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
+  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "桜 はな", kana: "さくら はな", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
   fail("デモ表示のため、送信・変更はできません（本番の設定後に使えます）。");
 }
 function demoBanner() {
@@ -306,13 +306,14 @@ function renderSummary() {
 }
 
 function collect() {
-  return { cls: st.cls, parent: $("parent").value.trim(), child: $("child").value.trim(), pin: $("pin").value.trim(), pay: st.pay,
+  return { cls: st.cls, child: $("child").value.trim(), kana: $("kana").value.trim(), pin: $("pin").value.trim(), pay: st.pay,
     items: st.items.map(it => ({ ...it, name: it.name.trim() })), spellOk: $("spellOk").checked };
 }
 function check(o) {
   if (!o.cls) return "クラスを選んでください。";
-  if (!o.parent) return "保護者のお名前を入力してください。";
   if (!o.child) return "お子さまのお名前を入力してください。";
+  if (!o.kana) return "ふりがなを入力してください。";
+  if (!/^[ぁ-んァ-ヶー\s　]+$/.test(o.kana)) return "ふりがなは、ひらがなで入力してください。";
   for (const [i, it] of o.items.entries()) {
     if (!it.size) return `${i + 1}枚目：サイズを選んでください。`;
     if (!it.chara) return `${i + 1}枚目：左胸のキャラクターを選んでください。`;
@@ -350,7 +351,7 @@ $("form").addEventListener("submit", async e => {
       const { order } = await api("get", { token: editToken });
       if (order.status !== "有効" || order.paid !== "未入金") { location.href = `status.html?t=${editToken}`; return; }
       Object.assign(st, { cls: order.cls, pay: order.pay, items: order.items.map(it => ({ ...it, chara: Number(it.chara) })) });
-      $("parent").value = order.parent; $("child").value = order.child;
+      $("child").value = order.child; $("kana").value = order.kana;
       $("title").innerHTML = "申込内容の<br>変更"; $("modeLabel").textContent = `Edit — ${order.id}`;
       $("clsLock").classList.remove("hidden");
       $("pinHint").textContent = "変更する場合だけ入力してください（空欄のままなら今の番号のままです）。";

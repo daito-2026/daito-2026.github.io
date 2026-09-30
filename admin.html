@@ -115,7 +115,7 @@ th{font-weight:500;background:var(--plate)}
 
 <form id="login" class="step hidden" novalidate>
   <h2>管理ページ</h2>
-  <div class="field"><input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN"></div>
+  <div class="field"><input id="pin" type="password" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="PIN"></div>
   <p class="hint err hidden" id="lgErr"></p>
   <div style="margin-top:12px"><button class="btn">開く</button></div>
 </form>
@@ -155,7 +155,7 @@ const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
 
 /* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
 const DEMO = API_URL.startsWith("__");
-const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", parent: "大東 花子", child: "だいとう たろう",
+const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
   items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
   open: true, paypayUrl: "#demo", squareUrl: "" };
@@ -164,7 +164,7 @@ async function demoApi(action, data) {
   const fail = m => { throw new Error(m); };
   if (action === "config") return { ok: true, open: true };
   if (action === "get") return { ok: true, order: DEMO_ORDER };
-  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "さくら はな", parent: "桜 太郎", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
+  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "桜 はな", kana: "さくら はな", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
   fail("デモ表示のため、送信・変更はできません（本番の設定後に使えます）。");
 }
 function demoBanner() {
@@ -263,11 +263,11 @@ function renderList() {
     if (flt === "paid" && !isPaid(o)) return false;
     if (flt === "himawari" && o.clsJp !== "ひまわり組") return false;
     if (flt === "yuri" && o.clsJp !== "ゆり組") return false;
-    return !q || [o.id, o.child, o.parent, ...o.items.map(i => i.name)].join(" ").toLowerCase().includes(q.toLowerCase());
+    return !q || [o.id, o.child, o.kana, ...o.items.map(i => i.name)].join(" ").toLowerCase().includes(q.toLowerCase());
   });
   $("list").innerHTML = list.map(o => `<div class="ord ${o.status !== "有効" ? "cxl" : isPaid(o) ? "paid" : "unpaid"}">
     <div class="top"><b>${esc(o.id)} ${esc(o.child)}</b><span class="hint" style="margin:0">${esc(o.clsJp)}</span></div>
-    <div class="hint" style="margin:2px 0">${esc(o.parent)}／${esc(o.payJp)}／${o.count}枚 ${yen(o.total)}／${esc(o.createdAt)}</div>
+    <div class="hint" style="margin:2px 0">${esc(o.kana)}／${esc(o.payJp)}／${o.count}枚 ${yen(o.total)}／${esc(o.createdAt)}</div>
     <ul>${o.items.map((i, n) => `<li>${n + 1}. ${i.kind === "kids" ? "子ども" : "大人"} ${esc(i.size)}・キャラ${i.chara}・<b style="font-family:Krungthep,Oxanium,sans-serif">${esc(i.name)}</b></li>`).join("")}</ul>
     <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span></div>
     ${o.status === "有効" ? `<div class="acts">
@@ -292,8 +292,8 @@ $("syncBtn").onclick = async e => {
   b.disabled = false; b.textContent = "Square入金を確認";
 };
 $("csvBtn").onclick = () => {
-  const head = ["管理番号", "クラス", "子どもの名前", "No", "区分", "サイズ", "左胸キャラ", "背面の名前", "支払方法", "入金状況"];
-  const rows = data.orders.filter(o => o.status === "有効").flatMap(o => o.items.map((i, n) => [o.id, o.clsJp, o.child, n + 1, i.kind === "kids" ? "子ども" : "大人", i.size, i.chara, i.name, o.payJp, o.paid]));
+  const head = ["管理番号", "クラス", "子どもの名前", "ふりがな", "No", "区分", "サイズ", "左胸キャラ", "背面の名前", "支払方法", "入金状況"];
+  const rows = data.orders.filter(o => o.status === "有効").flatMap(o => o.items.map((i, n) => [o.id, o.clsJp, o.child, o.kana, n + 1, i.kind === "kids" ? "子ども" : "大人", i.size, i.chara, i.name, o.payJp, o.paid]));
   const csv = "﻿" + [head, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
   const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
   a.download = `daito_tee_${new Date().toISOString().slice(0, 10)}.csv`; a.click();
