@@ -192,7 +192,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
   <!-- STEP 2 -->
   <section class="sec" id="sec2">
     <span class="label">Step 2</span><h2>Tシャツ <small class="hint" id="countLabel"></small></h2>
-    <p class="desc">1枚ずつ、着る人・サイズ・左胸のキャラクター・背面の名前を選んでください。ご家族の分もまとめて申し込めます（10枚まで）。</p>
+    <p class="desc">保護者のみなさま向けのTシャツですが、ご希望の方はお子さま用（120サイズ）もお作りできます。1枚ずつ、着る人・サイズ・左胸のキャラクター・背面のお名前を選んでください。ご家族の分もまとめてお申し込みいただけます（10枚まで）。</p>
     <div id="shirts"></div>
     <button type="button" class="add" id="addShirt">＋ もう1枚追加する</button>
   </section>
@@ -232,7 +232,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
     <ol>
       <li><b>締切は 10月2日（金）23:59 です</b><span>締切後のお申し込みや変更は、各クラスの役員までご相談ください。</span></li>
       <li><b>1枚 3,000円（大人・子ども共通）です</b><span>先生2名分の制作費も含まれています。</span></li>
-      <li><b>サイズについて</b><span>大人：S・M・L・XL・2XL・3XL<br>子ども：120 のみ<br>大人のサイズ表は、フォームの中でご覧いただけます。</span></li>
+      <li><b>保護者用のTシャツです（ご希望の方はお子さま用も作れます）</b><span>もともとは保護者のみなさま向けのおそろいTシャツですが、ご希望の方にはお子さま用もお作りします。<br>大人：S・M・L・XL・2XL・3XL<br>お子さま：120 のみ<br>大人のサイズ表は、フォームの中でご覧いただけます。</span></li>
       <li><b>背中のお名前はローマ字で入力します</b><span>例：そら → <code>SORA</code><br>入力されたつづりのまま印刷しますので、送信前にもう一度ご確認をお願いします。</span></li>
       <li><b>お支払いは、できればキャッシュレスでお願いします</b><span>PayPay・カード等は、お申し込み後の確認ページからお支払いいただけます。<br>現金の場合は、運動会当日のお渡しの際にお願いします。</span></li>
       <li><b>確認ページはLINEに保存しておくと便利です</b><span>お申し込み後に表示される「LINEで保存」ボタンから保存できます。お支払いや内容の変更の際に使います。</span></li>
@@ -371,7 +371,7 @@ function renderShirts() {
     card.innerHTML = `<div class="hd"><span>${i + 1}枚目 <span class="sum">${esc(sum)}</span></span>${st.items.length > 1 ? `<button type="button" class="link" data-rm>削除</button>` : ""}</div>
       <div class="bd">
         <div class="q"><i>1</i>着る人</div>
-        <div class="opts c2">${[["adult", "大人"], ["kids", "子ども"]].map(([k, l]) => `<button type="button" class="opt" data-kind="${k}" aria-pressed="${it.kind === k}"><b>${l}</b><span>${k === "kids" ? "120サイズのみ" : "S〜3XL"}</span></button>`).join("")}</div>
+        <div class="opts c2">${[["adult", "大人"], ["kids", "子ども"]].map(([k, l]) => `<button type="button" class="opt" data-kind="${k}" aria-pressed="${it.kind === k}"><b>${l}</b><span>${k === "kids" ? "ご希望の方のみ・120サイズ" : "S〜3XL"}</span></button>`).join("")}</div>
         <div class="q"><i>2</i>サイズ</div>
         <div class="opts sz" data-sizes>${sizes.map(s => `<button type="button" class="opt" data-size="${s}" aria-pressed="${it.size === s}"><b>${s}</b></button>`).join("")}</div>
         ${it.kind === "adult" ? sizeChart() : ""}
