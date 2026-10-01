@@ -146,8 +146,29 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 .guide li span{display:block;font-size:15px;line-height:1.8;color:#333;margin-top:4px}
 .guide code{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:18px;background:var(--plate);padding:0 6px}
 .guide u{text-decoration-thickness:2px;text-underline-offset:3px}
+.guide .gl{font-size:14px;line-height:1.8;color:#333;padding:10px 0 4px}
 .guide .gq{font-size:14px;margin-top:14px;color:var(--muted)}
 .guide .gf{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+/* shirt preview */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pair figure{margin:0;background:var(--plate);position:relative}
+.pair figcaption{position:absolute;left:6px;top:4px;font-size:10px;color:var(--muted)}
+.shirtSvg{display:block;width:100%;height:auto}
+.pv{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px;width:100%;min-height:44px;border:1px solid var(--ink);font-size:14px;font-weight:500;margin-top:12px}
+.heroPv{all:unset;cursor:zoom-in;display:block;width:100%;margin:4px 0 16px}
+.heroPv .cap{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+.viewer{border:none;padding:0;margin:auto;width:min(100%,480px);max-width:100%;height:100%;max-height:100%;background:var(--bg)}
+.viewer[open]{display:flex;flex-direction:column}
+.viewer::backdrop{background:rgba(0,0,0,.55)}
+.viewer .vh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top));border-bottom:1px solid var(--ink)}
+.viewer .vclose{all:unset;cursor:pointer;background:var(--ink);color:#fff;padding:8px 14px;font-size:13px}
+.viewer .vb{flex:1;overflow-y:auto;padding:12px 16px calc(24px + env(safe-area-inset-bottom))}
+.viewer figure{margin:0 0 14px;background:var(--plate)}
+.viewer figcaption{font-size:12px;padding:8px 10px 0}
+.viewer .vmeta{font-size:13px;margin-bottom:10px}
+.viewer .vnote{font-size:11px;color:var(--muted)}
+.review .row.big{grid-template-columns:1fr;gap:8px}
+.review .rtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 </style>
 <style>
 .kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
@@ -278,6 +299,69 @@ function miniBack(cls, name) {
   return svg;
 }
 function lineShareUrl(text) { return "https://line.me/R/share?text=" + encodeURIComponent(text); }
+
+/* ---------- Tシャツ全体のプレビュー（デザインA・ネイビー、実寸mm座標。プレビューページと同じ描き方） ---------- */
+const SHIRT_BODY = "M-90 0 Q-160 18 -235 42 L-405 148 L-307 305 Q-276 268 -260 245 L-262 700 L262 700 L260 245 Q276 268 307 305 L405 148 L235 42 Q160 18 90 0 ";
+const SHIRT_NECK = { front: "C88 50 50 75 0 75 C-50 75 -88 50 -90 0", back: "C80 16 40 20 0 20 C-40 20 -80 16 -90 0" };
+const shade = (hex, amt) => { const n = parseInt(hex.slice(1), 16), f = v => Math.max(0, Math.min(255, Math.round(v + amt)));
+  return "#" + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(f).map(v => v.toString(16).padStart(2, "0")).join(""); };
+let _shirtSeq = 0;
+function drawShirt(side, o = {}) {
+  const svg = document.createElementNS(SVGNS, "svg"), id = "sh" + (++_shirtSeq);
+  svg.setAttribute("viewBox", "-440 -40 880 780"); svg.setAttribute("class", "shirtSvg");
+  const mk = (tag, a) => { const e = document.createElementNS(SVGNS, tag); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+  const path = SHIRT_BODY + SHIRT_NECK[side] + " Z", dk = a => shade(NAVY, a);
+  mk("path", { d: path, fill: NAVY });
+  if (side === "front") {
+    mk("path", { d: "M90 0 " + SHIRT_NECK.back + " C-88 50 -50 75 0 75 C50 75 88 50 90 0 Z", fill: dk(-34) });
+    mk("path", { d: "M90 0 " + SHIRT_NECK.back, fill: "none", stroke: dk(-22), "stroke-width": 12 });
+  }
+  mk("path", { d: "M90 0 " + SHIRT_NECK[side], fill: "none", stroke: dk(-8), "stroke-width": 18 });
+  mk("path", { d: "M90 0 " + SHIRT_NECK[side], fill: "none", stroke: dk(-24), "stroke-width": 1.6, transform: "translate(0 9.5)" });
+  const cp = mk("clipPath", { id: id + "c" }); const cpp = document.createElementNS(SVGNS, "path"); cpp.setAttribute("d", path); cp.appendChild(cpp);
+  mk("path", { d: "M90 0 Q160 18 235 42 M-90 0 Q-160 18 -235 42 M235 42 Q252 150 260 245 M-235 42 Q-252 150 -260 245 M384 135 L286 292 M-384 135 L-286 292 M-262 675 L262 675",
+    stroke: dk(-16), "stroke-width": 2.2, fill: "none", "clip-path": `url(#${id}c)` });
+  if (side === "front") {
+    if (o.chara) mk("image", { href: charaImg(o.chara), x: 62.5, y: 180, width: 85, height: 85, preserveAspectRatio: "xMidYMid meet" });
+    else mk("rect", { x: 62.5, y: 180, width: 85, height: 85, fill: "none", stroke: "rgba(255,255,255,.35)", "stroke-dasharray": "6 6", "stroke-width": 2 });
+  } else {
+    mk("image", { href: backImg(o.cls || "himawari"), x: -140, y: 125, width: 280, height: 125.4, preserveAspectRatio: "xMidYMid meet" });
+    const t = mk("text", { x: 0, y: 290, "text-anchor": "middle", fill: "#FFFFFF", "font-family": "Krungthep, Oxanium, sans-serif", "font-weight": 800,
+      "font-size": 33.5, "letter-spacing": 0.67, style: "font-synthesis:none", "text-rendering": "geometricPrecision", opacity: o.name ? 1 : 0.35 });
+    t.textContent = o.name || "NAME";
+    requestAnimationFrame(() => { try { if (t.getComputedTextLength() > 280) { t.setAttribute("textLength", 280); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (e) {} });
+  }
+  return svg;
+}
+/* 表と裏を並べた小さなプレビュー */
+function shirtPair(o) {
+  const d = document.createElement("div"); d.className = "pair";
+  [["front", "表"], ["back", "裏"]].forEach(([s, l]) => { const f = document.createElement("figure"); f.appendChild(drawShirt(s, o));
+    const c = document.createElement("figcaption"); c.textContent = l; f.appendChild(c); d.appendChild(f); });
+  return d;
+}
+/* 全画面のプレビュー */
+function openViewer(title, o, meta) {
+  let v = document.getElementById("viewer");
+  if (!v) {
+    v = document.createElement("dialog"); v.id = "viewer"; v.className = "viewer";
+    v.innerHTML = `<div class="vh"><b id="vTitle"></b><button type="button" class="vclose">閉じる ✕</button></div><div class="vb" id="vBody"></div>`;
+    document.body.appendChild(v);
+    v.querySelector(".vclose").onclick = () => v.close();
+    v.addEventListener("click", e => { if (e.target === v) v.close(); });
+  }
+  v.querySelector("#vTitle").textContent = title;
+  const b = v.querySelector("#vBody"); b.innerHTML = "";
+  if (meta) { const m = document.createElement("p"); m.className = "vmeta"; m.textContent = meta; b.appendChild(m); }
+  [["front", "表（左胸のキャラクター）"], ["back", "裏（背面）"]].forEach(([s, l]) => {
+    const f = document.createElement("figure"); const c = document.createElement("figcaption"); c.textContent = l;
+    f.appendChild(c); f.appendChild(drawShirt(s, o)); b.appendChild(f);
+  });
+  const z = document.createElement("figure"); const zc = document.createElement("figcaption"); zc.textContent = "背面のお名前（拡大）";
+  z.appendChild(zc); z.appendChild(miniBack(o.cls, o.name)); b.appendChild(z);
+  const n = document.createElement("p"); n.className = "vnote"; n.textContent = "画面上のイメージです。実際の色味や大きさとは多少異なる場合があります。"; b.appendChild(n);
+  v.showModal(); b.scrollTop = 0;
+}
 </script>
 <script>
 let PIN = "", data = null, flt = "all";
