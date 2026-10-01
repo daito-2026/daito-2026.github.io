@@ -132,6 +132,22 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 .bar .t small{display:block;font-size:11px;color:var(--muted)}
 .bar .t b{font-size:20px;font-weight:500}
 .bar .btn{width:auto;min-height:46px;font-size:14px;padding:0 18px}
+/* guide dialog */
+.guide{border:none;padding:0;margin:auto;width:min(100%,480px);max-width:100%;height:100%;max-height:100%;background:var(--bg);color:var(--ink)}
+.guide[open]{display:flex;flex-direction:column}
+.guide::backdrop{background:rgba(0,0,0,.55)}
+.guide .gh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));border-bottom:1px solid var(--ink);font-size:17px}
+.guide .gx{all:unset;cursor:pointer;font-size:20px;padding:4px 8px}
+.guide .gb{flex:1;overflow-y:auto;padding:8px 16px 16px}
+.guide ol{list-style:none;counter-reset:g}
+.guide li{counter-increment:g;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line)}
+.guide li::before{content:counter(g);position:absolute;left:0;top:14px;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:15px;font-weight:500}
+.guide li b{display:block;font-size:17px;line-height:1.5;font-weight:500}
+.guide li span{display:block;font-size:15px;line-height:1.8;color:#333;margin-top:4px}
+.guide code{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:18px;background:var(--plate);padding:0 6px}
+.guide u{text-decoration-thickness:2px;text-underline-offset:3px}
+.guide .gq{font-size:14px;margin-top:14px;color:var(--muted)}
+.guide .gf{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
 </style>
 </head>
 <body class="jp">
@@ -148,6 +164,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
     <span class="label" id="modeLabel">Sports Day Tee 2026</span>
     <h1 id="title">運動会Tシャツ<br>申込フォーム</h1>
     <p class="lead" id="lead">4つのステップで申し込めます（約3分）。<br>入力内容は、締切までなら申込後も変更できます。</p>
+    <button type="button" class="btn" id="openGuide" style="margin-bottom:16px">はじめにお読みください（申込の注意）</button>
     <dl class="kv">
       <dt>価格</dt><dd>1枚 3,000円（大人・子ども共通）<br><span class="hint" style="margin:0">先生2名分の制作費を含みます</span></dd>
       <dt>締切</dt><dd><b>10月2日（金）23:59</b></dd>
@@ -206,6 +223,24 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
   <div class="bar"><div class="t"><small id="barSub">0枚</small><b id="barTotal">¥0</b></div><button type="button" class="btn" id="toReview">確認へ進む</button></div>
 </form>
 
+
+<dialog id="guide" class="guide">
+  <div class="gh"><b>申込の前に読んでください</b><button type="button" class="gx" data-close aria-label="閉じる">✕</button></div>
+  <div class="gb">
+    <ol>
+      <li><b>しめきりは 10月2日（金）の夜 23:59 です</b><span>それより後は、このページから申し込めません。</span></li>
+      <li><b>値段は 1枚 3,000円 です</b><span>大人も子どもも同じ値段です。</span></li>
+      <li><b>サイズ</b><span>大人は S・M・L・XL・2XL・3XL から選びます。<br>子どもは 120 だけです。</span></li>
+      <li><b>せなかの名前は「ローマ字」で入れます</b><span>例：そら → <code>SORA</code><br>入れた文字が、<u>そのまま</u>印刷されます。<br>まちがえると直せないので、よく見てください。</span></li>
+      <li><b>お金は、なるべく PayPay かカードで払ってください</b><span>申し込んだあとに出るページから払えます。<br>現金の人は、運動会の日に係の人へ渡してください。</span></li>
+      <li><b>申し込んだあとに出るページを、LINEに保存してください</b><span>「LINEで保存」ボタンを押すだけです。<br>払う時や、内容を直す時に使います。</span></li>
+      <li><b>4けたの暗証番号を、おぼえておいてください</b><span>保存したページをなくした時に使います。</span></li>
+      <li><b>Tシャツは、運動会の日にわたします</b><span>場所と時間は、あとでLINEで知らせます。</span></li>
+    </ol>
+    <p class="gq">わからない時は、クラスの役員に聞いてください。</p>
+  </div>
+  <div class="gf"><button type="button" class="btn" data-close>わかりました。申し込みにすすむ</button></div>
+</dialog>
 <div class="loading" id="loading">読み込み中…</div>
 <footer><span>大東幼稚園 運動会Tシャツ 2026</span><a class="link" style="font-size:10px" href="status.html">申込内容の確認</a></footer>
 
@@ -300,6 +335,10 @@ const st = { cls: "", pay: "", items: [] };
 const blank = () => ({ kind: "adult", size: "", chara: 0, name: "" });
 const kindJp = k => k === "kids" ? "子ども" : "大人";
 
+const guide = $("guide");
+$("openGuide").onclick = () => guide.showModal();
+guide.querySelectorAll("[data-close]").forEach(b => b.onclick = () => guide.close());
+guide.addEventListener("click", e => { if (e.target === guide) guide.close(); });
 $("cashlessNote").textContent = CASHLESS_NOTE;
 $("payDesc").textContent = CASHLESS_NOTE;
 
