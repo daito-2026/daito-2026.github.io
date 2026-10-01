@@ -393,6 +393,9 @@ function render(o) {
     <section class="hero"><span class="label">${esc(o.clsJp)} ／ 管理番号</span><div class="big-id" style="margin:6px 0 12px">${esc(o.id)}</div>
       <dl class="spec"><dt>Name</dt><dd>${esc(o.child)}（${esc(o.kana)}）</dd><dt>Payment</dt><dd>${esc(PAY[o.pay]?.jp || o.payJp)}</dd><dt>Date</dt><dd>${esc(o.createdAt)}${o.updatedAt && o.updatedAt !== o.createdAt ? `（変更 ${esc(o.updatedAt)}）` : ""}</dd></dl></section>
     <section class="step">${banner}${payBlock(o)}</section>
+    ${o.status === "有効" && o.paid === "未入金" ? `<section class="step"><span class="label">Change</span><h2>お支払い方法の変更</h2>
+      <div class="opts" id="payChg">${Object.entries(PAY).map(([k, v]) => `<button type="button" class="opt" data-pay="${k}" aria-pressed="${o.pay === k}"><b>${v.rec ? '<span class="badge">推奨</span>' : ""}${v.jp}</b><span>${o.pay === k ? "現在のお支払い方法です" : "タップするとこの方法に変更します"}</span></button>`).join("")}</div>
+      <p class="hint">お支払いが済むまでは、いつでも変更できます。</p></section>` : ""}
     <section class="step"><span class="label">Save</span><h2>このページを保存</h2>
       <a class="btn line" href="${lineShareUrl(shareText)}" target="_blank" rel="noopener">LINEで保存する</a>
       <button type="button" class="btn ghost" data-copy="${esc(url)}">URLをコピー</button>
@@ -415,6 +418,18 @@ function render(o) {
     box.appendChild(d);
   });
   $("view").querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copyText(b.dataset.copy));
+  $("view").querySelectorAll("[data-pay]").forEach(b => b.onclick = async () => {
+    const pay = b.dataset.pay; if (pay === o.pay) return;
+    $("view").querySelectorAll("[data-pay]").forEach(x => x.disabled = true); b.querySelector("span:last-child").textContent = "変更中…";
+    try {
+      try { await api("setpay", { token, pay }); }
+      catch (ex) {
+        if (!/不明な操作/.test(ex.message)) throw ex;
+        await api("update", { token, order: { cls: o.cls, child: o.child, kana: o.kana, pay, items: o.items, spellOk: true } }); // 旧版GAS用
+      }
+      const { order } = await api("get", { token }); render(order); toast(`お支払い方法を「${PAY[pay].jp}」に変更しました`);
+    } catch (ex) { toast(ex.message); load(); }
+  });
   $("payBtn")?.addEventListener("click", async e => {
     const b = e.currentTarget; b.disabled = true; b.textContent = "決済画面を準備中…";
     try { const d = await api("paylink", { token }); location.href = d.url; }
