@@ -146,6 +146,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 .guide li span{display:block;font-size:15px;line-height:1.8;color:#333;margin-top:4px}
 .guide code{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:18px;background:var(--plate);padding:0 6px}
 .guide u{text-decoration-thickness:2px;text-underline-offset:3px}
+.guide .gl{font-size:14px;line-height:1.8;color:#333;padding:10px 0 4px}
 .guide .gq{font-size:14px;margin-top:14px;color:var(--muted)}
 .guide .gf{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
 </style>
@@ -164,7 +165,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
     <span class="label" id="modeLabel">Sports Day Tee 2026</span>
     <h1 id="title">運動会Tシャツ<br>申込フォーム</h1>
     <p class="lead" id="lead">4つのステップで申し込めます（約3分）。<br>入力内容は、締切までなら申込後も変更できます。</p>
-    <button type="button" class="btn" id="openGuide" style="margin-bottom:16px">はじめにお読みください（申込の注意）</button>
+    <button type="button" class="btn" id="openGuide" style="margin-bottom:16px">お申し込みの前に（ご確認事項）</button>
     <dl class="kv">
       <dt>価格</dt><dd>1枚 3,000円（大人・子ども共通）<br><span class="hint" style="margin:0">先生2名分の制作費を含みます</span></dd>
       <dt>締切</dt><dd><b>10月2日（金）23:59</b></dd>
@@ -225,21 +226,22 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 
 
 <dialog id="guide" class="guide">
-  <div class="gh"><b>申込の前に読んでください</b><button type="button" class="gx" data-close aria-label="閉じる">✕</button></div>
+  <div class="gh"><b>お申し込みの前に</b><button type="button" class="gx" data-close aria-label="閉じる">✕</button></div>
   <div class="gb">
+    <p class="gl">ご確認いただきたいことを8つにまとめました。1分ほどで読めます。</p>
     <ol>
-      <li><b>しめきりは 10月2日（金）の夜 23:59 です</b><span>それより後は、このページから申し込めません。</span></li>
-      <li><b>値段は 1枚 3,000円 です</b><span>大人も子どもも同じ値段です。</span></li>
-      <li><b>サイズ</b><span>大人は S・M・L・XL・2XL・3XL から選びます。<br>子どもは 120 だけです。</span></li>
-      <li><b>せなかの名前は「ローマ字」で入れます</b><span>例：そら → <code>SORA</code><br>入れた文字が、<u>そのまま</u>印刷されます。<br>まちがえると直せないので、よく見てください。</span></li>
-      <li><b>お金は、なるべく PayPay かカードで払ってください</b><span>申し込んだあとに出るページから払えます。<br>現金の人は、運動会の日に係の人へ渡してください。</span></li>
-      <li><b>申し込んだあとに出るページを、LINEに保存してください</b><span>「LINEで保存」ボタンを押すだけです。<br>払う時や、内容を直す時に使います。</span></li>
-      <li><b>4けたの暗証番号を、おぼえておいてください</b><span>保存したページをなくした時に使います。</span></li>
-      <li><b>Tシャツは、運動会の日にわたします</b><span>場所と時間は、あとでLINEで知らせます。</span></li>
+      <li><b>締切は 10月2日（金）23:59 です</b><span>締切後のお申し込みや変更は、各クラスの役員までご相談ください。</span></li>
+      <li><b>1枚 3,000円（大人・子ども共通）です</b><span>先生2名分の制作費も含まれています。</span></li>
+      <li><b>サイズについて</b><span>大人：S・M・L・XL・2XL・3XL<br>子ども：120 のみ<br>大人のサイズ表は、フォームの中でご覧いただけます。</span></li>
+      <li><b>背中のお名前はローマ字で入力します</b><span>例：そら → <code>SORA</code><br>入力されたつづりのまま印刷しますので、送信前にもう一度ご確認をお願いします。</span></li>
+      <li><b>お支払いは、できればキャッシュレスでお願いします</b><span>PayPay・カード等は、お申し込み後の確認ページからお支払いいただけます。<br>現金の場合は、運動会当日のお渡しの際にお願いします。</span></li>
+      <li><b>確認ページはLINEに保存しておくと便利です</b><span>お申し込み後に表示される「LINEで保存」ボタンから保存できます。お支払いや内容の変更の際に使います。</span></li>
+      <li><b>暗証番号（数字4桁）を控えておくと安心です</b><span>確認ページが見つからなくなった時に、クラス・ふりがなと一緒に入力して呼び出せます。</span></li>
+      <li><b>Tシャツは運動会当日にお渡しします</b><span>場所と時間は、決まり次第LINEでお知らせします。</span></li>
     </ol>
-    <p class="gq">わからない時は、クラスの役員に聞いてください。</p>
+    <p class="gq">ご不明な点は、お気軽にクラスの役員までお声がけください。</p>
   </div>
-  <div class="gf"><button type="button" class="btn" data-close>わかりました。申し込みにすすむ</button></div>
+  <div class="gf"><button type="button" class="btn" data-close>確認しました</button></div>
 </dialog>
 <div class="loading" id="loading">読み込み中…</div>
 <footer><span>大東幼稚園 運動会Tシャツ 2026</span><a class="link" style="font-size:10px" href="status.html">申込内容の確認</a></footer>
