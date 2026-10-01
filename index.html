@@ -101,12 +101,16 @@ dialog::backdrop{background:var(--plate)}
 .stable tr.cur{background:var(--plate)}
 .stable tr.cur th::after{content:"プレビュー";display:block;font-size:9px;color:var(--muted);font-weight:400}
 @media (max-width:360px){.sizewrap{grid-template-columns:1fr}.sizewrap svg{max-width:160px;margin:0 auto}}
+.cta{font-size:12px;font-weight:500;color:#fff;background:var(--ink);padding:7px 12px;text-decoration:none;letter-spacing:.04em}
+.intro h1{font-weight:400;font-size:26px;line-height:1.2;margin:6px 0 10px}
+.intro p{font-size:13px;line-height:1.8;color:#333}
+.ctaBig{display:flex;justify-content:center;align-items:center;min-height:52px;margin-top:14px;background:var(--ink);color:#fff;text-decoration:none;font-weight:500;font-size:15px;letter-spacing:.04em}
 </style>
 </head>
 <body>
 <header>
   <div class="logo" id="school"></div>
-  <span class="label">Preview</span>
+  <a class="cta" href="order.html">申し込む →</a>
 </header>
 
 <section class="stage" id="stage">
@@ -121,19 +125,25 @@ dialog::backdrop{background:var(--plate)}
 </section>
 
 <main>
-  <div class="step">
+  <div class="step intro">
+    <span class="label">Sports Day Tee 2026</span>
+    <h1 class="jp">運動会Tシャツ<br>完成イメージ</h1>
+    <p class="jp">クラス・左胸のキャラクター・背面のお名前を選ぶと、上の図に反映されます。<br>生地はネイビー、1枚 3,000円（大人・子ども共通）です。</p>
+    <a class="ctaBig jp" href="order.html">このデザインで申し込む</a>
+  </div>
+  <div class="step hidden">
     <span class="label">01</span>
     <h2><span class="jp">デザイン</span><small>2 types</small></h2>
     <div class="opts c2" id="designOpts"></div>
     <p class="hint jp" id="designDesc"></p>
   </div>
-  <div class="step">
+  <div class="step hidden">
     <span class="label">02</span>
     <h2><span class="jp">生地色</span></h2>
     <div class="opts c2" id="colorOpts"></div>
   </div>
   <div class="step">
-    <span class="label">03</span>
+    <span class="label">01</span>
     <h2><span class="jp">クラス</span></h2>
     <div class="opts c2" id="classOpts"></div>
   </div>
@@ -143,14 +153,14 @@ dialog::backdrop{background:var(--plate)}
     <div class="opts c2" id="cbackOpts"></div>
   </div>
   <div class="step" id="charaStep">
-    <span class="label">04</span>
+    <span class="label">02</span>
     <h2><span class="jp">左胸のキャラクター</span><small id="charaNow"></small></h2>
     <div class="rail" id="charaRail"></div>
     <div class="railFoot"><span class="jp">横にスクロールできます</span><button type="button" class="link jp" id="charaZoom">大きく見る</button></div>
   </div>
   <div class="step">
     <span class="label" id="nameNo">05</span>
-    <h2><span class="jp">お子さまの名前（ローマ字）</span></h2>
+    <h2><span class="jp">背面のお名前（ローマ字）</span></h2>
     <div class="field"><input id="name" type="text" inputmode="latin" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="HANAKO"><span class="count" id="count"></span></div>
     <p class="hint jp" id="nameHint"></p>
   </div>
@@ -168,7 +178,8 @@ dialog::backdrop{background:var(--plate)}
         <tbody id="sizeRows"></tbody>
       </table>
     </div>
-    <p class="hint jp">手持ちのTシャツを平らに置き、B（脇の下の幅）を測って近いサイズを選ぶと選びやすいです。大人サイズのみです。</p>
+    <p class="hint jp">手持ちのTシャツを平らに置き、B（脇の下の幅）を測って近いサイズを選ぶと選びやすいです。お子さま用は120サイズのみです。</p>
+    <a class="ctaBig jp" href="order.html" style="margin-top:16px">このデザインで申し込む</a>
   </div>
 </main>
 
@@ -198,7 +209,7 @@ const CONFIG = {
   school: "大東幼稚園",
   body:   "Printstar 00148-HVT 7.4oz／大人サイズ XS〜3XL（予定）",
   bLogoYuri: true,   // ゆり組のBロゴ（b_logo_yuri.png）あり
-  nameMax: 9,  // ローマ字の上限（Bの白帯で文字の大きさ・間隔を固定して収まる9文字まで）
+  nameMax: 12,  // ローマ字の上限（申込フォームと同じ12文字。10文字以上は幅を詰めて表示）
   // 名前のフォント：Mac・iPhoneは本体に入っているKrungthep、
   // それ以外（Android・Windows）はKrungthepに一番近い無料フォント Oxanium で表示
   nameFont: 'Krungthep, Oxanium, sans-serif',
@@ -220,7 +231,7 @@ const CONFIG = {
       name:  { side: "back", x: 0, y: 290, size: 33.5, maxW: 280 },
       charas: Array.from({length: 8}, (_, i) => `images/parts/a_chara${i+1}.png`),
     },
-    B: {
+    B: { hidden: true,
       title: "Typography", jp: "文字系",
       desc: "左胸：共通ロゴ＋文字／背面：共通デザイン＋名前",
       front: { img: c => `images/parts/b_logo_${c === "yuri" && !CONFIG.bLogoYuri ? "himawari" : c}.png`, box: [62.5, 180, 85, 85] },  // ゆり組版が届くまでは、ひまわり版を表示
@@ -378,15 +389,15 @@ function render() {
     $("vRail").classList.toggle("hidden", !(state.design === "A" && state.side === "front"));
   }
 
-  $("metaL").textContent = `${state.design} — ${d.title.toUpperCase()} / ${col.label.toUpperCase()}`;
+  $("metaL").textContent = `${d.title.toUpperCase()} / ${col.label.toUpperCase()}`;
   $("designDesc").textContent = d.desc;
   $("charaStep").classList.toggle("hidden", state.design !== "A");
   $("cbackStep").classList.toggle("hidden", state.design !== "C");
-  $("nameNo").textContent = state.design === "B" ? "04" : "05";
+  $("nameNo").textContent = "03";
   $("charaNow").textContent = `No. ${pad2(state.chara + 1)} / ${pad2(CONFIG.designs.A.charas.length)}`;
 
   const rows = [
-    ["Design", `${state.design}：${d.jp}`],
+    ["Design", d.jp],
     ["Color", col.jp],
     ["Class", cls.jp],
     ...(state.design === "A" ? [["Character", pad2(state.chara + 1)]] : []),
@@ -463,7 +474,7 @@ swipe($("viewSvg"));
 
 /* 名前入力 */
 const input = $("name");
-const okHint = () => `半角英字・${CONFIG.nameMax}文字まで。入力した通りにプリントされます。`;
+const okHint = () => `半角英字・${CONFIG.nameMax}文字まで。保護者・お子さまどちらのお名前でも大丈夫です。入力した通りにプリントされます。`;
 input.maxLength = CONFIG.nameMax;
 input.addEventListener("focus", () => { const n = CONFIG.designs[state.design].name; if (n) { state.side = n.side; render(); } });
 input.addEventListener("input", () => {
@@ -483,7 +494,7 @@ $("nameHint").textContent = okHint();
 $("count").textContent = `0/${CONFIG.nameMax}`;
 build();
 /* サイズ表（Printstar 00148-HVT メーカー寸法・cm） */
-const SIZES = [["XS",63,46,41,18],["S",66,49,44,19],["M",70,52,47,20],["L",74,55,50,22],["XL",78,58,53,24],["2XL",82,61,56,26],["3XL",84,64,59,26]];
+const SIZES = [["S",66,49,44,19],["M",70,52,47,20],["L",74,55,50,22],["XL",78,58,53,24],["2XL",82,61,56,26],["3XL",84,64,59,26]];
 $("sizeRows").innerHTML = SIZES.map(r => `<tr${r[0] === "M" ? ' class="cur"' : ""}><th>${r[0]}</th>${r.slice(1).map(v => `<td>${v}</td>`).join("")}</tr>`).join("");
 (function sizeFig() {
   const f = $("sizeFig"), ink = "#111111", fab = "#E6E3DC";
