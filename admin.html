@@ -197,6 +197,14 @@ th{font-weight:500;background:var(--plate)}
 .ask .aname{font-size:18px}
 .ask .aamt{font-size:30px;font-weight:500;margin:10px 0;padding:8px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .ask .amsg{font-size:15px;line-height:1.7;margin-bottom:14px}
+.sym{border:1px solid var(--ink);padding:12px;margin-bottom:10px;text-align:center}
+.symq{font-size:13px;line-height:1.6}
+.symt{font-size:64px;line-height:1.1;font-weight:500;margin:6px 0 10px}
+.symc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.symc button{all:unset;cursor:pointer;border:1px solid var(--ink);font-size:36px;line-height:1;padding:14px 0;text-align:center}
+.symc button:active{background:var(--plate)}
+.symerr{color:var(--err);font-size:13px;margin-top:8px}
+.symok{font-size:11px;color:var(--muted);margin-top:8px}
 </style>
 </head>
 <body class="jp">
@@ -230,7 +238,13 @@ th{font-weight:500;background:var(--plate)}
     <div class="aname" id="askName"></div>
     <div class="aamt" id="askAmt"></div>
     <p class="amsg" id="askMsg"></p>
-    <button type="button" class="btn" id="askYes"></button>
+    <div class="sym">
+      <p class="symq">確認のため、この記号と<b>同じもの</b>を下から押してください</p>
+      <div class="symt" id="symT"></div>
+      <div class="symc" id="symC"></div>
+      <p class="symerr hidden" id="symErr">記号が違います。もう一度選んでください。</p>
+      <p class="symok" id="askYes"></p>
+    </div>
     <button type="button" class="btn ghost" id="askNo">やめる</button>
   </div>
 </dialog>
@@ -459,11 +473,25 @@ function askMark(o, s) {
   const d = $("ask");
   $("askLabel").textContent = T[0]; $("askId").textContent = `${o.id}（${o.clsJp}）`;
   $("askName").textContent = `${o.child}（${o.kana}）`; $("askAmt").textContent = `${yen(o.total)}（${o.count}枚）`;
-  $("askMsg").textContent = T[1]; $("askYes").textContent = T[2]; $("askYes").style.background = T[3];
+  $("askMsg").textContent = T[1]; $("askYes").textContent = `正しい記号を押すと「${T[2].replace(/^はい、/, "")}」として記録します`;
+  const SYMS = ["○", "△", "□"];
+  let target;
+  const deal = () => {
+    target = SYMS[Math.floor(Math.random() * 3)];
+    $("symT").textContent = target; $("symT").style.color = T[3];
+    const order = [...SYMS].sort(() => Math.random() - 0.5);
+    $("symC").innerHTML = order.map(x => `<button type="button" data-sym="${x}">${x}</button>`).join("");
+  };
+  deal(); $("symErr").classList.add("hidden");
   d.showModal();
   return new Promise(res => {
-    const done = v => { d.close(); $("askYes").onclick = $("askNo").onclick = null; res(v); };
-    $("askYes").onclick = () => done(true); $("askNo").onclick = () => done(false);
+    const done = v => { d.close(); $("symC").onclick = $("askNo").onclick = null; res(v); };
+    $("symC").onclick = e => {
+      const b = e.target.closest("[data-sym]"); if (!b) return;
+      if (b.dataset.sym === target) done(true);
+      else { $("symErr").classList.remove("hidden"); deal(); }
+    };
+    $("askNo").onclick = () => done(false);
     d.oncancel = e => { e.preventDefault(); done(false); };
   });
 }
