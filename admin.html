@@ -190,6 +190,13 @@ th{font-weight:500;background:var(--plate)}
 .filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .filter button{all:unset;cursor:pointer;border:1px solid var(--line);padding:6px 10px;font-size:12px}
 .filter button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.ask{border:none;padding:0;margin:auto;width:min(92vw,400px);background:var(--bg)}
+.ask::backdrop{background:rgba(0,0,0,.6)}
+.ask .ak{padding:20px 18px}
+.ask .aid{font-size:28px;font-weight:500;margin:4px 0 2px}
+.ask .aname{font-size:18px}
+.ask .aamt{font-size:30px;font-weight:500;margin:10px 0;padding:8px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ask .amsg{font-size:15px;line-height:1.7;margin-bottom:14px}
 </style>
 </head>
 <body class="jp">
@@ -216,6 +223,17 @@ th{font-weight:500;background:var(--plate)}
     <div class="field" style="margin-bottom:10px"><input id="q" placeholder="名前・管理番号で検索"></div>
     <div id="list"></div></section>
 </main>
+<dialog id="ask" class="ask">
+  <div class="ak">
+    <p class="label" id="askLabel"></p>
+    <div class="aid" id="askId"></div>
+    <div class="aname" id="askName"></div>
+    <div class="aamt" id="askAmt"></div>
+    <p class="amsg" id="askMsg"></p>
+    <button type="button" class="btn" id="askYes"></button>
+    <button type="button" class="btn ghost" id="askNo">やめる</button>
+  </div>
+</dialog>
 <div class="loading hidden" id="loading">読み込み中…</div>
 
 <script>
@@ -424,10 +442,29 @@ function renderList() {
       ${isPaid(o) ? `<button type="button" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}</div>` : ""}
   </div>`).join("") || `<p class="hint">該当なし</p>`;
   $("list").querySelectorAll("[data-s]").forEach(b => b.onclick = async () => {
-    const s = b.dataset.s, id = b.dataset.id;
-    if (s === "unpaid" && !confirm(`${id} を未入金に戻しますか？`)) return;
+    const s = b.dataset.s, id = b.dataset.id, o = data.orders.find(x => x.id === id);
+    if (!(await askMark(o, s))) return;
     b.disabled = true;
     try { await api("admin_mark", { pin: PIN, id, status: s }); toast(`${id} を記録しました`); await load(); } catch (ex) { toast(ex.message); b.disabled = false; }
+  });
+}
+
+/* 記録の前の確認ポップアップ */
+function askMark(o, s) {
+  const T = {
+    cash:   ["現金の受け取り", "この方から現金を受け取りましたか？", "はい、現金を受け取りました", "#1B6B3A"],
+    paypay: ["PayPayの入金確認", "PayPayで、この金額の入金を確認しましたか？", "はい、入金を確認しました", "#1B6B3A"],
+    unpaid: ["未入金に戻す", "入金の記録を取り消して「未入金」に戻しますか？", "はい、未入金に戻します", "#B3261E"],
+  }[s];
+  const d = $("ask");
+  $("askLabel").textContent = T[0]; $("askId").textContent = `${o.id}（${o.clsJp}）`;
+  $("askName").textContent = `${o.child}（${o.kana}）`; $("askAmt").textContent = `${yen(o.total)}（${o.count}枚）`;
+  $("askMsg").textContent = T[1]; $("askYes").textContent = T[2]; $("askYes").style.background = T[3];
+  d.showModal();
+  return new Promise(res => {
+    const done = v => { d.close(); $("askYes").onclick = $("askNo").onclick = null; res(v); };
+    $("askYes").onclick = () => done(true); $("askNo").onclick = () => done(false);
+    d.oncancel = e => { e.preventDefault(); done(false); };
   });
 }
 
