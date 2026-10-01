@@ -233,7 +233,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
       <li><b>締切は 10月2日（金）23:59 です</b><span>締切後のお申し込みや変更は、各クラスの役員までご相談ください。</span></li>
       <li><b>1枚 3,000円（大人・子ども共通）です</b><span>先生2名分の制作費も含まれています。</span></li>
       <li><b>保護者用のTシャツです（ご希望の方はお子さま用も作れます）</b><span>もともとは保護者のみなさま向けのおそろいTシャツですが、ご希望の方にはお子さま用もお作りします。<br>大人：S・M・L・XL・2XL・3XL<br>お子さま：120 のみ<br>大人のサイズ表は、フォームの中でご覧いただけます。</span></li>
-      <li><b>背中のお名前はローマ字で入力します</b><span>例：そら → <code>SORA</code><br>入力されたつづりのまま印刷しますので、送信前にもう一度ご確認をお願いします。</span></li>
+      <li><b>背中のお名前はローマ字で入力します</b><span>保護者・お子さまどちらのお名前でも大丈夫です。<br>例：そら → <code>SORA</code><br>入力されたつづりのまま印刷しますので、送信前にもう一度ご確認をお願いします。</span></li>
       <li><b>お支払いは、できればキャッシュレスでお願いします</b><span>PayPay・カード等は、お申し込み後の確認ページからお支払いいただけます。<br>現金の場合は、運動会当日のお渡しの際にお願いします。</span></li>
       <li><b>確認ページはLINEに保存しておくと便利です</b><span>お申し込み後に表示される「LINEで保存」ボタンから保存できます。お支払いや内容の変更の際に使います。</span></li>
       <li><b>暗証番号（数字4桁）を控えておくと安心です</b><span>確認ページが見つからなくなった時に、クラス・ふりがなと一緒に入力して呼び出せます。</span></li>
@@ -379,7 +379,7 @@ function renderShirts() {
         <div class="rail" data-rail>${Array.from({ length: 8 }, (_, n) => `<button type="button" class="chara" data-chara="${n + 1}" aria-pressed="${it.chara === n + 1}" aria-label="キャラクター${n + 1}"><em>${n + 1}</em><img src="${charaImg(n + 1)}" alt=""></button>`).join("")}</div>
         <div class="q"><i>4</i>背面の名前 <small>半角ローマ字・12文字まで</small></div>
         <div class="field" data-nameF><input class="big" data-name value="${esc(it.name)}" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="例：SORA" maxlength="${NAME_MAX}"><span class="count">${it.name.length}/${NAME_MAX}</span></div>
-        <p class="hint">入力したつづりのまま印刷されます。10文字以上は、文字の幅を詰めて印刷します。</p>
+        <p class="hint">保護者・お子さまどちらのお名前でも大丈夫です。入力したつづりのまま印刷されます。10文字以上は、文字の幅を詰めて印刷します。</p>
         <div data-mini></div>
       </div>`;
     card.querySelector("[data-rm]")?.addEventListener("click", () => { st.items.splice(i, 1); renderShirts(); });
