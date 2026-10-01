@@ -87,6 +87,51 @@ header{display:flex;justify-content:space-between;align-items:center;height:48px
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;font-size:13px;z-index:50;max-width:90vw}
 .loading{padding:60px 16px;text-align:center;color:var(--muted)}
 footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;gap:12px;flex-wrap:wrap}
+/* v2 */
+.lead{font-size:14px;line-height:1.8;margin:-4px 0 16px}
+.notice{border:1px solid var(--ink);background:#F7F7F4;padding:12px 14px;font-size:13px;line-height:1.75;margin-top:16px}
+.notice b{display:block;font-size:13px;margin-bottom:2px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);font-size:11px;text-align:center}
+.flow span{padding:10px 0;border-left:1px solid var(--line);color:var(--muted)}
+.flow span:first-child{border-left:none}
+.flow b{display:block;font-size:10px;letter-spacing:.1em;color:var(--ink);font-weight:500}
+.sec{padding:24px 16px;border-bottom:1px solid var(--line)}
+.sec>h2{font-weight:500;font-size:19px;margin:2px 0 4px}
+.sec>.desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.q{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:500;margin:18px 0 8px}
+.q:first-child{margin-top:0}
+.q i{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;flex:none}
+.q small{font-weight:400;font-size:11px;color:var(--muted)}
+.req{font-size:10px;color:var(--err);border:1px solid var(--err);padding:0 4px;margin-left:4px;font-weight:400}
+.shirt .hd{background:var(--ink);color:#fff;border-bottom:none}
+.shirt .hd .link{color:#fff}
+.shirt .sum{font-weight:400;font-size:11px;opacity:.8;letter-spacing:.02em}
+.badge{display:inline-block;background:var(--ink);color:#fff;font-size:10px;padding:1px 6px;margin-left:6px;vertical-align:2px;font-weight:500;letter-spacing:.06em}
+.opt .badge{margin-left:0;margin-right:6px}
+details.chart{margin-top:10px;border:1px solid var(--line)}
+details.chart summary{cursor:pointer;padding:10px 12px;font-size:12px;list-style:none;display:flex;justify-content:space-between}
+details.chart summary::after{content:"＋"}
+details.chart[open] summary::after{content:"－"}
+details.chart table{width:100%;border-collapse:collapse;font-size:12px}
+details.chart th,details.chart td{border-top:1px solid var(--line);padding:7px 4px;text-align:center}
+details.chart th{font-weight:500;background:var(--plate)}
+details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1.6}
+.bad{border-color:var(--err)!important;box-shadow:inset 0 0 0 1px var(--err)!important}
+.ferr{color:var(--err);font-size:12px;margin-top:6px}
+.review{border:1px solid var(--line);margin-bottom:12px}
+.review .row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.review .row:first-child{border-top:none}
+.review .row img{width:44px;height:44px;object-fit:contain;background:var(--navy);display:block}
+.review .nm{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:20px;letter-spacing:.04em;word-break:break-all;line-height:1.2}
+.review .sub{font-size:11px;color:var(--muted)}
+.review .pr{font-size:13px}
+.kv{display:grid;grid-template-columns:92px 1fr;row-gap:6px;font-size:13px;margin-bottom:12px}
+.kv dt{color:var(--muted);font-size:12px}
+.bar{position:sticky;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--ink);display:flex;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .t{flex:1;line-height:1.2}
+.bar .t small{display:block;font-size:11px;color:var(--muted)}
+.bar .t b{font-size:20px;font-weight:500}
+.bar .btn{width:auto;min-height:46px;font-size:14px;padding:0 18px}
 </style>
 </head>
 <body class="jp">
@@ -118,10 +163,13 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6
 const NAVY = "#1F2A44";
 const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
 const PAY = {
-  paypay: { jp: "PayPay送金", sub: "おすすめ。申込後の画面に送金先を表示します" },
-  square: { jp: "カード・Apple Pay・Google Pay", sub: "申込後の画面から支払えます" },
-  cash:   { jp: "現金（当日）", sub: "Tシャツのお渡し時に担当へ" },
+  paypay: { jp: "PayPay", sub: "申込後の確認ページから、PayPayアプリで送金できます", rec: true },
+  square: { jp: "クレジットカード・Apple Pay・Google Pay", sub: "申込後の確認ページから、オンラインで支払えます", rec: true },
+  cash:   { jp: "現金", sub: "運動会当日、Tシャツのお渡し時に担当へお支払いください", rec: false },
 };
+const CASHLESS_NOTE = "当日のお渡しをスムーズにするため、今回はなるべくキャッシュレス（PayPay・カード等）でのお支払いにご協力をお願いします。";
+/* 大人サイズ（cm）：身丈・身幅・肩幅・袖丈 */
+const SIZE_CHART = [["S", 66, 49, 44, 19], ["M", 70, 52, 47, 20], ["L", 74, 55, 50, 22], ["XL", 78, 58, 53, 24], ["2XL", 82, 61, 56, 26], ["3XL", 84, 64, 59, 26]];
 const IMG_BASE = "https://daito-2026.github.io/images/parts/"; // 公開済みの画像を直接参照（どこで開いても表示される）
 const charaImg = n => `${IMG_BASE}a_chara${n}.png`;
 const backImg = cls => `${IMG_BASE}a_back_${cls}.png`;
@@ -132,7 +180,7 @@ const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
 /* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
 const DEMO = API_URL.startsWith("__");
 const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
-  items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
+  items: [{ kind: "adult", size: "L", chara: 3, name: "SORA" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
   open: true, paypayUrl: "#demo", squareUrl: "" };
 async function demoApi(action, data) {
@@ -243,7 +291,7 @@ function render(o) {
     : params.get("updated") ? `<div class="box ok"><b>変更を保存しました。</b></div>` : "";
   $("view").innerHTML = `
     <section class="hero"><span class="label">${esc(o.clsJp)} ／ 管理番号</span><div class="big-id" style="margin:6px 0 12px">${esc(o.id)}</div>
-      <dl class="spec"><dt>Name</dt><dd>${esc(o.child)}（${esc(o.kana)}）</dd><dt>Payment</dt><dd>${esc(o.payJp)}</dd><dt>Date</dt><dd>${esc(o.createdAt)}${o.updatedAt && o.updatedAt !== o.createdAt ? `（変更 ${esc(o.updatedAt)}）` : ""}</dd></dl></section>
+      <dl class="spec"><dt>Name</dt><dd>${esc(o.child)}（${esc(o.kana)}）</dd><dt>Payment</dt><dd>${esc(PAY[o.pay]?.jp || o.payJp)}</dd><dt>Date</dt><dd>${esc(o.createdAt)}${o.updatedAt && o.updatedAt !== o.createdAt ? `（変更 ${esc(o.updatedAt)}）` : ""}</dd></dl></section>
     <section class="step">${banner}${payBlock(o)}</section>
     <section class="step"><span class="label">Save</span><h2>このページを保存</h2>
       <a class="btn line" href="${lineShareUrl(shareText)}" target="_blank" rel="noopener">LINEで保存する</a>

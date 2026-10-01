@@ -87,6 +87,51 @@ header{display:flex;justify-content:space-between;align-items:center;height:48px
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;font-size:13px;z-index:50;max-width:90vw}
 .loading{padding:60px 16px;text-align:center;color:var(--muted)}
 footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;gap:12px;flex-wrap:wrap}
+/* v2 */
+.lead{font-size:14px;line-height:1.8;margin:-4px 0 16px}
+.notice{border:1px solid var(--ink);background:#F7F7F4;padding:12px 14px;font-size:13px;line-height:1.75;margin-top:16px}
+.notice b{display:block;font-size:13px;margin-bottom:2px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);font-size:11px;text-align:center}
+.flow span{padding:10px 0;border-left:1px solid var(--line);color:var(--muted)}
+.flow span:first-child{border-left:none}
+.flow b{display:block;font-size:10px;letter-spacing:.1em;color:var(--ink);font-weight:500}
+.sec{padding:24px 16px;border-bottom:1px solid var(--line)}
+.sec>h2{font-weight:500;font-size:19px;margin:2px 0 4px}
+.sec>.desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.q{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:500;margin:18px 0 8px}
+.q:first-child{margin-top:0}
+.q i{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;flex:none}
+.q small{font-weight:400;font-size:11px;color:var(--muted)}
+.req{font-size:10px;color:var(--err);border:1px solid var(--err);padding:0 4px;margin-left:4px;font-weight:400}
+.shirt .hd{background:var(--ink);color:#fff;border-bottom:none}
+.shirt .hd .link{color:#fff}
+.shirt .sum{font-weight:400;font-size:11px;opacity:.8;letter-spacing:.02em}
+.badge{display:inline-block;background:var(--ink);color:#fff;font-size:10px;padding:1px 6px;margin-left:6px;vertical-align:2px;font-weight:500;letter-spacing:.06em}
+.opt .badge{margin-left:0;margin-right:6px}
+details.chart{margin-top:10px;border:1px solid var(--line)}
+details.chart summary{cursor:pointer;padding:10px 12px;font-size:12px;list-style:none;display:flex;justify-content:space-between}
+details.chart summary::after{content:"＋"}
+details.chart[open] summary::after{content:"－"}
+details.chart table{width:100%;border-collapse:collapse;font-size:12px}
+details.chart th,details.chart td{border-top:1px solid var(--line);padding:7px 4px;text-align:center}
+details.chart th{font-weight:500;background:var(--plate)}
+details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1.6}
+.bad{border-color:var(--err)!important;box-shadow:inset 0 0 0 1px var(--err)!important}
+.ferr{color:var(--err);font-size:12px;margin-top:6px}
+.review{border:1px solid var(--line);margin-bottom:12px}
+.review .row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.review .row:first-child{border-top:none}
+.review .row img{width:44px;height:44px;object-fit:contain;background:var(--navy);display:block}
+.review .nm{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:20px;letter-spacing:.04em;word-break:break-all;line-height:1.2}
+.review .sub{font-size:11px;color:var(--muted)}
+.review .pr{font-size:13px}
+.kv{display:grid;grid-template-columns:92px 1fr;row-gap:6px;font-size:13px;margin-bottom:12px}
+.kv dt{color:var(--muted);font-size:12px}
+.bar{position:sticky;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--ink);display:flex;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .t{flex:1;line-height:1.2}
+.bar .t small{display:block;font-size:11px;color:var(--muted)}
+.bar .t b{font-size:20px;font-weight:500}
+.bar .btn{width:auto;min-height:46px;font-size:14px;padding:0 18px}
 </style>
 </head>
 <body class="jp">
@@ -102,60 +147,63 @@ footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;j
   <section class="hero">
     <span class="label" id="modeLabel">Sports Day Tee 2026</span>
     <h1 id="title">運動会Tシャツ<br>申込フォーム</h1>
-    <dl class="spec">
-      <dt>Design</dt><dd>A オリジナルキャラクター／ネイビー</dd>
-      <dt>Price</dt><dd>1枚 ¥3,000（大人・子ども共通）<br><span class="hint" style="margin:0">先生2名分の制作費を含みます</span></dd>
-      <dt>Deadline</dt><dd>10月2日（金）23:59</dd>
-      <dt>Delivery</dt><dd>運動会当日にお渡し（場所・時間は追ってご連絡します）</dd>
+    <p class="lead" id="lead">4つのステップで申し込めます（約3分）。<br>入力内容は、締切までなら申込後も変更できます。</p>
+    <dl class="kv">
+      <dt>価格</dt><dd>1枚 3,000円（大人・子ども共通）<br><span class="hint" style="margin:0">先生2名分の制作費を含みます</span></dd>
+      <dt>締切</dt><dd><b>10月2日（金）23:59</b></dd>
+      <dt>お渡し</dt><dd>運動会当日（場所・時間は追ってご連絡します）</dd>
+      <dt>デザイン</dt><dd>オリジナルキャラクター／ネイビー<br><a class="link" href="./">プレビューで見え方を確認する</a></dd>
     </dl>
-    <p class="hint">デザインの見え方は <a class="link" href="./">プレビュー</a> で確認できます。</p>
+    <div class="notice"><b>お支払いについてのお願い</b><span id="cashlessNote"></span></div>
   </section>
+  <nav class="flow" aria-hidden="true"><span><b>STEP 1</b>お子さま</span><span><b>STEP 2</b>Tシャツ</span><span><b>STEP 3</b>お支払い</span><span><b>STEP 4</b>確認</span></nav>
 
-  <section class="step">
-    <span class="label">01</span><h2>クラス</h2>
+  <!-- STEP 1 -->
+  <section class="sec" id="sec1">
+    <span class="label">Step 1</span><h2>お子さまについて</h2>
+    <p class="desc">当日のお渡しと、申込内容の確認に使います。</p>
+    <div class="q"><i>1</i>クラス<span class="req">必須</span></div>
     <div class="opts c2" id="clsOpts"></div>
     <p class="hint hidden" id="clsLock">クラスは変更できません。変更する場合は、取り消してから申込み直してください。</p>
+    <div class="q"><i>2</i>お子さまのお名前<span class="req">必須</span></div>
+    <div class="field" id="childF"><input id="child" autocomplete="off" placeholder="例：大東 太郎"></div>
+    <div class="q"><i>3</i>ふりがな<span class="req">必須</span></div>
+    <div class="field" id="kanaF"><input id="kana" autocomplete="off" placeholder="例：だいとう たろう"></div>
   </section>
 
-  <section class="step">
-    <span class="label">02</span><h2>お子さまのお名前</h2>
-    <label class="fl" for="child">お子さまのお名前</label>
-    <div class="field"><input id="child" autocomplete="off" placeholder="例：大東 太郎"></div>
-    <label class="fl" for="kana">ふりがな</label>
-    <div class="field"><input id="kana" autocomplete="off" placeholder="例：だいとう たろう"></div>
-    <p class="hint">当日のお渡しと、申込内容の確認（ふりがな＋暗証番号）に使います。</p>
-  </section>
-
-  <section class="step">
-    <span class="label">03</span><h2>Tシャツ <small id="countLabel"></small></h2>
+  <!-- STEP 2 -->
+  <section class="sec" id="sec2">
+    <span class="label">Step 2</span><h2>Tシャツ <small class="hint" id="countLabel"></small></h2>
+    <p class="desc">1枚ずつ、着る人・サイズ・左胸のキャラクター・背面の名前を選んでください。ご家族の分もまとめて申し込めます（10枚まで）。</p>
     <div id="shirts"></div>
-    <button type="button" class="add" id="addShirt">＋ もう1枚追加</button>
-    <p class="hint">大人：S〜3XL／子ども：120のみ。サイズ表は <a class="link" href="./#sizeStep">プレビュー</a> にあります。<br>
-    背面の名前は半角ローマ字12文字まで。10文字以上は文字の幅を詰めて印刷します。</p>
+    <button type="button" class="add" id="addShirt">＋ もう1枚追加する</button>
   </section>
 
-  <section class="step">
-    <span class="label">04</span><h2>お支払い方法</h2>
+  <!-- STEP 3 -->
+  <section class="sec" id="sec3">
+    <span class="label">Step 3</span><h2>お支払い方法</h2>
+    <p class="desc" id="payDesc"></p>
     <div class="opts" id="payOpts"></div>
-    <p class="hint">PayPay・カードは運動会当日までにお支払いください。</p>
+    <p class="hint">PayPay・カード等は、運動会当日までにお支払いください。お支払い方法は、申込後に確認ページから変更できます。</p>
+    <div class="q" style="margin-top:22px"><i>✓</i>暗証番号（数字4桁）<span class="req" id="pinReq">必須</span></div>
+    <div class="field" id="pinF"><input id="pin" inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="off" placeholder="0000"></div>
+    <p class="hint" id="pinHint">申込後のURLをなくした時に、クラス・ふりがな・この番号で申込内容を確認できます。忘れないものにしてください。</p>
   </section>
 
-  <section class="step">
-    <span class="label">05</span><h2>暗証番号（数字4桁）</h2>
-    <div class="field"><input id="pin" inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="off" placeholder="0000"></div>
-    <p class="hint" id="pinHint">申込後のURLをなくした時に、クラス・ふりがな・この番号で申込内容を確認できます。</p>
-  </section>
-
-  <section class="step">
-    <span class="label">06</span><h2>確認</h2>
+  <!-- STEP 4 -->
+  <section class="sec" id="sec4">
+    <span class="label">Step 4</span><h2>申込内容の確認</h2>
+    <p class="desc">背面の名前は、ここに表示されているつづりのまま印刷します。</p>
+    <dl class="kv" id="reviewHead"></dl>
+    <div class="review" id="review"></div>
     <div class="total"><span id="totalSub">合計</span><b id="total">¥0</b></div>
-    <span class="label">背面の名前（このつづりで印刷します）</span>
-    <ul class="names" id="nameList"></ul>
-    <label class="check"><input type="checkbox" id="spellOk"><span>背面の名前のつづり（大文字・小文字も含む）を確認しました。このつづりのまま印刷されることに同意します。</span></label>
+    <label class="check" id="spellBox"><input type="checkbox" id="spellOk"><span>背面の名前のつづり（大文字・小文字も含む）を確認しました。このつづりのまま印刷されることに同意します。</span></label>
     <p class="hint err hidden" id="formErr" role="alert"></p>
     <button type="submit" class="btn" id="submit">この内容で申し込む</button>
-    <button type="button" class="btn danger hidden" id="cancelEdit">変更せずに戻る</button>
+    <button type="button" class="btn ghost hidden" id="cancelEdit">変更せずに戻る</button>
   </section>
+
+  <div class="bar"><div class="t"><small id="barSub">0枚</small><b id="barTotal">¥0</b></div><button type="button" class="btn" id="toReview">確認へ進む</button></div>
 </form>
 
 <div class="loading" id="loading">読み込み中…</div>
@@ -167,10 +215,13 @@ const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6
 const NAVY = "#1F2A44";
 const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
 const PAY = {
-  paypay: { jp: "PayPay送金", sub: "おすすめ。申込後の画面に送金先を表示します" },
-  square: { jp: "カード・Apple Pay・Google Pay", sub: "申込後の画面から支払えます" },
-  cash:   { jp: "現金（当日）", sub: "Tシャツのお渡し時に担当へ" },
+  paypay: { jp: "PayPay", sub: "申込後の確認ページから、PayPayアプリで送金できます", rec: true },
+  square: { jp: "クレジットカード・Apple Pay・Google Pay", sub: "申込後の確認ページから、オンラインで支払えます", rec: true },
+  cash:   { jp: "現金", sub: "運動会当日、Tシャツのお渡し時に担当へお支払いください", rec: false },
 };
+const CASHLESS_NOTE = "当日のお渡しをスムーズにするため、今回はなるべくキャッシュレス（PayPay・カード等）でのお支払いにご協力をお願いします。";
+/* 大人サイズ（cm）：身丈・身幅・肩幅・袖丈 */
+const SIZE_CHART = [["S", 66, 49, 44, 19], ["M", 70, 52, 47, 20], ["L", 74, 55, 50, 22], ["XL", 78, 58, 53, 24], ["2XL", 82, 61, 56, 26], ["3XL", 84, 64, 59, 26]];
 const IMG_BASE = "https://daito-2026.github.io/images/parts/"; // 公開済みの画像を直接参照（どこで開いても表示される）
 const charaImg = n => `${IMG_BASE}a_chara${n}.png`;
 const backImg = cls => `${IMG_BASE}a_back_${cls}.png`;
@@ -181,7 +232,7 @@ const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
 /* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
 const DEMO = API_URL.startsWith("__");
 const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
-  items: [{ kind: "adult", size: "L", chara: 3, name: "RINTAROU" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
+  items: [{ kind: "adult", size: "L", chara: 3, name: "SORA" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
   open: true, paypayUrl: "#demo", squareUrl: "" };
 async function demoApi(action, data) {
@@ -247,33 +298,47 @@ const params = new URLSearchParams(location.search);
 const editToken = params.get("t");
 const st = { cls: "", pay: "", items: [] };
 const blank = () => ({ kind: "adult", size: "", chara: 0, name: "" });
+const kindJp = k => k === "kids" ? "子ども" : "大人";
+
+$("cashlessNote").textContent = CASHLESS_NOTE;
+$("payDesc").textContent = CASHLESS_NOTE;
 
 function renderCls() {
   $("clsOpts").innerHTML = Object.entries(CLASSES).map(([k, v]) =>
     `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.cls === k}" ${editToken ? "disabled" : ""}><b>${v}</b></button>`).join("");
-  $("clsOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.cls = b.dataset.k; renderCls(); renderShirts(); });
+  $("clsOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.cls = b.dataset.k; $("clsOpts").classList.remove("bad"); renderCls(); renderShirts(); });
 }
 function renderPay() {
   $("payOpts").innerHTML = Object.entries(PAY).map(([k, v]) =>
-    `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.pay === k}"><b>${v.jp}</b><span>${v.sub}</span></button>`).join("");
-  $("payOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.pay = b.dataset.k; renderPay(); });
+    `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.pay === k}"><b>${v.rec ? '<span class="badge">推奨</span>' : ""}${v.jp}</b><span>${v.sub}</span></button>`).join("");
+  $("payOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.pay = b.dataset.k; $("payOpts").classList.remove("bad"); renderPay(); renderSummary(); });
+}
+
+function sizeChart() {
+  return `<details class="chart"><summary>大人サイズ表（cm）</summary>
+    <table><tr><th>サイズ</th><th>身丈</th><th>身幅</th><th>肩幅</th><th>袖丈</th></tr>
+    ${SIZE_CHART.map(r => `<tr>${r.map((v, i) => i ? `<td>${v}</td>` : `<th>${v}</th>`).join("")}</tr>`).join("")}</table>
+    <p>身丈：首の付け根〜裾／身幅：脇下の横幅。子どもは120のみです。</p></details>`;
 }
 
 function renderShirts() {
   const wrap = $("shirts"); wrap.innerHTML = "";
   st.items.forEach((it, i) => {
     const sizes = it.kind === "kids" ? KIDS : ADULT;
-    const card = document.createElement("div"); card.className = "shirt";
-    card.innerHTML = `<div class="hd"><span>${String(i + 1).padStart(2, "0")} 枚目</span>${st.items.length > 1 ? `<button type="button" class="link" data-rm>削除</button>` : ""}</div>
+    const sum = [kindJp(it.kind) + (it.size ? " " + it.size : ""), it.chara ? "キャラ" + it.chara : "", it.name].filter(Boolean).join("・");
+    const card = document.createElement("div"); card.className = "shirt"; card.id = "shirt" + i;
+    card.innerHTML = `<div class="hd"><span>${i + 1}枚目 <span class="sum">${esc(sum)}</span></span>${st.items.length > 1 ? `<button type="button" class="link" data-rm>削除</button>` : ""}</div>
       <div class="bd">
-        <label class="fl">大人・子ども</label>
-        <div class="opts c2">${[["adult", "大人"], ["kids", "子ども（120）"]].map(([k, l]) => `<button type="button" class="opt" data-kind="${k}" aria-pressed="${it.kind === k}"><b>${l}</b></button>`).join("")}</div>
-        <label class="fl">サイズ</label>
-        <div class="opts sz">${sizes.map(s => `<button type="button" class="opt" data-size="${s}" aria-pressed="${it.size === s}"><b>${s}</b></button>`).join("")}</div>
-        <label class="fl">左胸のキャラクター ${it.chara ? `<span class="hint">（${it.chara}番）</span>` : ""}</label>
-        <div class="rail">${Array.from({ length: 8 }, (_, n) => `<button type="button" class="chara" data-chara="${n + 1}" aria-pressed="${it.chara === n + 1}" aria-label="キャラクター${n + 1}"><em>${n + 1}</em><img src="${charaImg(n + 1)}" alt=""></button>`).join("")}</div>
-        <label class="fl">背面の名前（半角ローマ字）</label>
-        <div class="field"><input class="big" data-name value="${esc(it.name)}" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="RINTAROU" maxlength="${NAME_MAX}"><span class="count">${it.name.length}/${NAME_MAX}</span></div>
+        <div class="q"><i>1</i>着る人</div>
+        <div class="opts c2">${[["adult", "大人"], ["kids", "子ども"]].map(([k, l]) => `<button type="button" class="opt" data-kind="${k}" aria-pressed="${it.kind === k}"><b>${l}</b><span>${k === "kids" ? "120サイズのみ" : "S〜3XL"}</span></button>`).join("")}</div>
+        <div class="q"><i>2</i>サイズ</div>
+        <div class="opts sz" data-sizes>${sizes.map(s => `<button type="button" class="opt" data-size="${s}" aria-pressed="${it.size === s}"><b>${s}</b></button>`).join("")}</div>
+        ${it.kind === "adult" ? sizeChart() : ""}
+        <div class="q"><i>3</i>左胸のキャラクター <small>${it.chara ? it.chara + "番を選択中" : "横にスクロールして8種類から選択"}</small></div>
+        <div class="rail" data-rail>${Array.from({ length: 8 }, (_, n) => `<button type="button" class="chara" data-chara="${n + 1}" aria-pressed="${it.chara === n + 1}" aria-label="キャラクター${n + 1}"><em>${n + 1}</em><img src="${charaImg(n + 1)}" alt=""></button>`).join("")}</div>
+        <div class="q"><i>4</i>背面の名前 <small>半角ローマ字・12文字まで</small></div>
+        <div class="field" data-nameF><input class="big" data-name value="${esc(it.name)}" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="例：SORA" maxlength="${NAME_MAX}"><span class="count">${it.name.length}/${NAME_MAX}</span></div>
+        <p class="hint">入力したつづりのまま印刷されます。10文字以上は、文字の幅を詰めて印刷します。</p>
         <div data-mini></div>
       </div>`;
     card.querySelector("[data-rm]")?.addEventListener("click", () => { st.items.splice(i, 1); renderShirts(); });
@@ -285,11 +350,14 @@ function renderShirts() {
       const clean = inp.value.replace(/[^A-Za-z .\-]/g, "").replace(/^\s+/, "").slice(0, NAME_MAX);
       if (clean !== inp.value) inp.value = clean;
       it.name = clean; cnt.textContent = `${clean.length}/${NAME_MAX}`;
+      card.querySelector("[data-nameF]").classList.remove("bad");
+      card.querySelector(".sum").textContent = [kindJp(it.kind) + (it.size ? " " + it.size : ""), it.chara ? "キャラ" + it.chara : "", clean.trim()].filter(Boolean).join("・");
       mini.innerHTML = ""; mini.appendChild(miniBack(st.cls, clean.trim())); renderSummary();
     };
     inp.addEventListener("input", upd); upd();
     wrap.appendChild(card);
-    const sel = card.querySelector('.chara[aria-pressed="true"]'); if (sel) sel.scrollIntoView({ block: "nearest", inline: "nearest" });
+    const sel = card.querySelector('.chara[aria-pressed="true"]');
+    if (sel) { const r = card.querySelector("[data-rail]"); r.scrollLeft = sel.offsetLeft - r.offsetLeft - 12; }
   });
   $("addShirt").classList.toggle("hidden", st.items.length >= MAX);
   $("countLabel").textContent = `${st.items.length}枚`;
@@ -297,11 +365,17 @@ function renderShirts() {
 }
 
 function renderSummary() {
-  const n = st.items.length;
-  $("total").textContent = yen(n * 3000);
-  $("totalSub").textContent = `合計（${n}枚 × ¥3,000）`;
-  $("nameList").innerHTML = st.items.map((it, i) =>
-    `<li><span class="nm">${esc(it.name.trim()) || '<span class="err" style="font-size:13px;font-family:inherit">未入力</span>'}</span><span class="sub">${i + 1}枚目・${it.kind === "kids" ? "子ども" : "大人"} ${it.size || "—"}・キャラ${it.chara || "—"}</span></li>`).join("");
+  const n = st.items.length, total = yen(n * 3000);
+  $("total").textContent = total; $("barTotal").textContent = total;
+  $("totalSub").textContent = `合計（${n}枚 × 3,000円）`; $("barSub").textContent = `${n}枚・合計`;
+  $("reviewHead").innerHTML = `<dt>クラス</dt><dd>${st.cls ? CLASSES[st.cls] : '<span class="err">未選択</span>'}</dd>
+    <dt>お名前</dt><dd>${esc($("child").value.trim()) || '<span class="err">未入力</span>'}${$("kana").value.trim() ? `（${esc($("kana").value.trim())}）` : ""}</dd>
+    <dt>お支払い</dt><dd>${st.pay ? PAY[st.pay].jp : '<span class="err">未選択</span>'}</dd>`;
+  $("review").innerHTML = st.items.map((it, i) => `<div class="row">
+    ${it.chara ? `<img src="${charaImg(it.chara)}" alt="">` : `<span style="width:44px;height:44px;background:var(--plate)"></span>`}
+    <div><div class="nm">${esc(it.name.trim()) || '<span class="err" style="font-size:13px;font-family:inherit">名前未入力</span>'}</div>
+    <div class="sub">${i + 1}枚目・${kindJp(it.kind)} ${it.size || "サイズ未選択"}・${it.chara ? "キャラ" + it.chara : "キャラ未選択"}</div></div>
+    <div class="pr">3,000円</div></div>`).join("");
   $("spellOk").checked = false;
 }
 
@@ -309,36 +383,49 @@ function collect() {
   return { cls: st.cls, child: $("child").value.trim(), kana: $("kana").value.trim(), pin: $("pin").value.trim(), pay: st.pay,
     items: st.items.map(it => ({ ...it, name: it.name.trim() })), spellOk: $("spellOk").checked };
 }
+/* 未入力の箇所を返す：[メッセージ, 赤くする要素] */
 function check(o) {
-  if (!o.cls) return "クラスを選んでください。";
-  if (!o.child) return "お子さまのお名前を入力してください。";
-  if (!o.kana) return "ふりがなを入力してください。";
-  if (!/^[ぁ-んァ-ヶー\s　]+$/.test(o.kana)) return "ふりがなは、ひらがなで入力してください。";
+  if (!o.cls) return ["クラスを選んでください。", $("clsOpts")];
+  if (!o.child) return ["お子さまのお名前を入力してください。", $("childF")];
+  if (!o.kana) return ["ふりがなを入力してください。", $("kanaF")];
+  if (!/^[ぁ-んァ-ヶー\s　]+$/.test(o.kana)) return ["ふりがなは、ひらがなで入力してください。", $("kanaF")];
   for (const [i, it] of o.items.entries()) {
-    if (!it.size) return `${i + 1}枚目：サイズを選んでください。`;
-    if (!it.chara) return `${i + 1}枚目：左胸のキャラクターを選んでください。`;
-    if (!/^[A-Za-z]/.test(it.name)) return `${i + 1}枚目：背面の名前を入力してください。`;
+    const c = $("shirt" + i);
+    if (!it.size) return [`${i + 1}枚目：サイズを選んでください。`, c.querySelector("[data-sizes]")];
+    if (!it.chara) return [`${i + 1}枚目：左胸のキャラクターを選んでください。`, c.querySelector("[data-rail]")];
+    if (!/^[A-Za-z]/.test(it.name)) return [`${i + 1}枚目：背面の名前を入力してください。`, c.querySelector("[data-nameF]")];
   }
-  if (!o.pay) return "お支払い方法を選んでください。";
-  if ((!editToken || o.pin) && !/^\d{4}$/.test(o.pin)) return "暗証番号を数字4桁で入力してください。";
-  if (!o.spellOk) return "背面の名前のつづり確認にチェックを入れてください。";
-  return "";
+  if (!o.pay) return ["お支払い方法を選んでください。", $("payOpts")];
+  if ((!editToken || o.pin) && !/^\d{4}$/.test(o.pin)) return ["暗証番号を数字4桁で入力してください。", $("pinF")];
+  if (!o.spellOk) return ["背面の名前のつづりを確認し、チェックを入れてください。", $("spellBox")];
+  return null;
+}
+function showErr(res) {
+  const err = $("formErr");
+  document.querySelectorAll(".bad").forEach(e => e.classList.remove("bad"));
+  if (!res) { err.classList.add("hidden"); return; }
+  const [msg, el] = res; err.textContent = msg; err.classList.remove("hidden");
+  el.classList.add("bad"); el.scrollIntoView({ behavior: "smooth", block: "center" });
+  toast(msg);
 }
 
-$("spellOk").addEventListener("change", () => $("formErr").classList.add("hidden"));
-$("addShirt").onclick = () => { st.items.push(blank()); renderShirts(); };
-$("pin").addEventListener("input", e => e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4));
+["child", "kana"].forEach(id => $(id).addEventListener("input", () => { $(id + "F").classList.remove("bad"); renderSummary(); }));
+$("pin").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); $("pinF").classList.remove("bad"); });
+$("spellOk").addEventListener("change", () => { $("spellBox").classList.remove("bad"); $("formErr").classList.add("hidden"); });
+$("addShirt").onclick = () => { st.items.push(blank()); renderShirts(); $("shirt" + (st.items.length - 1)).scrollIntoView({ behavior: "smooth", block: "start" }); };
+$("toReview").onclick = () => $("sec4").scrollIntoView({ behavior: "smooth", block: "start" });
+new IntersectionObserver(es => es.forEach(e => $("toReview").classList.toggle("hidden", e.isIntersecting)), { threshold: 0.15 }).observe($("sec4"));
+
 $("form").addEventListener("submit", async e => {
   e.preventDefault();
-  const o = collect(), msg = check(o), err = $("formErr");
-  err.classList.toggle("hidden", !msg); err.textContent = msg;
-  if (msg) return;
+  const o = collect(), res = check(o);
+  showErr(res); if (res) return;
   const btn = $("submit"); btn.disabled = true; btn.textContent = "送信中…";
   try {
     if (editToken) { await api("update", { token: editToken, order: o }); location.href = `status.html?t=${editToken}&updated=1`; }
     else { const d = await api("create", { order: o }); location.href = `status.html?t=${d.token}&new=1`; }
   } catch (ex) {
-    err.textContent = ex.message; err.classList.remove("hidden");
+    $("formErr").textContent = ex.message; $("formErr").classList.remove("hidden"); toast(ex.message);
     btn.disabled = false; btn.textContent = editToken ? "この内容で変更する" : "この内容で申し込む";
   }
 });
@@ -353,8 +440,9 @@ $("form").addEventListener("submit", async e => {
       Object.assign(st, { cls: order.cls, pay: order.pay, items: order.items.map(it => ({ ...it, chara: Number(it.chara) })) });
       $("child").value = order.child; $("kana").value = order.kana;
       $("title").innerHTML = "申込内容の<br>変更"; $("modeLabel").textContent = `Edit — ${order.id}`;
+      $("lead").textContent = "変更したい項目を直して、いちばん下の「この内容で変更する」を押してください。";
       $("clsLock").classList.remove("hidden");
-      $("pinHint").textContent = "変更する場合だけ入力してください（空欄のままなら今の番号のままです）。";
+      $("pinReq").textContent = "任意"; $("pinHint").textContent = "変更する場合だけ入力してください（空欄のままなら今の番号のままです）。";
       $("submit").textContent = "この内容で変更する";
       $("cancelEdit").classList.remove("hidden"); $("cancelEdit").onclick = () => location.href = `status.html?t=${editToken}`;
     } else st.items = [blank()];
