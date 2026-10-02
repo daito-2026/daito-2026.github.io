@@ -401,7 +401,7 @@ function render(o) {
       <button type="button" class="btn ghost" data-copy="${esc(url)}">URLをコピー</button>
       <p class="hint">LINEの「Keepメモ」か自分とのトークに送っておくと便利です。URLをなくした場合は <a class="link" href="status.html">こちら</a> から、クラス・ふりがな・暗証番号で確認できます。</p></section>
     <section class="step"><span class="label">Items</span><h2>申込内容 <small>${o.count}枚・${yen(o.total)}</small></h2><div id="items"></div></section>
-    ${editable ? `<section class="step"><span class="label">Edit</span><h2>変更・取り消し <small>10/2 23:59まで</small></h2>
+    ${editable ? `<section class="step"><span class="label">Edit</span><h2>変更・取り消し <small>10/4 23:59まで</small></h2>
       <a class="btn ghost" href="order.html?t=${token}">内容を変更する</a>
       <button type="button" class="btn danger" id="cancelBtn">申込を取り消す</button>
       <p class="hint">締切後・お支払い後の変更は、各クラスの役員にご連絡ください。</p></section>`
