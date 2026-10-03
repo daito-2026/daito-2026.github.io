@@ -370,6 +370,7 @@ $("lookup").addEventListener("submit", async e => {
 function payBlock(o) {
   const msg = `${o.id} ${o.clsJp} ${o.child}`;
   if (o.status !== "有効") return `<div class="box warn"><b>この申込は取り消されています。</b></div>`;
+  if (o.paid !== "未入金" && o.extraDue > 0) return `<div class="box"><span class="label">Payment — 追加分</span><p style="margin:4px 0 6px"><b style="font-size:22px">${yen(o.extraDue)}</b>（追加分）</p><p><b>追加分は、運動会当日のお渡しの際に現金でお支払いください。</b></p><p class="hint">最初のお申し込み分（${esc(o.paid)}）はお支払い済みです。</p></div>`;
   if (o.paid !== "未入金") return `<div class="box ok"><span class="label" style="color:inherit">Payment</span><p style="font-size:18px;margin-top:4px"><b>お支払い確認済み</b></p><p class="hint" style="color:inherit">${esc(o.paid)}${o.paidAt ? "（" + esc(o.paidAt) + "）" : ""}</p></div>`;
   const head = `<span class="label">Payment — 未払い</span><p style="margin:4px 0 10px"><b style="font-size:22px">${yen(o.total)}</b>（${o.count}枚）</p>`;
   if (o.pay === "paypay") return `<div class="box">${head}
@@ -418,7 +419,7 @@ function render(o) {
   const box = $("items");
   o.items.forEach((it, i) => {
     const d = document.createElement("div"); d.className = "shirt";
-    d.innerHTML = `<div class="hd"><span>${String(i + 1).padStart(2, "0")} 枚目</span><span>${it.kind === "kids" ? "子ども" : "大人"} ${esc(it.size)}</span></div>
+    d.innerHTML = `<div class="hd"><span>${String(i + 1).padStart(2, "0")} 枚目${it.add ? "（追加）" : ""}</span><span>${it.kind === "kids" ? "子ども" : "大人"} ${esc(it.size)}</span></div>
       <div class="bd" style="display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center">
         <div class="chara" style="width:72px;cursor:default"><em>${it.chara}</em><img src="${charaImg(it.chara)}" alt="キャラクター${it.chara}"></div>
         <div><span class="label">背面の名前</span><div class="nm" style="font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:22px;word-break:break-all">${esc(it.name)}</div></div>

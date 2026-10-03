@@ -212,6 +212,11 @@ th{font-weight:500;background:var(--plate)}
 .memo{margin-top:8px;padding:8px 10px;background:var(--plate);font-size:13px}
 .memo p{margin:2px 0 4px;line-height:1.6;word-break:break-all}
 #memoText{width:100%;border:1px solid var(--ink);padding:10px;font:inherit;font-size:15px;resize:vertical}
+.addRow{border:1px solid var(--line);padding:10px;margin-bottom:8px}
+.addHd{font-size:12px;font-weight:500;margin-bottom:6px;display:flex;justify-content:space-between}
+.addG{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:6px}
+.addRow select,.addRow input{width:100%;border:1px solid var(--ink);padding:9px 6px;font:inherit;font-size:15px;background:#fff;border-radius:0}
+.ask{max-height:92vh;overflow-y:auto}
 </style>
 </head>
 <body class="jp">
@@ -238,6 +243,17 @@ th{font-weight:500;background:var(--plate)}
     <div class="field" style="margin-bottom:10px"><input id="q" placeholder="名前・管理番号で検索"></div>
     <div id="list"></div></section>
 </main>
+<dialog id="addDlg" class="ask">
+  <div class="ak">
+    <p class="label">Tシャツの追加</p>
+    <div class="aname" id="addId" style="margin:4px 0 10px"></div>
+    <div id="addRows"></div>
+    <button type="button" class="add" id="addMore" style="margin-top:8px">＋ もう1枚</button>
+    <p class="hint" id="addSum"></p>
+    <button type="button" class="btn" id="addSave" style="margin-top:12px">追加する</button>
+    <button type="button" class="btn ghost" id="addCancel">やめる</button>
+  </div>
+</dialog>
 <dialog id="memoDlg" class="ask">
   <div class="ak">
     <p class="label">備考（管理用・保護者には表示されません）</p>
@@ -415,7 +431,8 @@ function openViewer(title, o, meta) {
 let PIN = "", data = null, flt = "all";
 try { PIN = sessionStorage.getItem("daito_admin") || ""; } catch (e) {}
 const SIZES = ["S", "M", "L", "XL", "2XL", "3XL"];
-const isPaid = o => o.paid !== "未入金";
+const isPaid = o => o.paid !== "未入金" && !(o.extraDue > 0);
+const due = o => o.paid === "未入金" ? o.total : (o.extraDue || 0);
 
 async function load() {
   $("loading").classList.remove("hidden");
@@ -464,15 +481,18 @@ function renderList() {
   $("list").innerHTML = list.map(o => `<div class="ord ${o.status !== "有効" ? "cxl" : isPaid(o) ? "paid" : "unpaid"}">
     <div class="top"><b>${esc(o.id)} ${esc(o.child)}</b><span class="hint" style="margin:0">${esc(o.clsJp)}</span></div>
     <div class="hint" style="margin:2px 0">${esc(o.kana)}／${esc(o.payJp)}／${o.count}枚 ${yen(o.total)}／${esc(o.createdAt)}</div>
-    <ul>${o.items.map((i, n) => `<li>${n + 1}. ${i.kind === "kids" ? "子ども" : "大人"} ${esc(i.size)}・キャラ${i.chara}・<b style="font-family:Krungthep,Oxanium,sans-serif">${esc(i.name)}</b></li>`).join("")}</ul>
-    <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span>${o.pickedAt ? ` <span class="pill">受取済 ${esc(o.pickedAt)}</span>` : ""}</div>
+    <ul>${o.items.map((i, n) => `<li>${n + 1}. ${i.kind === "kids" ? "子ども" : "大人"} ${esc(i.size)}・キャラ${i.chara}${i.add ? "（追加）" : ""}・<b style="font-family:Krungthep,Oxanium,sans-serif">${esc(i.name)}</b></li>`).join("")}</ul>
+    <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span>${o.extraDue > 0 ? ` <span class="pill err">追加分 未入金 ${yen(o.extraDue)}</span>` : ""}${o.pickedAt ? ` <span class="pill">受取済 ${esc(o.pickedAt)}</span>` : ""}</div>
     <div class="memo"><span class="label">備考</span>${o.memo ? `<p>${esc(o.memo).replace(/\n/g, "<br>")}</p>` : `<p class="hint" style="margin:0">なし</p>`}
       <button type="button" class="link" data-memo="${esc(o.id)}">${o.memo ? "備考を編集" : "備考を追加"}</button></div>
     ${o.status === "有効" ? `<div class="acts">
       <button type="button" data-id="${esc(o.id)}" data-s="paypay" class="${o.paid === "入金済み（PayPay）" ? "on" : ""}">PayPay入金</button>
       <button type="button" data-id="${esc(o.id)}" data-s="cash" class="${o.paid === "現金受領" ? "on" : ""}">現金受領</button>
-      ${isPaid(o) ? `<button type="button" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}</div>` : ""}
+      ${o.paid !== "未入金" ? `<button type="button" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}
+      ${o.extraDue > 0 ? `<button type="button" data-id="${esc(o.id)}" data-s="extra_cash">追加分 現金受領</button>` : ""}
+      <button type="button" data-add="${esc(o.id)}">＋ 追加</button></div>` : ""}
   </div>`).join("") || `<p class="hint">該当なし</p>`;
+  $("list").querySelectorAll("[data-add]").forEach(b => b.onclick = () => openAdd(data.orders.find(x => x.id === b.dataset.add)));
   $("list").querySelectorAll("[data-memo]").forEach(b => b.onclick = () => editMemo(data.orders.find(x => x.id === b.dataset.memo)));
   $("list").querySelectorAll("[data-s]").forEach(b => b.onclick = async () => {
     const s = b.dataset.s, id = b.dataset.id, o = data.orders.find(x => x.id === id);
@@ -480,6 +500,46 @@ function renderList() {
     b.disabled = true;
     try { await api("admin_mark", { pin: PIN, id, status: s }); toast(`${id} を記録しました`); await load(); } catch (ex) { toast(ex.message); b.disabled = false; }
   });
+}
+
+/* Tシャツの追加 */
+const ADD_SIZES = { adult: ["S", "M", "L", "XL", "2XL", "3XL"], kids: ["120"] };
+function openAdd(o) {
+  const d = $("addDlg"), rows = [];
+  $("addId").textContent = `${o.id} ${o.child}（${o.clsJp}）　今 ${o.count}枚`;
+  const box = $("addRows");
+  const row = () => {
+    const r = { kind: "adult", size: "", chara: "", name: "" }; rows.push(r);
+    const el = document.createElement("div"); el.className = "addRow";
+    const draw = () => {
+      el.innerHTML = `<div class="addHd">${rows.indexOf(r) + 1}枚目${rows.length > 1 ? ` <button type="button" class="link" data-rm>削除</button>` : ""}</div>
+        <div class="addG"><select data-k="kind"><option value="adult"${r.kind === "adult" ? " selected" : ""}>大人</option><option value="kids"${r.kind === "kids" ? " selected" : ""}>子ども</option></select>
+        <select data-k="size"><option value="">サイズ</option>${ADD_SIZES[r.kind].map(x => `<option${r.size === x ? " selected" : ""}>${x}</option>`).join("")}</select>
+        <select data-k="chara"><option value="">キャラ</option>${[1,2,3,4,5,6,7,8].map(n => `<option value="${n}"${String(r.chara) === String(n) ? " selected" : ""}>${n}番</option>`).join("")}</select></div>
+        <input data-k="name" value="${esc(r.name)}" placeholder="背面の名前（半角ローマ字）" autocapitalize="characters" spellcheck="false" maxlength="12">`;
+      el.querySelectorAll("[data-k]").forEach(i => i.oninput = i.onchange = () => {
+        let v = i.value; if (i.dataset.k === "name") { v = v.replace(/[^A-Za-z .\-]/g, ""); i.value = v; }
+        r[i.dataset.k] = v; if (i.dataset.k === "kind") { r.size = r.kind === "kids" ? "120" : ""; draw(); } sum();
+      });
+      el.querySelector("[data-rm]")?.addEventListener("click", () => { rows.splice(rows.indexOf(r), 1); el.remove(); box.querySelectorAll(".addRow").forEach((x, i) => x.querySelector(".addHd").firstChild.textContent = `${i + 1}枚目`); sum(); });
+    };
+    draw(); box.appendChild(el); sum();
+  };
+  const sum = () => { $("addSum").textContent = `追加 ${rows.length}枚・${yen(rows.length * 3000)}${o.paid !== "未入金" ? "（支払い済みの家庭なので、追加分は未入金として記録します）" : "（合計金額に足されます）"}`; };
+  box.innerHTML = ""; row();
+  $("addMore").onclick = row;
+  $("addCancel").onclick = () => d.close();
+  $("addSave").onclick = async () => {
+    const b = $("addSave");
+    const bad = rows.findIndex(r => !r.size || !r.chara || !/^[A-Za-z]/.test(r.name.trim()));
+    if (bad >= 0) { toast(`${bad + 1}枚目の入力が足りません`); return; }
+    if (!confirm(`${o.id} ${o.child} に ${rows.length}枚追加します。よろしいですか？\n\n` + rows.map((r, i) => `${i + 1}. ${r.kind === "kids" ? "子ども" : "大人"} ${r.size}・キャラ${r.chara}・${r.name.trim()}`).join("\n"))) return;
+    b.disabled = true; b.textContent = "保存中…";
+    try { await api("admin_add", { pin: PIN, id: o.id, items: rows.map(r => ({ ...r, name: r.name.trim() })) }); d.close(); toast(`${o.id} に追加しました`); await load(); }
+    catch (ex) { toast(/不明な操作/.test(ex.message) ? "受付の仕組み（GAS）の更新がまだのため追加できません" : ex.message); }
+    finally { b.disabled = false; b.textContent = "追加する"; }
+  };
+  d.showModal();
 }
 
 /* 備考の編集 */
@@ -499,13 +559,14 @@ function editMemo(o) {
 /* 記録の前の確認ポップアップ */
 function askMark(o, s) {
   const T = {
+    extra_cash: ["追加分の現金の受け取り", "追加分の現金を受け取りましたか？", "はい、追加分を受け取りました", "#1B6B3A"],
     cash:   ["現金の受け取り", "この方から現金を受け取りましたか？", "はい、現金を受け取りました", "#1B6B3A"],
     paypay: ["PayPayの入金確認", "PayPayで、この金額の入金を確認しましたか？", "はい、入金を確認しました", "#1B6B3A"],
     unpaid: ["未入金に戻す", "入金の記録を取り消して「未入金」に戻しますか？", "はい、未入金に戻します", "#B3261E"],
   }[s];
   const d = $("ask");
   $("askLabel").textContent = T[0]; $("askId").textContent = `${o.id}（${o.clsJp}）`;
-  $("askName").textContent = `${o.child}（${o.kana}）`; $("askAmt").textContent = `${yen(o.total)}（${o.count}枚）`;
+  $("askName").textContent = `${o.child}（${o.kana}）`; $("askAmt").textContent = s === "extra_cash" ? `追加分 ${yen(o.extraDue)}` : `${yen(o.total)}（${o.count}枚）`;
   $("askMsg").textContent = T[1]; $("askYes").textContent = `正しい記号を押すと「${T[2].replace(/^はい、/, "")}」として記録します`;
   const SYMS = ["○", "△", "□"];
   let target;
