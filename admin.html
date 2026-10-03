@@ -181,16 +181,6 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
 th,td{border:1px solid var(--line);padding:6px;text-align:center}
 th{font-weight:500;background:var(--plate)}
-.ord{border:1px solid var(--line);padding:12px;margin-bottom:8px}
-.ord.paid{border-left:4px solid var(--ok)}
-.ord.unpaid{border-left:4px solid var(--err)}
-.ord.cxl{opacity:.45}
-.ord .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.ord .top b{font-size:17px;font-weight:500}
-.ord ul{list-style:none;font-size:12px;margin:6px 0;color:#444}
-.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-.acts button{all:unset;cursor:pointer;border:1px solid var(--ink);padding:6px 10px;font-size:12px}
-.acts button.on{background:var(--ink);color:#fff}
 .filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .filter button{all:unset;cursor:pointer;border:1px solid var(--line);padding:6px 10px;font-size:12px}
 .filter button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
@@ -217,6 +207,27 @@ th{font-weight:500;background:var(--plate)}
 .addG{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:6px}
 .addRow select,.addRow input{width:100%;border:1px solid var(--ink);padding:9px 6px;font:inherit;font-size:15px;background:#fff;border-radius:0}
 .ask{max-height:92vh;overflow-y:auto}
+.ord{border:1px solid var(--line);margin-bottom:6px;background:#fff}
+.ord>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:52px 1fr auto auto;gap:8px;align-items:center;padding:10px 10px 10px 12px}
+.ord>summary::-webkit-details-marker{display:none}
+.ord.paid{border-left:5px solid var(--ok)}.ord.unpaid{border-left:5px solid var(--err)}.ord.part{border-left:5px solid #C77700}.ord.cxl{opacity:.45}
+.sid{font-weight:500;font-size:13px}.snm{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.scnt{font-size:12px;color:var(--muted)}
+.chip{font-size:11px;padding:3px 7px;white-space:nowrap;color:#fff}.chip.ok{background:var(--ok)}.chip.ng{background:var(--err)}.chip.warn{background:#C77700}.chip.gray{background:#999}
+.tag{font-size:10px;border:1px solid var(--muted);color:var(--muted);padding:0 4px;vertical-align:2px}
+.det{padding:0 12px 12px;border-top:1px solid var(--line)}
+.itbl{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0}
+.itbl th{font-weight:500;background:var(--plate);padding:5px 4px;text-align:left}
+.itbl td{border-top:1px solid var(--line);padding:6px 4px;vertical-align:middle}
+.itbl td small{display:block;font-size:9px;color:#C77700}
+.itbl tr.addrow{background:#FFF6E8}
+.itbl .bn{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:13px;word-break:break-all}
+.t{font-size:11px;padding:1px 6px;color:#fff}.t.ok{background:var(--ok)}.t.ng{background:var(--err)}
+.pinfo{display:grid;grid-template-columns:70px 1fr;row-gap:4px;font-size:12px;margin:6px 0}
+.pinfo dt{color:var(--muted)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.acts button{all:unset;cursor:pointer;border:1px solid var(--ink);padding:8px 12px;font-size:13px}
+.acts button.pri{background:#C77700;border-color:#C77700;color:#fff}
+.acts button.sub{border-color:var(--line);color:var(--muted);font-size:11px;padding:8px 8px}
 </style>
 </head>
 <body class="jp">
@@ -450,7 +461,7 @@ async function load() {
 function render() {
   const act = data.orders.filter(o => o.status === "有効");
   const shirts = act.reduce((a, o) => a + o.count, 0), total = act.reduce((a, o) => a + o.total, 0);
-  const paid = act.filter(isPaid).reduce((a, o) => a + o.total, 0);
+  const paid = act.reduce((a, o) => a + o.total - due(o), 0);
   const by = k => act.filter(o => o.payJp.startsWith(k)).length;
   $("kpi").innerHTML = `<div><span class="label">申込</span><b>${act.length}件</b><span class="hint">ひまわり ${act.filter(o => o.clsJp === "ひまわり組").length}／ゆり ${act.filter(o => o.clsJp === "ゆり組").length}</span></div>
     <div><span class="label">枚数</span><b>${shirts}枚</b></div>
@@ -462,7 +473,7 @@ function render() {
   $("sizeTbl").innerHTML = `<table><tr><th>区分</th><th>サイズ</th><th>ひまわり</th><th>ゆり</th><th>計</th></tr>${rows.flatMap(([k, ss]) => ss.map(s => `<tr><td>${k}</td><td>${s}</td><td>${cnt(k, s, "ひまわり組")}</td><td>${cnt(k, s, "ゆり組")}</td><td><b>${cnt(k, s)}</b></td></tr>`)).join("")}</table>`;
   const cc = n => act.reduce((a, o) => a + o.items.filter(i => Number(i.chara) === n).length, 0);
   $("charaTbl").innerHTML = `<table><tr>${Array.from({ length: 8 }, (_, i) => `<th>${i + 1}</th>`).join("")}</tr><tr>${Array.from({ length: 8 }, (_, i) => `<td>${cc(i + 1)}</td>`).join("")}</tr></table>`;
-  const F = [["all", "すべて"], ["unpaid", "未入金"], ["paid", "入金済み"], ["himawari", "ひまわり"], ["yuri", "ゆり"], ["cxl", "取消"]];
+  const F = [["all", "すべて"], ["unpaid", "未入金あり"], ["paid", "支払済"], ["extra", "追加あり"], ["himawari", "ひまわり"], ["yuri", "ゆり"], ["cxl", "取消"]];
   $("filter").innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${flt === k}">${l}</button>`).join("");
   $("filter").querySelectorAll("button").forEach(b => b.onclick = () => { flt = b.dataset.f; render(); });
   renderList();
@@ -474,24 +485,44 @@ function renderList() {
     if (flt === "cxl") { if (o.status === "有効") return false; } else if (o.status !== "有効") return false;
     if (flt === "unpaid" && isPaid(o)) return false;
     if (flt === "paid" && !isPaid(o)) return false;
+    if (flt === "extra" && !o.items.some(i => i.add)) return false;
     if (flt === "himawari" && o.clsJp !== "ひまわり組") return false;
     if (flt === "yuri" && o.clsJp !== "ゆり組") return false;
     return !q || [o.id, o.child, o.kana, o.memo || "", ...o.items.map(i => i.name)].join(" ").toLowerCase().includes(q.toLowerCase());
   });
-  $("list").innerHTML = list.map(o => `<div class="ord ${o.status !== "有効" ? "cxl" : isPaid(o) ? "paid" : "unpaid"}">
-    <div class="top"><b>${esc(o.id)} ${esc(o.child)}</b><span class="hint" style="margin:0">${esc(o.clsJp)}</span></div>
-    <div class="hint" style="margin:2px 0">${esc(o.kana)}／${esc(o.payJp)}／${o.count}枚 ${yen(o.total)}／${esc(o.createdAt)}</div>
-    <ul>${o.items.map((i, n) => `<li>${n + 1}. ${i.kind === "kids" ? "子ども" : "大人"} ${esc(i.size)}・キャラ${i.chara}${i.add ? "（追加）" : ""}・<b style="font-family:Krungthep,Oxanium,sans-serif">${esc(i.name)}</b></li>`).join("")}</ul>
-    <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span>${o.extraDue > 0 ? ` <span class="pill err">追加分 未入金 ${yen(o.extraDue)}</span>` : ""}${o.pickedAt ? ` <span class="pill">受取済 ${esc(o.pickedAt)}</span>` : ""}</div>
-    <div class="memo"><span class="label">備考</span>${o.memo ? `<p>${esc(o.memo).replace(/\n/g, "<br>")}</p>` : `<p class="hint" style="margin:0">なし</p>`}
-      <button type="button" class="link" data-memo="${esc(o.id)}">${o.memo ? "備考を編集" : "備考を追加"}</button></div>
-    ${o.status === "有効" ? `<div class="acts">
-      <button type="button" data-id="${esc(o.id)}" data-s="paypay" class="${o.paid === "入金済み（PayPay）" ? "on" : ""}">PayPay入金</button>
-      <button type="button" data-id="${esc(o.id)}" data-s="cash" class="${o.paid === "現金受領" ? "on" : ""}">現金受領</button>
-      ${o.paid !== "未入金" ? `<button type="button" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}
-      ${o.extraDue > 0 ? `<button type="button" data-id="${esc(o.id)}" data-s="extra_cash">追加分 現金受領</button>` : ""}
-      <button type="button" data-add="${esc(o.id)}">＋ 追加</button></div>` : ""}
-  </div>`).join("") || `<p class="hint">該当なし</p>`;
+  const chip = o => o.status !== "有効" ? `<span class="chip gray">取消</span>`
+    : o.paid === "未入金" ? `<span class="chip ng">未入金 ${yen(o.total)}</span>`
+    : o.extraDue > 0 ? `<span class="chip warn">追加分 未入金 ${yen(o.extraDue)}</span>`
+    : `<span class="chip ok">支払済</span>`;
+  const itemPay = (o, i) => o.paid === "未入金" ? `<span class="t ng">未</span>` : (i.add && o.extraDue > 0) ? `<span class="t ng">未</span>` : `<span class="t ok">済</span>`;
+  $("list").innerHTML = list.map(o => `<details class="ord ${o.status !== "有効" ? "cxl" : o.paid === "未入金" ? "unpaid" : o.extraDue > 0 ? "part" : "paid"}">
+    <summary>
+      <span class="sid">${esc(o.id)}</span>
+      <span class="snm">${esc(o.child)}${o.items.some(i => i.add) ? ` <span class="tag">追加あり</span>` : ""}${o.pickedAt ? ` <span class="tag">受取済</span>` : ""}</span>
+      <span class="scnt">${o.count}枚</span>
+      ${chip(o)}
+    </summary>
+    <div class="det">
+      <div class="hint" style="margin:0 0 6px">${esc(o.clsJp)}／${esc(o.kana)}／申込 ${esc(o.createdAt)}</div>
+      <table class="itbl"><tr><th>#</th><th>区分</th><th>キャラ</th><th>背面</th><th>支払</th></tr>
+        ${o.items.map((i, n) => `<tr class="${i.add ? "addrow" : ""}"><td>${n + 1}${i.add ? "<small>追加</small>" : ""}</td><td>${i.kind === "kids" ? "子" : "大"} ${esc(i.size)}</td><td>${i.chara}</td><td class="bn">${esc(i.name)}</td><td>${itemPay(o, i)}</td></tr>`).join("")}
+      </table>
+      <dl class="pinfo">
+        <dt>元の分</dt><dd>${esc(o.payJp)}／<b class="${o.paid === "未入金" ? "err" : ""}">${esc(o.paid)}</b>${o.paidAt ? `（${esc(o.paidAt)}）` : ""}</dd>
+        ${o.items.some(i => i.add) ? `<dt>追加分</dt><dd>${o.extraDue > 0 ? `<b class="err">未入金 ${yen(o.extraDue)}</b>（当日現金）` : o.paid === "未入金" ? "元の分と一緒に支払い" : "<b>支払済</b>"}</dd>` : ""}
+        <dt>合計</dt><dd>${yen(o.total)}</dd>
+        ${o.note ? `<dt>入金メモ</dt><dd>${esc(o.note)}</dd>` : ""}
+        ${o.pickedAt ? `<dt>受け取り</dt><dd>${esc(o.pickedAt)}</dd>` : ""}
+      </dl>
+      <div class="memo"><span class="label">備考</span>${o.memo ? `<p>${esc(o.memo).replace(/\n/g, "<br>")}</p>` : `<p class="hint" style="margin:0">なし</p>`}
+        <button type="button" class="link" data-memo="${esc(o.id)}">${o.memo ? "備考を編集" : "備考を追加"}</button></div>
+      ${o.status === "有効" ? `<div class="acts">
+        ${o.paid === "未入金" ? `<button type="button" data-id="${esc(o.id)}" data-s="paypay">PayPay入金</button><button type="button" data-id="${esc(o.id)}" data-s="cash">現金受領</button>` : ""}
+        ${o.extraDue > 0 ? `<button type="button" class="pri" data-id="${esc(o.id)}" data-s="extra_cash">追加分 現金受領</button>` : ""}
+        <button type="button" data-add="${esc(o.id)}">＋ 追加</button>
+        ${o.paid !== "未入金" ? `<button type="button" class="sub" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}</div>` : ""}
+    </div>
+  </details>`).join("") || `<p class="hint">該当なし</p>`;
   $("list").querySelectorAll("[data-add]").forEach(b => b.onclick = () => openAdd(data.orders.find(x => x.id === b.dataset.add)));
   $("list").querySelectorAll("[data-memo]").forEach(b => b.onclick = () => editMemo(data.orders.find(x => x.id === b.dataset.memo)));
   $("list").querySelectorAll("[data-s]").forEach(b => b.onclick = async () => {
