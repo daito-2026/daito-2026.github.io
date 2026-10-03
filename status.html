@@ -169,6 +169,10 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 .viewer .vnote{font-size:11px;color:var(--muted)}
 .review .row.big{grid-template-columns:1fr;gap:8px}
 .review .rtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+/* pickup qr */
+.qrbox{border:1px solid var(--ink);padding:16px;text-align:center;background:#fff}
+#qr svg{width:min(70vw,260px);height:auto;display:block;margin:0 auto}
+.qrid{margin-top:8px;font-size:14px;font-weight:500}
 </style>
 </head>
 <body class="jp">
@@ -194,6 +198,7 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 <div class="loading" id="loading">読み込み中…</div>
 <footer><span>大東幼稚園 運動会Tシャツ 2026</span></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script>
 /* 申込フォーム共通 */
 const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6W4dcP5zB88keT2JBWh9n_c5UZNZ_qO8_p5A7sWeiC75mjA/exec"; // GASのウェブアプリURL（/exec）
@@ -219,7 +224,7 @@ const DEMO = API_URL.startsWith("__");
 const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
   items: [{ kind: "adult", size: "L", chara: 3, name: "SORA" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
-  open: true, paypayUrl: "#demo", squareUrl: "" };
+  open: true, paypayUrl: "#demo", squareUrl: "", pickup: "DT1-Y-001-demo123456", pickedAt: "" };
 async function demoApi(action, data) {
   await new Promise(r => setTimeout(r, 250));
   const fail = m => { throw new Error(m); };
@@ -396,6 +401,10 @@ function render(o) {
     ${o.status === "有効" && o.paid === "未入金" ? `<section class="step"><span class="label">Change</span><h2>お支払い方法の変更</h2>
       <div class="opts" id="payChg">${Object.entries(PAY).map(([k, v]) => `<button type="button" class="opt" data-pay="${k}" aria-pressed="${o.pay === k}"><b>${v.rec ? '<span class="badge">推奨</span>' : ""}${v.jp}</b><span>${o.pay === k ? "現在のお支払い方法です" : "タップするとこの方法に変更します"}</span></button>`).join("")}</div>
       <p class="hint">お支払いが済むまでは、いつでも変更できます。</p></section>` : ""}
+    ${o.status === "有効" && o.pickup ? `<section class="step"><span class="label">Pickup</span><h2>当日の受け取り</h2>
+      ${o.pickedAt ? `<div class="box ok"><b>受け取り済み</b>（${esc(o.pickedAt)}）</div>` : `<p class="hint" style="margin:0 0 10px;color:var(--ink);font-size:13px">運動会当日、受け取りの際にこのQRコードを係の人に見せてください。</p>
+      <div class="qrbox"><div id="qr"></div><div class="qrid">${esc(o.id)}　${esc(o.clsJp)}　${esc(o.child)}</div></div>
+      <p class="hint">スクリーンショットを撮っておくと、電波が弱い場所でもすぐ出せます。</p>`}</section>` : ""}
     <section class="step"><span class="label">Save</span><h2>このページを保存</h2>
       <a class="btn line" href="${lineShareUrl(shareText)}" target="_blank" rel="noopener">LINEで保存する</a>
       <button type="button" class="btn ghost" data-copy="${esc(url)}">URLをコピー</button>
@@ -417,6 +426,10 @@ function render(o) {
     d.querySelector(".bd").after(miniBack(o.cls, it.name));
     box.appendChild(d);
   });
+  if (o.pickup && !o.pickedAt && window.qrcode && $("qr")) {
+    const q = qrcode(0, "M"); q.addData(o.pickup); q.make();
+    $("qr").innerHTML = q.createSvgTag({ cellSize: 6, margin: 2, scalable: true });
+  }
   $("view").querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copyText(b.dataset.copy));
   $("view").querySelectorAll("[data-pay]").forEach(b => b.onclick = async () => {
     const pay = b.dataset.pay; if (pay === o.pay) return;

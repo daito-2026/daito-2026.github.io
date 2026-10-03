@@ -169,6 +169,10 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 .viewer .vnote{font-size:11px;color:var(--muted)}
 .review .row.big{grid-template-columns:1fr;gap:8px}
 .review .rtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+/* pickup qr */
+.qrbox{border:1px solid var(--ink);padding:16px;text-align:center;background:#fff}
+#qr svg{width:min(70vw,260px);height:auto;display:block;margin:0 auto}
+.qrid{margin-top:8px;font-size:14px;font-weight:500}
 </style>
 <style>
 .kpi{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
@@ -287,7 +291,7 @@ const DEMO = API_URL.startsWith("__");
 const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
   items: [{ kind: "adult", size: "L", chara: 3, name: "SORA" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
   count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
-  open: true, paypayUrl: "#demo", squareUrl: "" };
+  open: true, paypayUrl: "#demo", squareUrl: "", pickup: "DT1-Y-001-demo123456", pickedAt: "" };
 async function demoApi(action, data) {
   await new Promise(r => setTimeout(r, 250));
   const fail = m => { throw new Error(m); };
@@ -461,7 +465,7 @@ function renderList() {
     <div class="top"><b>${esc(o.id)} ${esc(o.child)}</b><span class="hint" style="margin:0">${esc(o.clsJp)}</span></div>
     <div class="hint" style="margin:2px 0">${esc(o.kana)}／${esc(o.payJp)}／${o.count}枚 ${yen(o.total)}／${esc(o.createdAt)}</div>
     <ul>${o.items.map((i, n) => `<li>${n + 1}. ${i.kind === "kids" ? "子ども" : "大人"} ${esc(i.size)}・キャラ${i.chara}・<b style="font-family:Krungthep,Oxanium,sans-serif">${esc(i.name)}</b></li>`).join("")}</ul>
-    <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span></div>
+    <div><span class="pill ${isPaid(o) ? "" : "err"}">${esc(o.paid)}</span> <span class="hint">${esc(o.paidAt)} ${esc(o.note || "")}</span>${o.pickedAt ? ` <span class="pill">受取済 ${esc(o.pickedAt)}</span>` : ""}</div>
     <div class="memo"><span class="label">備考</span>${o.memo ? `<p>${esc(o.memo).replace(/\n/g, "<br>")}</p>` : `<p class="hint" style="margin:0">なし</p>`}
       <button type="button" class="link" data-memo="${esc(o.id)}">${o.memo ? "備考を編集" : "備考を追加"}</button></div>
     ${o.status === "有効" ? `<div class="acts">
@@ -534,8 +538,8 @@ $("syncBtn").onclick = async e => {
   b.disabled = false; b.textContent = "Square入金を確認";
 };
 $("csvBtn").onclick = () => {
-  const head = ["管理番号", "クラス", "子どもの名前", "ふりがな", "No", "区分", "サイズ", "左胸キャラ", "背面の名前", "支払方法", "入金状況", "備考"];
-  const rows = data.orders.filter(o => o.status === "有効").flatMap(o => o.items.map((i, n) => [o.id, o.clsJp, o.child, o.kana, n + 1, i.kind === "kids" ? "子ども" : "大人", i.size, i.chara, i.name, o.payJp, o.paid, o.memo || ""]));
+  const head = ["管理番号", "クラス", "子どもの名前", "ふりがな", "No", "区分", "サイズ", "左胸キャラ", "背面の名前", "支払方法", "入金状況", "備考", "受取"];
+  const rows = data.orders.filter(o => o.status === "有効").flatMap(o => o.items.map((i, n) => [o.id, o.clsJp, o.child, o.kana, n + 1, i.kind === "kids" ? "子ども" : "大人", i.size, i.chara, i.name, o.payJp, o.paid, o.memo || "", o.pickedAt || ""]));
   const csv = "﻿" + [head, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
   const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
   a.download = `daito_tee_${new Date().toISOString().slice(0, 10)}.csv`; a.click();

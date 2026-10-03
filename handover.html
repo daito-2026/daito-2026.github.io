@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>申込 | 大東幼稚園 運動会Tシャツ</title>
+<title>受け渡し | 大東幼稚園 運動会Tシャツ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Oxanium:wght@800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
@@ -174,104 +174,58 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 #qr svg{width:min(70vw,260px);height:auto;display:block;margin:0 auto}
 .qrid{margin-top:8px;font-size:14px;font-weight:500}
 </style>
+<style>
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.tabs button{all:unset;cursor:pointer;text-align:center;padding:14px 0;font-size:15px;font-weight:500;color:var(--muted)}
+.tabs button[aria-pressed="true"]{color:var(--ink);box-shadow:inset 0 -3px 0 var(--ink)}
+.cam{position:relative;background:#000;aspect-ratio:1/1;overflow:hidden}
+.cam video{width:100%;height:100%;object-fit:cover;display:block}
+.cam .frame{position:absolute;inset:18%;border:3px solid #fff;border-radius:12px;box-shadow:0 0 0 999px rgba(0,0,0,.35)}
+.cam .msg{position:absolute;left:0;right:0;bottom:10px;text-align:center;color:#fff;font-size:13px}
+.prog{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13px}
+.prog b{font-size:22px;font-weight:500}
+.res{padding:12px;border:1px solid var(--line);margin-top:8px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.res.done{opacity:.5}
+.card{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;max-width:480px;margin:0 auto;padding:16px 16px calc(24px + env(safe-area-inset-bottom))}
+.card .id{font-size:44px;font-weight:500;line-height:1.1}
+.card .nm{font-size:24px;margin:2px 0 10px}
+.band{padding:14px;font-size:17px;font-weight:500;margin:12px 0;color:#fff;text-align:center}
+.band.ok{background:var(--ok)}.band.ng{background:var(--err)}.band.done{background:#555}
+.it{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:15px;gap:10px}
+.it .bn{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:18px;word-break:break-all}
+.sym{border:1px solid var(--ink);padding:12px;margin:10px 0;text-align:center}
+.symt{font-size:60px;line-height:1.1;margin:4px 0 10px}
+.symc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.symc button{all:unset;cursor:pointer;border:1px solid var(--ink);font-size:34px;padding:12px 0;text-align:center}
+</style>
 </head>
 <body class="jp">
-<header><a class="logo" href="./">大東幼稚園</a><span class="label">Order</span></header>
+<header><span class="logo">大東幼稚園</span><span class="label">Pickup</span></header>
 
-<div id="closed" class="hidden">
-  <section class="hero"><span class="label">Closed</span><h1>申込の受付は<br>終了しました</h1>
-  <p>変更・追加のご相談は、各クラスの役員に直接ご連絡ください。</p>
-  <p style="margin-top:14px"><a class="link" href="status.html">申込内容の確認はこちら</a></p></section>
-</div>
-
-<form id="form" class="hidden" novalidate>
-  <section class="hero">
-    <span class="label" id="modeLabel">Sports Day Tee 2026</span>
-    <h1 id="title">運動会Tシャツ<br>申込フォーム</h1>
-    <p class="lead" id="lead">4つのステップで申し込めます（約3分）。<br>入力内容は、締切までなら申込後も<a class="link" style="font-size:inherit" href="status.html">こちら</a>より変更できます。</p>
-    <button type="button" class="heroPv" id="heroPv" aria-label="完成イメージを拡大"></button>
-    <button type="button" class="btn" id="openGuide">お申し込みの前に（ご確認事項）</button>
-    <a class="btn ghost" href="status.html" style="margin:8px 0 16px;flex-direction:column;gap:2px;padding:8px 16px"><span>お申し込み済みの方はこちら</span><small style="font-size:11px;font-weight:400">内容の確認・変更・お支払い</small></a>
-    <dl class="kv">
-      <dt>価格</dt><dd>1枚 3,000円（大人・子ども共通）</dd>
-      <dt>締切</dt><dd><b>10月4日（日）23:59</b></dd>
-      <dt>お渡し</dt><dd>運動会当日（場所・時間は追ってご連絡します）</dd>
-      <dt>デザイン</dt><dd>オリジナルキャラクター／ネイビー</dd>
-    </dl>
-    <div class="notice"><b>お支払いについてのお願い</b><span id="cashlessNote"></span></div>
-  </section>
-  <nav class="flow" aria-hidden="true"><span><b>STEP 1</b>お子さま</span><span><b>STEP 2</b>Tシャツ</span><span><b>STEP 3</b>お支払い</span><span><b>STEP 4</b>確認</span></nav>
-
-  <!-- STEP 1 -->
-  <section class="sec" id="sec1">
-    <span class="label">Step 1</span><h2>お子さまについて</h2>
-    <p class="desc">当日のお渡しと、申込内容の確認に使います。</p>
-    <div class="q"><i>1</i>クラス<span class="req">必須</span></div>
-    <div class="opts c2" id="clsOpts"></div>
-    <p class="hint hidden" id="clsLock">クラスは変更できません。変更する場合は、取り消してから申込み直してください。</p>
-    <div class="q"><i>2</i>お子さまのお名前<span class="req">必須</span></div>
-    <div class="field" id="childF"><input id="child" autocomplete="off" placeholder="例：大東 太郎"></div>
-    <div class="q"><i>3</i>ふりがな<span class="req">必須</span></div>
-    <div class="field" id="kanaF"><input id="kana" autocomplete="off" placeholder="例：だいとう たろう"></div>
-  </section>
-
-  <!-- STEP 2 -->
-  <section class="sec" id="sec2">
-    <span class="label">Step 2</span><h2>Tシャツ <small class="hint" id="countLabel"></small></h2>
-    <p class="desc">保護者のみなさま向けのTシャツですが、ご希望の方はお子さま用（120サイズ）もお作りできます。1枚ずつ、着る人・サイズ・左胸のキャラクター・背面のお名前を選んでください。ご家族の分もまとめてお申し込みいただけます。</p>
-    <div id="shirts"></div>
-    <button type="button" class="add" id="addShirt">＋ もう1枚追加する</button>
-  </section>
-
-  <!-- STEP 3 -->
-  <section class="sec" id="sec3">
-    <span class="label">Step 3</span><h2>お支払い方法</h2>
-    <p class="desc" id="payDesc"></p>
-    <div class="opts" id="payOpts"></div>
-    <p class="hint">PayPay・カード等は、運動会当日までにお支払いください。お支払い方法は、申込後に確認ページから変更できます。</p>
-    <div class="q" style="margin-top:22px"><i>✓</i>暗証番号（数字4桁）<span class="req" id="pinReq">必須</span></div>
-    <div class="field" id="pinF"><input id="pin" inputmode="numeric" pattern="\d*" maxlength="4" autocomplete="off" placeholder="0000"></div>
-    <p class="hint" id="pinHint">数字4桁をご自身で設定してください。申込後のURLをなくした時に、クラス・ふりがな・この番号で申込内容を確認できます。忘れないものにしてください。</p>
-  </section>
-
-  <!-- STEP 4 -->
-  <section class="sec" id="sec4">
-    <span class="label">Step 4</span><h2>申込内容の確認</h2>
-    <p class="desc">背面の名前は、ここに表示されているつづりのまま印刷します。</p>
-    <dl class="kv" id="reviewHead"></dl>
-    <div class="review" id="review"></div>
-    <div class="total"><span id="totalSub">合計</span><b id="total">¥0</b></div>
-    <label class="check" id="spellBox"><input type="checkbox" id="spellOk"><span>背面の名前のつづり（大文字・小文字も含む）を確認しました。このつづりのまま印刷されることに同意します。</span></label>
-    <p class="hint err hidden" id="formErr" role="alert"></p>
-    <button type="submit" class="btn" id="submit">この内容で申し込む</button>
-    <button type="button" class="btn ghost hidden" id="cancelEdit">変更せずに戻る</button>
-  </section>
-
-  <div class="bar"><div class="t"><small id="barSub">0枚</small><b id="barTotal">¥0</b></div><button type="button" class="btn" id="toReview">確認へ進む</button></div>
+<form id="login" class="step hidden" novalidate>
+  <h2>受け渡しページ</h2>
+  <div class="field"><input id="pin" type="password" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="PIN"></div>
+  <p class="hint err hidden" id="lgErr"></p>
+  <div style="margin-top:12px"><button class="btn">開く</button></div>
 </form>
 
+<main id="app" class="hidden">
+  <div class="prog"><span>受け取り済み</span><span><b id="doneN">0</b> / <span id="allN">0</span> 家庭</span></div>
+  <div class="tabs"><button type="button" data-tab="scan" aria-pressed="true">QRを読む</button><button type="button" data-tab="find" aria-pressed="false">名前で探す</button></div>
+  <section id="scanTab">
+    <div class="cam"><video id="video" playsinline muted></video><div class="frame"></div><div class="msg" id="camMsg">カメラを起動しています…</div></div>
+    <div class="step"><p class="hint" style="margin:0">保護者のスマホのQRコードを枠に合わせてください。読めない時は「名前で探す」を使ってください。</p></div>
+  </section>
+  <section id="findTab" class="step hidden">
+    <div class="field"><input id="q" placeholder="ふりがな・名前・管理番号"></div>
+    <div id="results"></div>
+  </section>
+</main>
 
-<dialog id="guide" class="guide">
-  <div class="gh"><b>お申し込みの前に</b><button type="button" class="gx" data-close aria-label="閉じる">✕</button></div>
-  <div class="gb">
-    <p class="gl">ご確認いただきたいことを8つにまとめました。1分ほどで読めます。</p>
-    <ol>
-      <li><b>締切は 10月4日（日）23:59 です</b><span>締切後のお申し込みや変更は、各クラスの役員までご相談ください。</span></li>
-      <li><b>1枚 3,000円（大人・子ども共通）です</b><span>合計金額は「枚数 × 3,000円」です。</span></li>
-      <li><b>保護者用のTシャツです（ご希望の方はお子さま用も作れます）</b><span>もともとは保護者のみなさま向けのおそろいTシャツですが、ご希望の方にはお子さま用もお作りします。<br>大人：S・M・L・XL・2XL・3XL<br>お子さま：120 のみ<br>大人のサイズ表は、フォームの中でご覧いただけます。</span></li>
-      <li><b>背中のお名前はローマ字で入力します</b><span>保護者・お子さまどちらのお名前でも大丈夫です。<br>例：そら → <code>SORA</code><br>入力されたつづりのまま印刷しますので、送信前にもう一度ご確認をお願いします。</span></li>
-      <li><b>お支払いは、できればキャッシュレスでお願いします</b><span>PayPay・カード等は、お申し込み後の確認ページからお支払いいただけます。<br>現金の場合は、運動会当日のお渡しの際にお願いします。</span></li>
-      <li><b>確認ページはLINEに保存しておくと便利です</b><span>お申し込み後に表示される「LINEで保存」ボタンから保存できます。お支払いや内容の変更の際に使います。</span></li>
-      <li><b>暗証番号（数字4桁）を控えておくと安心です</b><span>暗証番号は、お申し込みの際にご自身で設定してください。<br>確認ページが見つからなくなった時に、クラス・ふりがなと一緒に入力して呼び出せます。</span></li>
-      <li><b>Tシャツは運動会当日にお渡しします</b><span>場所と時間は、決まり次第LINEでお知らせします。</span></li>
-    </ol>
-    <p class="gq">ご不明な点は、お気軽にクラスの役員までお声がけください。</p>
-  </div>
-  <div class="gf"><button type="button" class="btn" data-close>確認しました</button></div>
-</dialog>
-<div class="loading" id="loading">読み込み中…</div>
-<footer><span>大東幼稚園 運動会Tシャツ 2026</span><a class="link" style="font-size:10px" href="status.html">申込内容の確認</a></footer>
+<div class="card hidden" id="card"></div>
+<div class="loading hidden" id="loading">読み込み中…</div>
 
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script>
 /* 申込フォーム共通 */
 const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6W4dcP5zB88keT2JBWh9n_c5UZNZ_qO8_p5A7sWeiC75mjA/exec"; // GASのウェブアプリURL（/exec）
@@ -418,182 +372,128 @@ function openViewer(title, o, meta) {
 }
 </script>
 <script>
-const MAX = 10, NAME_MAX = 12;
-const ADULT = ["S", "M", "L", "XL", "2XL", "3XL"], KIDS = ["120"];
-const params = new URLSearchParams(location.search);
-const editToken = params.get("t");
-const st = { cls: "", pay: "", items: [] };
-const blank = () => ({ kind: "adult", size: "", chara: 0, name: "" });
+let PIN = "", list = [], stream = null, scanning = false, busy = false;
+try { PIN = sessionStorage.getItem("daito_staff") || ""; } catch (e) {}
 const kindJp = k => k === "kids" ? "子ども" : "大人";
+const isPaid = o => o.paid !== "未入金";
 
-const shirtMeta = it => `${kindJp(it.kind)} ${it.size || "サイズ未選択"}・${it.chara ? "キャラ" + it.chara : "キャラ未選択"}`;
-(() => { const h = $("heroPv"), o = { cls: "himawari", chara: 1, name: "SORA" };
-  h.appendChild(shirtPair(o)); h.insertAdjacentHTML("beforeend", '<span class="cap"><span>完成イメージ（ネイビー）</span><span>タップで拡大 ＋</span></span>');
-  h.onclick = () => openViewer("完成イメージ", { cls: st.cls || "himawari", chara: 1, name: "SORA" }, "例：ひまわり組・キャラ1・背面のお名前「SORA」の場合"); })();
-const guide = $("guide");
-$("openGuide").onclick = () => guide.showModal();
-guide.querySelectorAll("[data-close]").forEach(b => b.onclick = () => guide.close());
-guide.addEventListener("click", e => { if (e.target === guide) guide.close(); });
-$("cashlessNote").textContent = CASHLESS_NOTE;
-$("payDesc").textContent = CASHLESS_NOTE;
+async function loadList() {
+  const d = await api("hand_list", { pin: PIN });
+  list = d.orders; renderProgress(); renderResults();
+}
+function renderProgress() { $("allN").textContent = list.length; $("doneN").textContent = list.filter(o => o.pickedAt).length; }
+function upsert(o) { const i = list.findIndex(x => x.id === o.id); if (i >= 0) list[i] = o; renderProgress(); renderResults(); }
 
-function renderCls() {
-  $("clsOpts").innerHTML = Object.entries(CLASSES).map(([k, v]) =>
-    `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.cls === k}" ${editToken ? "disabled" : ""}><b>${v}</b></button>`).join("");
-  $("clsOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.cls = b.dataset.k; $("clsOpts").classList.remove("bad"); renderCls(); renderShirts(); });
-}
-function renderPay() {
-  $("payOpts").innerHTML = Object.entries(PAY).map(([k, v]) =>
-    `<button type="button" class="opt" data-k="${k}" aria-pressed="${st.pay === k}"><b>${v.rec ? '<span class="badge">推奨</span>' : ""}${v.jp}</b><span>${v.sub}</span></button>`).join("");
-  $("payOpts").querySelectorAll(".opt").forEach(b => b.onclick = () => { st.pay = b.dataset.k; $("payOpts").classList.remove("bad"); renderPay(); renderSummary(); });
-}
-
-function sizeChart() {
-  return `<details class="chart"><summary>大人サイズ表（cm）</summary>
-    <table><tr><th>サイズ</th><th>身丈</th><th>身幅</th><th>肩幅</th><th>袖丈</th></tr>
-    ${SIZE_CHART.map(r => `<tr>${r.map((v, i) => i ? `<td>${v}</td>` : `<th>${v}</th>`).join("")}</tr>`).join("")}</table>
-    <p>身丈：首の付け根〜裾／身幅：脇下の横幅。子どもは120のみです。</p></details>`;
-}
-
-function renderShirts() {
-  const wrap = $("shirts"); wrap.innerHTML = "";
-  st.items.forEach((it, i) => {
-    const sizes = it.kind === "kids" ? KIDS : ADULT;
-    const sum = [kindJp(it.kind) + (it.size ? " " + it.size : ""), it.chara ? "キャラ" + it.chara : "", it.name].filter(Boolean).join("・");
-    const card = document.createElement("div"); card.className = "shirt"; card.id = "shirt" + i;
-    card.innerHTML = `<div class="hd"><span>${i + 1}枚目 <span class="sum">${esc(sum)}</span></span>${st.items.length > 1 ? `<button type="button" class="link" data-rm>削除</button>` : ""}</div>
-      <div class="bd">
-        <div class="q"><i>1</i>着る人</div>
-        <div class="opts c2">${[["adult", "大人"], ["kids", "子ども"]].map(([k, l]) => `<button type="button" class="opt" data-kind="${k}" aria-pressed="${it.kind === k}"><b>${l}</b><span>${k === "kids" ? "ご希望の方のみ・120サイズ" : "S〜3XL"}</span></button>`).join("")}</div>
-        <div class="q"><i>2</i>サイズ</div>
-        <div class="opts sz" data-sizes>${sizes.map(s => `<button type="button" class="opt" data-size="${s}" aria-pressed="${it.size === s}"><b>${s}</b></button>`).join("")}</div>
-        ${it.kind === "adult" ? sizeChart() : ""}
-        <div class="q"><i>3</i>左胸のキャラクター <small>${it.chara ? it.chara + "番を選択中" : "横にスクロールして8種類から選択"}</small></div>
-        <div class="rail" data-rail>${Array.from({ length: 8 }, (_, n) => `<button type="button" class="chara" data-chara="${n + 1}" aria-pressed="${it.chara === n + 1}" aria-label="キャラクター${n + 1}"><em>${n + 1}</em><img src="${charaImg(n + 1)}" alt=""></button>`).join("")}</div>
-        <div class="q"><i>4</i>背面の名前 <small>半角ローマ字・12文字まで</small></div>
-        <div class="field" data-nameF><input class="big" data-name value="${esc(it.name)}" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="例：SORA" maxlength="${NAME_MAX}"><span class="count">${it.name.length}/${NAME_MAX}</span></div>
-        <p class="hint">保護者・お子さまどちらのお名前でも大丈夫です。入力したつづりのまま印刷されます。10文字以上は、文字の幅を詰めて印刷します。</p>
-        <div data-mini></div>
-        <button type="button" class="pv" data-pv>この1枚の完成イメージを見る（表・裏）</button>
-      </div>`;
-    card.querySelector("[data-rm]")?.addEventListener("click", () => { st.items.splice(i, 1); renderShirts(); });
-    card.querySelector("[data-pv]").onclick = () => openViewer(`${i + 1}枚目の完成イメージ`, { cls: st.cls, chara: it.chara, name: it.name.trim() }, shirtMeta(it));
-    card.querySelectorAll("[data-kind]").forEach(b => b.onclick = () => { it.kind = b.dataset.kind; it.size = it.kind === "kids" ? "120" : ""; renderShirts(); });
-    card.querySelectorAll("[data-size]").forEach(b => b.onclick = () => { it.size = b.dataset.size; renderShirts(); });
-    card.querySelectorAll("[data-chara]").forEach(b => b.onclick = () => { it.chara = Number(b.dataset.chara); renderShirts(); });
-    const inp = card.querySelector("[data-name]"), mini = card.querySelector("[data-mini]"), cnt = card.querySelector(".count");
-    const upd = () => {
-      const clean = inp.value.replace(/[^A-Za-z .\-]/g, "").replace(/^\s+/, "").slice(0, NAME_MAX);
-      if (clean !== inp.value) inp.value = clean;
-      it.name = clean; cnt.textContent = `${clean.length}/${NAME_MAX}`;
-      card.querySelector("[data-nameF]").classList.remove("bad");
-      card.querySelector(".sum").textContent = [kindJp(it.kind) + (it.size ? " " + it.size : ""), it.chara ? "キャラ" + it.chara : "", clean.trim()].filter(Boolean).join("・");
-      mini.innerHTML = ""; mini.appendChild(miniBack(st.cls, clean.trim())); renderSummary();
-    };
-    inp.addEventListener("input", upd); upd();
-    wrap.appendChild(card);
-    const sel = card.querySelector('.chara[aria-pressed="true"]');
-    if (sel) { const r = card.querySelector("[data-rail]"); r.scrollLeft = sel.offsetLeft - r.offsetLeft - 12; }
-  });
-  $("addShirt").classList.toggle("hidden", st.items.length >= MAX);
-  $("countLabel").textContent = `${st.items.length}枚`;
-  renderSummary();
-}
-
-function renderSummary() {
-  const n = st.items.length, total = yen(n * 3000);
-  $("total").textContent = total; $("barTotal").textContent = total;
-  $("totalSub").textContent = `合計（${n}枚 × 3,000円）`; $("barSub").textContent = `${n}枚・合計`;
-  $("reviewHead").innerHTML = `<dt>クラス</dt><dd>${st.cls ? CLASSES[st.cls] : '<span class="err">未選択</span>'}</dd>
-    <dt>お名前</dt><dd>${esc($("child").value.trim()) || '<span class="err">未入力</span>'}${$("kana").value.trim() ? `（${esc($("kana").value.trim())}）` : ""}</dd>
-    <dt>お支払い</dt><dd>${st.pay ? PAY[st.pay].jp : '<span class="err">未選択</span>'}</dd>`;
-  const rv = $("review"); rv.innerHTML = "";
-  st.items.forEach((it, i) => {
-    const row = document.createElement("div"); row.className = "row big";
-    row.innerHTML = `<div class="rtop"><div><div class="nm">${esc(it.name.trim()) || '<span class="err" style="font-size:13px;font-family:inherit">名前未入力</span>'}</div>
-      <div class="sub">${i + 1}枚目・${esc(shirtMeta(it))}</div></div><div class="pr">3,000円</div></div>`;
-    const pr = shirtPair({ cls: st.cls, chara: it.chara, name: it.name.trim() });
-    const btn = document.createElement("button"); btn.type = "button"; btn.className = "heroPv"; btn.style.margin = "0"; btn.setAttribute("aria-label", `${i + 1}枚目を拡大`);
-    btn.appendChild(pr); btn.onclick = () => openViewer(`${i + 1}枚目の完成イメージ`, { cls: st.cls, chara: it.chara, name: it.name.trim() }, shirtMeta(it));
-    row.appendChild(btn); rv.appendChild(row);
-  });
-  $("spellOk").checked = false;
-}
-
-function collect() {
-  return { cls: st.cls, child: $("child").value.trim(), kana: $("kana").value.trim(), pin: $("pin").value.trim(), pay: st.pay,
-    items: st.items.map(it => ({ ...it, name: it.name.trim() })), spellOk: $("spellOk").checked };
-}
-/* 未入力の箇所を返す：[メッセージ, 赤くする要素] */
-function check(o) {
-  if (!o.cls) return ["クラスを選んでください。", $("clsOpts")];
-  if (!o.child) return ["お子さまのお名前を入力してください。", $("childF")];
-  if (!o.kana) return ["ふりがなを入力してください。", $("kanaF")];
-  if (!/^[ぁ-んァ-ヶー\s　]+$/.test(o.kana)) return ["ふりがなは、ひらがなで入力してください。", $("kanaF")];
-  for (const [i, it] of o.items.entries()) {
-    const c = $("shirt" + i);
-    if (!it.size) return [`${i + 1}枚目：サイズを選んでください。`, c.querySelector("[data-sizes]")];
-    if (!it.chara) return [`${i + 1}枚目：左胸のキャラクターを選んでください。`, c.querySelector("[data-rail]")];
-    if (!/^[A-Za-z]/.test(it.name)) return [`${i + 1}枚目：背面の名前を入力してください。`, c.querySelector("[data-nameF]")];
-  }
-  if (!o.pay) return ["お支払い方法を選んでください。", $("payOpts")];
-  if ((!editToken || o.pin) && !/^\d{4}$/.test(o.pin)) return ["暗証番号を数字4桁で入力してください。", $("pinF")];
-  if (!o.spellOk) return ["背面の名前のつづりを確認し、チェックを入れてください。", $("spellBox")];
-  return null;
-}
-function showErr(res) {
-  const err = $("formErr");
-  document.querySelectorAll(".bad").forEach(e => e.classList.remove("bad"));
-  if (!res) { err.classList.add("hidden"); return; }
-  const [msg, el] = res; err.textContent = msg; err.classList.remove("hidden");
-  el.classList.add("bad"); el.scrollIntoView({ behavior: "smooth", block: "center" });
-  toast(msg);
-}
-
-["child", "kana"].forEach(id => $(id).addEventListener("input", () => { $(id + "F").classList.remove("bad"); renderSummary(); }));
-$("pin").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); $("pinF").classList.remove("bad"); });
-$("spellOk").addEventListener("change", () => { $("spellBox").classList.remove("bad"); $("formErr").classList.add("hidden"); });
-$("addShirt").onclick = () => { st.items.push(blank()); renderShirts(); $("shirt" + (st.items.length - 1)).scrollIntoView({ behavior: "smooth", block: "start" }); };
-$("toReview").onclick = () => $("sec4").scrollIntoView({ behavior: "smooth", block: "start" });
-new IntersectionObserver(es => es.forEach(e => $("toReview").classList.toggle("hidden", e.isIntersecting)), { threshold: 0.15 }).observe($("sec4"));
-
-$("form").addEventListener("submit", async e => {
-  e.preventDefault();
-  const o = collect(), res = check(o);
-  showErr(res); if (res) return;
-  const btn = $("submit"); btn.disabled = true; btn.textContent = "送信中…";
+async function login() {
+  $("loading").classList.remove("hidden");
   try {
-    if (editToken) { await api("update", { token: editToken, order: o }); location.href = `status.html?t=${editToken}&updated=1`; }
-    else { const d = await api("create", { order: o }); location.href = `status.html?t=${d.token}&new=1`; }
+    await loadList();
+    try { sessionStorage.setItem("daito_staff", PIN); } catch (e) {}
+    $("login").classList.add("hidden"); $("app").classList.remove("hidden");
+    startCam();
   } catch (ex) {
-    $("formErr").textContent = ex.message; $("formErr").classList.remove("hidden"); toast(ex.message);
-    btn.disabled = false; btn.textContent = editToken ? "この内容で変更する" : "この内容で申し込む";
-  }
-});
-
-(async () => {
-  try {
-    const cfg = await api("config");
-    if (!cfg.open) { $("closed").classList.remove("hidden"); return; }
-    if (editToken) {
-      const { order } = await api("get", { token: editToken });
-      if (order.status !== "有効" || order.paid !== "未入金") { location.href = `status.html?t=${editToken}`; return; }
-      Object.assign(st, { cls: order.cls, pay: order.pay, items: order.items.map(it => ({ ...it, chara: Number(it.chara) })) });
-      $("child").value = order.child; $("kana").value = order.kana;
-      $("title").innerHTML = "申込内容の<br>変更"; $("modeLabel").textContent = `Edit — ${order.id}`;
-      $("lead").textContent = "変更したい項目を直して、いちばん下の「この内容で変更する」を押してください。";
-      $("clsLock").classList.remove("hidden");
-      $("pinReq").textContent = "任意"; $("pinHint").textContent = "変更する場合だけ入力してください（空欄のままなら今の番号のままです）。";
-      $("submit").textContent = "この内容で変更する";
-      $("cancelEdit").classList.remove("hidden"); $("cancelEdit").onclick = () => location.href = `status.html?t=${editToken}`;
-    } else st.items = [blank()];
-    renderCls(); renderPay(); renderShirts();
-    $("form").classList.remove("hidden");
-  } catch (ex) {
-    $("closed").classList.remove("hidden");
-    $("closed").querySelector("h1").textContent = "読み込めませんでした"; $("closed").querySelector("p").textContent = ex.message;
+    try { sessionStorage.removeItem("daito_staff"); } catch (e) {}
+    $("login").classList.remove("hidden");
+    if (PIN) { $("lgErr").textContent = ex.message; $("lgErr").classList.remove("hidden"); }
   } finally { $("loading").classList.add("hidden"); }
-})();
+}
+
+/* ---------- カメラでQRを読む ---------- */
+async function startCam() {
+  if (stream) { scanning = true; tick(); return; }
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+    const v = $("video"); v.srcObject = stream; await v.play();
+    $("camMsg").textContent = "QRコードを枠に合わせてください";
+    scanning = true; tick();
+  } catch (e) { $("camMsg").textContent = "カメラを使えません。「名前で探す」を使ってください。"; }
+}
+function stopCam() { scanning = false; }
+const cv = document.createElement("canvas"), cx = cv.getContext("2d", { willReadFrequently: true });
+function tick() {
+  if (!scanning) return;
+  const v = $("video");
+  if (v.readyState === v.HAVE_ENOUGH_DATA && !busy) {
+    const w = 480, h = Math.round(v.videoHeight / v.videoWidth * w) || 480;
+    cv.width = w; cv.height = h; cx.drawImage(v, 0, 0, w, h);
+    const r = window.jsQR ? jsQR(cx.getImageData(0, 0, w, h).data, w, h, { inversionAttempts: "dontInvert" }) : null;
+    if (r && r.data) { onCode(r.data); }
+  }
+  requestAnimationFrame(tick);
+}
+async function onCode(code) {
+  busy = true; stopCam();
+  if (navigator.vibrate) navigator.vibrate(80);
+  try { const d = await api("hand_get", { pin: PIN, code }); upsert(d.order); showCard(d.order); }
+  catch (ex) { toast(ex.message); setTimeout(() => { busy = false; startCam(); }, 1500); }
+}
+
+/* ---------- 名前で探す ---------- */
+function renderResults() {
+  const q = $("q").value.trim().toLowerCase().replace(/\s/g, "");
+  const hit = !q ? list : list.filter(o => [o.id, o.child, o.kana].join("").toLowerCase().replace(/\s/g, "").includes(q));
+  $("results").innerHTML = hit.map(o => `<div class="res ${o.pickedAt ? "done" : ""}" data-id="${esc(o.id)}">
+    <div><b>${esc(o.id)}</b> ${esc(o.child)}<div class="hint" style="margin:0">${esc(o.kana)}・${esc(o.clsJp)}・${o.count}枚</div></div>
+    <span class="pill ${o.pickedAt ? "" : isPaid(o) ? "" : "err"}">${o.pickedAt ? "受取済" : isPaid(o) ? "支払済" : "未入金"}</span></div>`).join("") || `<p class="hint">該当なし</p>`;
+  $("results").querySelectorAll(".res").forEach(e => e.onclick = () => showCard(list.find(o => o.id === e.dataset.id)));
+}
+
+/* ---------- 受け渡しカード ---------- */
+function showCard(o) {
+  const c = $("card");
+  const state = o.pickedAt ? `<div class="band done">受け取り済み（${esc(o.pickedAt)}）</div>`
+    : isPaid(o) ? `<div class="band ok">お支払い済み（${esc(o.paid)}）</div>`
+    : `<div class="band ng">未入金　${yen(o.total)}</div>`;
+  c.innerHTML = `<span class="label">${esc(o.clsJp)}</span><div class="id">${esc(o.id)}</div><div class="nm">${esc(o.child)}<span class="hint" style="font-size:14px">（${esc(o.kana)}）</span></div>
+    ${state}
+    <span class="label">渡すもの（${o.count}枚）</span>
+    ${o.items.map((i, n) => `<div class="it"><span>${n + 1}. ${kindJp(i.kind)} <b>${esc(i.size)}</b>・キャラ${i.chara}</span><span class="bn">${esc(i.name)}</span></div>`).join("")}
+    ${o.memo ? `<div class="notice"><b>備考</b>${esc(o.memo)}</div>` : ""}
+    <div style="margin-top:16px" id="acts"></div>
+    <button type="button" class="btn ghost" id="cClose" style="margin-top:8px">戻る（次の人へ）</button>`;
+  const acts = c.querySelector("#acts");
+  if (o.pickedAt) {
+    acts.innerHTML = `<button type="button" class="btn danger" id="undo">受け取りを取り消す（間違えた時）</button>`;
+    acts.querySelector("#undo").onclick = () => run("hand_undo", o, "取り消しました");
+  } else if (isPaid(o)) {
+    acts.innerHTML = `<button type="button" class="btn" id="done" style="background:var(--ok);min-height:60px;font-size:17px">渡しました（受け渡し完了）</button>`;
+    acts.querySelector("#done").onclick = () => run("hand_done", o, "受け渡し完了");
+  } else {
+    acts.innerHTML = `<p style="font-size:15px;margin-bottom:8px">現金で <b style="font-size:22px">${yen(o.total)}</b> を受け取ってから、下の記号を合わせてください。</p><div class="sym" id="sym"></div>`;
+    dealSym(acts.querySelector("#sym"), async () => {
+      try { const d = await api("hand_cash", { pin: PIN, id: o.id }); upsert(d.order); toast("現金受領を記録しました"); showCard(d.order); }
+      catch (ex) { toast(ex.message); }
+    });
+  }
+  c.querySelector("#cClose").onclick = closeCard;
+  c.classList.remove("hidden"); c.scrollTop = 0;
+}
+function dealSym(box, ok) {
+  const S = ["○", "△", "□"], t = S[Math.floor(Math.random() * 3)];
+  box.innerHTML = `<p class="hint" style="margin:0">受け取ったら、この記号と<b>同じもの</b>を押す</p><div class="symt">${t}</div>
+    <div class="symc">${[...S].sort(() => Math.random() - .5).map(x => `<button type="button" data-s="${x}">${x}</button>`).join("")}</div>`;
+  box.querySelectorAll("[data-s]").forEach(b => b.onclick = () => b.dataset.s === t ? ok() : (toast("記号が違います"), dealSym(box, ok)));
+}
+async function run(action, o, msg) {
+  try { const d = await api(action, { pin: PIN, id: o.id }); upsert(d.order); toast(msg); if (action === "hand_done") closeCard(); else showCard(d.order); }
+  catch (ex) { toast(ex.message); }
+}
+function closeCard() {
+  $("card").classList.add("hidden"); busy = false;
+  if (!$("scanTab").classList.contains("hidden")) startCam();
+}
+
+/* ---------- 画面切り替え ---------- */
+document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
+  document.querySelectorAll("[data-tab]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  const scan = b.dataset.tab === "scan";
+  $("scanTab").classList.toggle("hidden", !scan); $("findTab").classList.toggle("hidden", scan);
+  if (scan) { busy = false; startCam(); } else { stopCam(); loadList().catch(() => {}); }
+});
+$("q").addEventListener("input", renderResults);
+$("login").addEventListener("submit", e => { e.preventDefault(); PIN = $("pin").value.trim(); login(); });
+setInterval(() => { if ($("card").classList.contains("hidden")) loadList().catch(() => {}); }, 60000);
+if (PIN) login(); else $("login").classList.remove("hidden");
 </script>
 </body>
 </html>
