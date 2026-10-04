@@ -370,7 +370,22 @@ $("lookup").addEventListener("submit", async e => {
 function payBlock(o) {
   const msg = `${o.id} ${o.clsJp} ${o.child}`;
   if (o.status !== "有効") return `<div class="box warn"><b>この申込は取り消されています。</b></div>`;
-  if (o.paid !== "未入金" && o.extraDue > 0) return `<div class="box"><span class="label">Payment — 追加分</span><p style="margin:4px 0 6px"><b style="font-size:22px">${yen(o.extraDue)}</b>（追加分）</p><p><b>追加分は、運動会当日のお渡しの際に現金でお支払いください。</b></p><p class="hint">最初のお申し込み分（${esc(o.paid)}）はお支払い済みです。</p></div>`;
+  if (o.paid !== "未入金" && o.extraDue > 0) {
+    const xp = o.extraPay || "cash", amt = yen(o.extraDue), xmsg = `${o.id} 追加 ${o.clsJp} ${o.child}`;
+    const head = `<span class="label">Payment — 追加分 未払い</span><p style="margin:4px 0 10px"><b style="font-size:22px">${amt}</b>（追加 ${o.extraDue / 3000}枚）</p>`;
+    const body = xp === "paypay" ? `<p><b>PayPayで送金してください</b></p>
+      <ol class="hint" style="padding-left:1.2em;color:var(--ink);font-size:13px"><li>下の「メッセージに入れる文」をコピー</li><li>ボタンでPayPayを開き、金額 <b>${amt}</b> を入力</li><li>メッセージにコピーした文を貼り付けて送金</li></ol>
+      <span class="label" style="display:block;margin-top:12px">メッセージに入れる文</span>
+      <div class="copy" style="margin-top:4px"><code>${esc(xmsg)}</code><button type="button" data-copy="${esc(xmsg)}">コピー</button></div>
+      ${o.paypayUrl ? `<a class="btn" style="background:#FF0033;margin-top:10px" href="${esc(o.paypayUrl)}" target="_blank" rel="noopener">PayPayを開いて送金する</a>` : `<p class="hint err">送金先を準備中です。少し時間をおいて再度開いてください。</p>`}
+      <p class="hint">担当が入金を確認すると、このページが「お支払い確認済み」に変わります。</p>`
+      : xp === "square" ? `<button type="button" class="btn" id="xPayBtn">カード・Apple Pay等で追加分を支払う</button>
+      <p class="hint">Squareの決済画面に移動します。支払い後、このページに反映されるまで10分ほどかかります。</p>`
+      : `<p><b>追加分は、運動会当日のお渡しの際に現金でお支払いください。</b></p>`;
+    const chg = `<details style="margin-top:12px"><summary class="hint" style="cursor:pointer">追加分のお支払い方法を変更する</summary>
+      <div class="opts" style="margin-top:8px">${Object.entries(PAY).map(([k, v]) => `<button type="button" class="opt" data-xpay="${k}" aria-pressed="${xp === k}"><b>${v.jp}</b></button>`).join("")}</div></details>`;
+    return `<div class="box">${head}${body}${chg}<p class="hint">最初のお申し込み分（${esc(o.paid)}）はお支払い済みです。</p></div>`;
+  }
   if (o.paid !== "未入金") return `<div class="box ok"><span class="label" style="color:inherit">Payment</span><p style="font-size:18px;margin-top:4px"><b>お支払い確認済み</b></p><p class="hint" style="color:inherit">${esc(o.paid)}${o.paidAt ? "（" + esc(o.paidAt) + "）" : ""}</p></div>`;
   const head = `<span class="label">Payment — 未払い</span><p style="margin:4px 0 10px"><b style="font-size:22px">${yen(o.total)}</b>（${o.count}枚）</p>`;
   if (o.pay === "paypay") return `<div class="box">${head}
@@ -394,7 +409,8 @@ function render(o) {
   const shareText = `【大東幼稚園 運動会Tシャツ】申込内容の確認ページ（${o.id}）\n${url}`;
   const editable = o.open && o.status === "有効" && o.paid === "未入金";
   const banner = params.get("new") ? `<div class="box ok"><b>申込を受け付けました。</b><br>このページのURLを必ず保存してください。支払い状況もここで確認できます。</div>`
-    : params.get("updated") ? `<div class="box ok"><b>変更を保存しました。</b></div>` : "";
+    : params.get("updated") ? `<div class="box ok"><b>変更を保存しました。</b></div>`
+    : params.get("added") ? `<div class="box ok"><b>追加注文を受け付けました。</b><br>同じ管理番号（${esc(o.id)}）に追加されています。</div>` : "";
   $("view").innerHTML = `
     <section class="hero"><span class="label">${esc(o.clsJp)} ／ 管理番号</span><div class="big-id" style="margin:6px 0 12px">${esc(o.id)}</div>
       <dl class="spec"><dt>Name</dt><dd>${esc(o.child)}（${esc(o.kana)}）</dd><dt>Payment</dt><dd>${esc(PAY[o.pay]?.jp || o.payJp)}</dd><dt>Date</dt><dd>${esc(o.createdAt)}${o.updatedAt && o.updatedAt !== o.createdAt ? `（変更 ${esc(o.updatedAt)}）` : ""}</dd></dl></section>
@@ -410,6 +426,9 @@ function render(o) {
       <a class="btn line" href="${lineShareUrl(shareText)}" target="_blank" rel="noopener">LINEで保存する</a>
       <button type="button" class="btn ghost" data-copy="${esc(url)}">URLをコピー</button>
       <p class="hint">LINEの「Keepメモ」か自分とのトークに送っておくと便利です。URLをなくした場合は <a class="link" href="status.html">こちら</a> から、クラス・ふりがな・暗証番号で確認できます。</p></section>
+    ${o.open && o.status === "有効" && o.count < (o.maxShirts || 10) ? `<section class="step"><span class="label">Add</span><h2>追加注文 <small>10/4 23:59まで</small></h2>
+      <a class="btn ghost" href="order.html?t=${token}&add=1">Tシャツを追加で注文する</a>
+      <p class="hint">今のお申し込み（${esc(o.id)}）に追加されます。新しく申し込み直す必要はありません。</p></section>` : ""}
     <section class="step"><span class="label">Items</span><h2>申込内容 <small>${o.count}枚・${yen(o.total)}</small></h2><div id="items"></div></section>
     ${editable ? `<section class="step"><span class="label">Edit</span><h2>変更・取り消し <small>10/4 23:59まで</small></h2>
       <a class="btn ghost" href="order.html?t=${token}">内容を変更する</a>
@@ -443,6 +462,17 @@ function render(o) {
       }
       const { order } = await api("get", { token }); render(order); toast(`お支払い方法を「${PAY[pay].jp}」に変更しました`);
     } catch (ex) { toast(ex.message); load(); }
+  });
+  $("xPayBtn")?.addEventListener("click", async e => {
+    const b = e.currentTarget; b.disabled = true; b.textContent = "決済画面を準備中…";
+    try { const d = await api("extra_paylink", { token }); location.href = d.url; }
+    catch (ex) { toast(ex.message); b.disabled = false; b.textContent = "カード・Apple Pay等で追加分を支払う"; }
+  });
+  $("view").querySelectorAll("[data-xpay]").forEach(b => b.onclick = async () => {
+    const pay = b.dataset.xpay; if (pay === (o.extraPay || "cash")) return;
+    $("view").querySelectorAll("[data-xpay]").forEach(x => x.disabled = true);
+    try { await api("extra_setpay", { token, pay }); const { order } = await api("get", { token }); render(order); toast(`追加分のお支払い方法を「${PAY[pay].jp}」に変更しました`); }
+    catch (ex) { toast(ex.message); load(); }
   });
   $("payBtn")?.addEventListener("click", async e => {
     const b = e.currentTarget; b.disabled = true; b.textContent = "決済画面を準備中…";

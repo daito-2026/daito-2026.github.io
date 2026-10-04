@@ -418,10 +418,12 @@ function openViewer(title, o, meta) {
 }
 </script>
 <script>
-const MAX = 10, NAME_MAX = 12;
+let MAX = 10; const NAME_MAX = 12;
 const ADULT = ["S", "M", "L", "XL", "2XL", "3XL"], KIDS = ["120"];
 const params = new URLSearchParams(location.search);
 const editToken = params.get("t");
+const addMode = !!(editToken && params.get("add"));
+let base = null; // 追加注文モード：既存の申込
 const st = { cls: "", pay: "", items: [] };
 const blank = () => ({ kind: "adult", size: "", chara: 0, name: "" });
 const kindJp = k => k === "kids" ? "子ども" : "大人";
@@ -503,15 +505,15 @@ function renderShirts() {
 function renderSummary() {
   const n = st.items.length, total = yen(n * 3000);
   $("total").textContent = total; $("barTotal").textContent = total;
-  $("totalSub").textContent = `合計（${n}枚 × 3,000円）`; $("barSub").textContent = `${n}枚・合計`;
+  $("totalSub").textContent = addMode ? `追加分（${n}枚 × 3,000円）` : `合計（${n}枚 × 3,000円）`; $("barSub").textContent = addMode ? `追加${n}枚` : `${n}枚・合計`;
   $("reviewHead").innerHTML = `<dt>クラス</dt><dd>${st.cls ? CLASSES[st.cls] : '<span class="err">未選択</span>'}</dd>
     <dt>お名前</dt><dd>${esc($("child").value.trim()) || '<span class="err">未入力</span>'}${$("kana").value.trim() ? `（${esc($("kana").value.trim())}）` : ""}</dd>
-    <dt>お支払い</dt><dd>${st.pay ? PAY[st.pay].jp : '<span class="err">未選択</span>'}</dd>`;
+    <dt>${addMode && base && base.paid !== "未入金" ? "追加分のお支払い" : "お支払い"}</dt><dd>${st.pay ? PAY[st.pay].jp : '<span class="err">未選択</span>'}</dd>`;
   const rv = $("review"); rv.innerHTML = "";
   st.items.forEach((it, i) => {
     const row = document.createElement("div"); row.className = "row big";
     row.innerHTML = `<div class="rtop"><div><div class="nm">${esc(it.name.trim()) || '<span class="err" style="font-size:13px;font-family:inherit">名前未入力</span>'}</div>
-      <div class="sub">${i + 1}枚目・${esc(shirtMeta(it))}</div></div><div class="pr">3,000円</div></div>`;
+      <div class="sub">${addMode ? "追加" : ""}${i + 1}枚目・${esc(shirtMeta(it))}</div></div><div class="pr">3,000円</div></div>`;
     const pr = shirtPair({ cls: st.cls, chara: it.chara, name: it.name.trim() });
     const btn = document.createElement("button"); btn.type = "button"; btn.className = "heroPv"; btn.style.margin = "0"; btn.setAttribute("aria-label", `${i + 1}枚目を拡大`);
     btn.appendChild(pr); btn.onclick = () => openViewer(`${i + 1}枚目の完成イメージ`, { cls: st.cls, chara: it.chara, name: it.name.trim() }, shirtMeta(it));
@@ -563,11 +565,12 @@ $("form").addEventListener("submit", async e => {
   showErr(res); if (res) return;
   const btn = $("submit"); btn.disabled = true; btn.textContent = "送信中…";
   try {
-    if (editToken) { await api("update", { token: editToken, order: o }); location.href = `status.html?t=${editToken}&updated=1`; }
+    if (addMode) { await api("self_add", { token: editToken, items: o.items, pay: o.pay, spellOk: o.spellOk, note: ($("addNote")?.value || "").trim() }); location.href = `status.html?t=${editToken}&added=1`; }
+    else if (editToken) { await api("update", { token: editToken, order: o }); location.href = `status.html?t=${editToken}&updated=1`; }
     else { const d = await api("create", { order: o }); location.href = `status.html?t=${d.token}&new=1`; }
   } catch (ex) {
     $("formErr").textContent = ex.message; $("formErr").classList.remove("hidden"); toast(ex.message);
-    btn.disabled = false; btn.textContent = editToken ? "この内容で変更する" : "この内容で申し込む";
+    btn.disabled = false; btn.textContent = addMode ? "この内容で追加注文する" : editToken ? "この内容で変更する" : "この内容で申し込む";
   }
 });
 
@@ -575,7 +578,29 @@ $("form").addEventListener("submit", async e => {
   try {
     const cfg = await api("config");
     if (!cfg.open) { $("closed").classList.remove("hidden"); return; }
-    if (editToken) {
+    if (addMode) {
+      const { order } = await api("get", { token: editToken });
+      if (order.status !== "有効") { location.href = `status.html?t=${editToken}`; return; }
+      base = order; MAX = Math.max(1, (order.maxShirts || 10) - order.count);
+      Object.assign(st, { cls: order.cls, pay: order.paid === "未入金" ? order.pay : "", items: [blank()] });
+      $("child").value = order.child; $("kana").value = order.kana; $("child").disabled = $("kana").disabled = true;
+      $("title").innerHTML = "追加注文"; $("modeLabel").textContent = `Add — ${order.id}`;
+      $("lead").textContent = `今のお申し込み（${order.id}）に、Tシャツを追加します。追加する分だけ入力してください。`;
+      $("clsLock").classList.remove("hidden"); $("clsLock").textContent = "今のお申し込みと同じクラス・お名前で追加します。";
+      $("pinReq").parentElement.classList.add("hidden"); $("pinF").classList.add("hidden"); $("pinHint").classList.add("hidden");
+      if (order.paid !== "未入金") $("payDesc").textContent = `最初のお申し込み分（${order.count}枚）はお支払い済みです。追加分のお支払い方法を選んでください。`;
+      else $("payDesc").textContent = `まだお支払い前のため、最初のお申し込み分と追加分をまとめて、選んだ方法でお支払いいただきます。`;
+      $("payOpts").insertAdjacentHTML("afterend", `<div class="q" style="margin-top:22px"><i>✓</i>ご要望<span class="req" style="background:none;color:var(--muted,#888)">任意</span></div>
+        <div class="field"><input id="addNote" maxlength="200" autocomplete="off" placeholder="例：ドライ素材希望"></div>`);
+      const ex = document.createElement("div"); ex.className = "box"; ex.style.marginBottom = "14px";
+      ex.innerHTML = `<span class="label">今のお申し込み（${esc(order.id)}）</span>
+        <p style="margin:4px 0 6px"><b>${order.count}枚・${yen(order.total)}</b>（${esc(order.paid)}）</p>
+        <ul class="hint" style="padding-left:1.2em;margin:0;color:var(--ink);font-size:13px">${order.items.map(it => `<li>${kindJp(it.kind)} ${esc(it.size)}・キャラ${it.chara}・${esc(it.name)}${it.add ? "（追加）" : ""}</li>`).join("")}</ul>
+        <p class="hint">下が今回<b>追加する分</b>です。</p>`;
+      $("reviewHead").before(ex);
+      $("submit").textContent = "この内容で追加注文する";
+      $("cancelEdit").textContent = "追加せずに戻る"; $("cancelEdit").classList.remove("hidden"); $("cancelEdit").onclick = () => location.href = `status.html?t=${editToken}`;
+    } else if (editToken) {
       const { order } = await api("get", { token: editToken });
       if (order.status !== "有効" || order.paid !== "未入金") { location.href = `status.html?t=${editToken}`; return; }
       Object.assign(st, { cls: order.cls, pay: order.pay, items: order.items.map(it => ({ ...it, chara: Number(it.chara) })) });

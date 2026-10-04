@@ -509,7 +509,7 @@ function renderList() {
       </table>
       <dl class="pinfo">
         <dt>元の分</dt><dd>${esc(o.payJp)}／<b class="${o.paid === "未入金" ? "err" : ""}">${esc(o.paid)}</b>${o.paidAt ? `（${esc(o.paidAt)}）` : ""}</dd>
-        ${o.items.some(i => i.add) ? `<dt>追加分</dt><dd>${o.extraDue > 0 ? `<b class="err">未入金 ${yen(o.extraDue)}</b>（当日現金）` : o.paid === "未入金" ? "元の分と一緒に支払い" : "<b>支払済</b>"}</dd>` : ""}
+        ${o.items.some(i => i.add) ? `<dt>追加分</dt><dd>${o.extraDue > 0 ? `<b class="err">未入金 ${yen(o.extraDue)}</b>（${esc(o.extraPay || "現金（当日）")}）` : o.paid === "未入金" ? "元の分と一緒に支払い" : "<b>支払済</b>"}</dd>` : ""}
         <dt>合計</dt><dd>${yen(o.total)}</dd>
         ${o.note ? `<dt>入金メモ</dt><dd>${esc(o.note)}</dd>` : ""}
         ${o.pickedAt ? `<dt>受け取り</dt><dd>${esc(o.pickedAt)}</dd>` : ""}
@@ -518,7 +518,7 @@ function renderList() {
         <button type="button" class="link" data-memo="${esc(o.id)}">${o.memo ? "備考を編集" : "備考を追加"}</button></div>
       ${o.status === "有効" ? `<div class="acts">
         ${o.paid === "未入金" ? `<button type="button" data-id="${esc(o.id)}" data-s="paypay">PayPay入金</button><button type="button" data-id="${esc(o.id)}" data-s="cash">現金受領</button>` : ""}
-        ${o.extraDue > 0 ? `<button type="button" class="pri" data-id="${esc(o.id)}" data-s="extra_cash">追加分 現金受領</button>` : ""}
+        ${o.extraDue > 0 ? `<button type="button" class="pri" data-id="${esc(o.id)}" data-s="extra_cash">追加分 受領</button>` : ""}
         <button type="button" data-add="${esc(o.id)}">＋ 追加</button>
         ${o.paid !== "未入金" ? `<button type="button" class="sub" data-id="${esc(o.id)}" data-s="unpaid">未入金に戻す</button>` : ""}</div>` : ""}
     </div>
@@ -590,7 +590,7 @@ function editMemo(o) {
 /* 記録の前の確認ポップアップ */
 function askMark(o, s) {
   const T = {
-    extra_cash: ["追加分の現金の受け取り", "追加分の現金を受け取りましたか？", "はい、追加分を受け取りました", "#1B6B3A"],
+    extra_cash: ["追加分の入金確認", "追加分の入金（PayPay・現金など）を確認しましたか？", "はい、追加分を受け取りました", "#1B6B3A"],
     cash:   ["現金の受け取り", "この方から現金を受け取りましたか？", "はい、現金を受け取りました", "#1B6B3A"],
     paypay: ["PayPayの入金確認", "PayPayで、この金額の入金を確認しましたか？", "はい、入金を確認しました", "#1B6B3A"],
     unpaid: ["未入金に戻す", "入金の記録を取り消して「未入金」に戻しますか？", "はい、未入金に戻します", "#B3261E"],
