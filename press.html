@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>圧着作業 | 大東幼稚園 運動会Tシャツ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Oxanium:wght@800&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFFFF;--ink:#111111;--muted:#8A8A8A;--line:#E6E6E6;--plate:#F2F2F0;--navy:#1F2A44;--err:#B3261E;--ok:#1B6B3A}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:#FAFAF8}
+body{background:var(--bg);color:var(--ink);font-family:"Archivo","Zen Kaku Gothic New",sans-serif;font-size:14px;letter-spacing:.02em;-webkit-font-smoothing:antialiased;line-height:1.6;
+  max-width:480px;margin:0 auto;min-height:100vh;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.jp{font-family:"Zen Kaku Gothic New",sans-serif}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 16px;border-bottom:1px solid var(--line)}
+.logo{font-weight:500;font-size:14px;text-decoration:none}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.hero{padding:28px 16px 22px;border-bottom:1px solid var(--line)}
+.hero h1{font-weight:400;font-size:30px;line-height:1.1;letter-spacing:-.01em;margin:6px 0 14px}
+.spec{display:grid;grid-template-columns:84px 1fr;row-gap:6px;font-size:13px}
+.spec dt{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding-top:3px}
+.step{padding:20px 16px;border-bottom:1px solid var(--line)}
+.step h2{font-weight:400;font-size:17px;margin:4px 0 12px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.step h2 small{font-size:11px;color:var(--muted)}
+.opts{display:grid;gap:8px}
+.c2{grid-template-columns:repeat(2,1fr)}
+.c3{grid-template-columns:repeat(3,1fr)}
+.opt{all:unset;cursor:pointer;border:1px solid var(--line);padding:12px;min-height:44px;display:flex;flex-direction:column;justify-content:center;gap:3px;box-sizing:border-box}
+.opt[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt[disabled]{opacity:.35;cursor:not-allowed}
+.opt b{font-weight:500;font-size:14px}
+.opt span{font-size:11px;color:var(--muted);line-height:1.5}
+.sz{grid-template-columns:repeat(6,1fr)}
+.sz .opt{padding:10px 0;align-items:center;min-height:40px}
+.field{display:flex;border:1px solid var(--line);background:var(--bg)}
+.field:focus-within{border-color:var(--ink)}
+.field input{all:unset;flex:1;padding:13px 12px;font-size:16px;min-width:0}
+.field input.big{font-size:20px;font-weight:500;letter-spacing:.06em}
+.field input::placeholder{color:#C8C8C8}
+.field .count{padding:0 12px;display:flex;align-items:center;font-size:11px;color:var(--muted)}
+.fl{display:block;font-size:12px;margin:14px 0 6px}
+.fl:first-child{margin-top:0}
+.hint{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.7}
+.hint.err,.err{color:var(--err)}
+.hidden{display:none!important}
+/* shirt card */
+.shirt{border:1px solid var(--ink);margin-bottom:12px}
+.shirt .hd{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12px;font-weight:500;letter-spacing:.08em}
+.shirt .bd{padding:12px}
+.rail{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 4px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.chara{all:unset;cursor:pointer;flex:0 0 23%;scroll-snap-align:start;aspect-ratio:1/1;background:var(--navy);border:1px solid var(--line);position:relative;display:grid;place-items:center}
+.chara img{width:80%;height:80%;object-fit:contain;display:block}
+.chara em{position:absolute;left:5px;top:3px;font-style:normal;font-size:10px;color:rgba(255,255,255,.75)}
+.chara[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:-2px;box-shadow:inset 0 0 0 3px #fff}
+.mini{display:block;width:100%;background:var(--navy);margin-top:10px}
+.link{all:unset;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:12px}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;width:100%;min-height:52px;padding:0 16px;background:var(--ink);color:#fff;font-weight:500;font-size:15px;letter-spacing:.04em;text-align:center}
+.btn.line{background:#06C755}
+.btn.ghost{background:var(--bg);color:var(--ink);border:1px solid var(--ink)}
+.btn.danger{background:var(--bg);color:var(--err);border:1px solid var(--err)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn+.btn{margin-top:8px}
+.add{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;border:1px dashed var(--ink);padding:14px;text-align:center;font-size:14px}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:14px}
+.total b{font-size:26px;font-weight:500}
+.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--ink);margin:12px 0;cursor:pointer;font-size:13px;line-height:1.6}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--ink)}
+.names{list-style:none;border:1px solid var(--line);margin-top:8px}
+.names li{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-top:1px solid var(--line);gap:10px}
+.names li:first-child{border-top:none}
+.names .nm{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:22px;letter-spacing:.04em;word-break:break-all}
+.names .sub{font-size:11px;color:var(--muted);white-space:nowrap}
+.box{border:1px solid var(--ink);padding:16px;margin-bottom:12px}
+.box.ok{border-color:var(--ok);color:var(--ok)}
+.box.warn{border-color:var(--err)}
+.big-id{font-size:40px;font-weight:500;letter-spacing:.02em;line-height:1.1}
+.pill{display:inline-block;border:1px solid currentColor;padding:1px 8px;font-size:11px}
+.copy{display:flex;border:1px solid var(--line);align-items:center;margin-top:8px}
+.copy code{flex:1;padding:10px 12px;font-size:15px;font-family:inherit;word-break:break-all}
+.copy button{all:unset;cursor:pointer;padding:10px 14px;border-left:1px solid var(--line);font-size:12px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;font-size:13px;z-index:50;max-width:90vw}
+.loading{padding:60px 16px;text-align:center;color:var(--muted)}
+footer{padding:18px 16px calc(40px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.06em;gap:12px;flex-wrap:wrap}
+/* v2 */
+.lead{font-size:14px;line-height:1.8;margin:-4px 0 16px}
+.notice{border:1px solid var(--ink);background:#F7F7F4;padding:12px 14px;font-size:13px;line-height:1.75;margin-top:16px}
+.notice b{display:block;font-size:13px;margin-bottom:2px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);font-size:11px;text-align:center}
+.flow span{padding:10px 0;border-left:1px solid var(--line);color:var(--muted)}
+.flow span:first-child{border-left:none}
+.flow b{display:block;font-size:10px;letter-spacing:.1em;color:var(--ink);font-weight:500}
+.sec{padding:24px 16px;border-bottom:1px solid var(--line)}
+.sec>h2{font-weight:500;font-size:19px;margin:2px 0 4px}
+.sec>.desc{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.q{display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:500;margin:18px 0 8px}
+.q:first-child{margin-top:0}
+.q i{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;flex:none}
+.q small{font-weight:400;font-size:11px;color:var(--muted)}
+.req{font-size:10px;color:var(--err);border:1px solid var(--err);padding:0 4px;margin-left:4px;font-weight:400}
+.shirt .hd{background:var(--ink);color:#fff;border-bottom:none}
+.shirt .hd .link{color:#fff}
+.shirt .sum{font-weight:400;font-size:11px;opacity:.8;letter-spacing:.02em}
+.badge{display:inline-block;background:var(--ink);color:#fff;font-size:10px;padding:1px 6px;margin-left:6px;vertical-align:2px;font-weight:500;letter-spacing:.06em}
+.opt .badge{margin-left:0;margin-right:6px}
+details.chart{margin-top:10px;border:1px solid var(--line)}
+details.chart summary{cursor:pointer;padding:10px 12px;font-size:12px;list-style:none;display:flex;justify-content:space-between}
+details.chart summary::after{content:"＋"}
+details.chart[open] summary::after{content:"－"}
+details.chart table{width:100%;border-collapse:collapse;font-size:12px}
+details.chart th,details.chart td{border-top:1px solid var(--line);padding:7px 4px;text-align:center}
+details.chart th{font-weight:500;background:var(--plate)}
+details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1.6}
+.bad{border-color:var(--err)!important;box-shadow:inset 0 0 0 1px var(--err)!important}
+.ferr{color:var(--err);font-size:12px;margin-top:6px}
+.review{border:1px solid var(--line);margin-bottom:12px}
+.review .row{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.review .row:first-child{border-top:none}
+.review .row img{width:44px;height:44px;object-fit:contain;background:var(--navy);display:block}
+.review .nm{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:20px;letter-spacing:.04em;word-break:break-all;line-height:1.2}
+.review .sub{font-size:11px;color:var(--muted)}
+.review .pr{font-size:13px}
+.kv{display:grid;grid-template-columns:92px 1fr;row-gap:6px;font-size:13px;margin-bottom:12px}
+.kv dt{color:var(--muted);font-size:12px}
+.bar{position:sticky;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--ink);display:flex;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .t{flex:1;line-height:1.2}
+.bar .t small{display:block;font-size:11px;color:var(--muted)}
+.bar .t b{font-size:20px;font-weight:500}
+.bar .btn{width:auto;min-height:46px;font-size:14px;padding:0 18px}
+/* guide dialog */
+.guide{border:none;padding:0;margin:auto;width:min(100%,480px);max-width:100%;height:100%;max-height:100%;background:var(--bg);color:var(--ink)}
+.guide[open]{display:flex;flex-direction:column}
+.guide::backdrop{background:rgba(0,0,0,.55)}
+.guide .gh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));border-bottom:1px solid var(--ink);font-size:17px}
+.guide .gx{all:unset;cursor:pointer;font-size:20px;padding:4px 8px}
+.guide .gb{flex:1;overflow-y:auto;padding:8px 16px 16px}
+.guide ol{list-style:none;counter-reset:g}
+.guide li{counter-increment:g;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line)}
+.guide li::before{content:counter(g);position:absolute;left:0;top:14px;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:15px;font-weight:500}
+.guide li b{display:block;font-size:17px;line-height:1.5;font-weight:500}
+.guide li span{display:block;font-size:15px;line-height:1.8;color:#333;margin-top:4px}
+.guide code{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:18px;background:var(--plate);padding:0 6px}
+.guide u{text-decoration-thickness:2px;text-underline-offset:3px}
+.guide .gl{font-size:14px;line-height:1.8;color:#333;padding:10px 0 4px}
+.guide .gq{font-size:14px;margin-top:14px;color:var(--muted)}
+.guide .gf{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+/* shirt preview */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pair figure{margin:0;background:var(--plate);position:relative}
+.pair figcaption{position:absolute;left:6px;top:4px;font-size:10px;color:var(--muted)}
+.shirtSvg{display:block;width:100%;height:auto}
+.pv{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px;width:100%;min-height:44px;border:1px solid var(--ink);font-size:14px;font-weight:500;margin-top:12px}
+.heroPv{all:unset;cursor:zoom-in;display:block;width:100%;margin:4px 0 16px}
+.heroPv .cap{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+.viewer{border:none;padding:0;margin:auto;width:min(100%,480px);max-width:100%;height:100%;max-height:100%;background:var(--bg)}
+.viewer[open]{display:flex;flex-direction:column}
+.viewer::backdrop{background:rgba(0,0,0,.55)}
+.viewer .vh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top));border-bottom:1px solid var(--ink)}
+.viewer .vclose{all:unset;cursor:pointer;background:var(--ink);color:#fff;padding:8px 14px;font-size:13px}
+.viewer .vb{flex:1;overflow-y:auto;padding:12px 16px calc(24px + env(safe-area-inset-bottom))}
+.viewer figure{margin:0 0 14px;background:var(--plate)}
+.viewer figcaption{font-size:12px;padding:8px 10px 0}
+.viewer .vmeta{font-size:13px;margin-bottom:10px}
+.viewer .vnote{font-size:11px;color:var(--muted)}
+.review .row.big{grid-template-columns:1fr;gap:8px}
+.review .rtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+/* pickup qr */
+.qrbox{border:1px solid var(--ink);padding:16px;text-align:center;background:#fff}
+#qr svg{width:min(70vw,260px);height:auto;display:block;margin:0 auto}
+.qrid{margin-top:8px;font-size:14px;font-weight:500}
+</style>
+<style>
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px 8px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.flow button{all:unset;cursor:pointer;border:1px solid var(--line);padding:6px 4px;text-align:center;box-sizing:border-box}
+.flow button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.flow b{display:block;font-size:20px;font-weight:500;line-height:1.2;font-variant-numeric:tabular-nums}
+.flow span{font-size:11px;color:var(--muted)}
+.bar{display:flex;height:5px;margin-top:8px;background:var(--plate)}
+.bar i{display:block;height:100%}
+.row2{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.row2 .field{flex:1 1 150px}
+.row2 .field input{padding:9px 10px;font-size:15px}
+.chips{display:flex;gap:6px;overflow-x:auto;margin-top:8px;padding-bottom:2px}
+.chips button{all:unset;cursor:pointer;flex:none;border:1px solid var(--line);padding:5px 11px;font-size:13px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fam{padding:14px 16px 4px}
+.famh{font-size:12px;color:var(--muted);margin-bottom:6px}
+.famh b{color:var(--ink);font-weight:500;font-size:14px;margin-right:6px}
+.sh{border:1px solid var(--line);margin-bottom:8px;padding:10px 12px;border-left:5px solid var(--line)}
+.sh.h{border-left-color:#E8A500}.sh.y{border-left-color:#2F8FC9}.sh.x{border-left-color:var(--navy)}
+.sh.done{background:#EEF6F1}
+.l1{display:flex;align-items:center;gap:10px}
+.l1 img{width:44px;height:44px;object-fit:contain;flex:none;background:var(--plate)}
+.bn{font-family:Krungthep,Oxanium,sans-serif;font-weight:800;font-size:22px;line-height:1.1;word-break:break-all;flex:1;min-width:0}
+.sz{font-family:Oxanium,sans-serif;font-weight:800;font-size:22px;flex:none}
+.meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--muted);margin-top:4px}
+.meta .warn{color:var(--err)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px}
+.steps span{font-size:12px;text-align:center;padding:4px 0;border:1px solid var(--line);color:var(--muted)}
+.steps span.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.acts{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:8px}
+.go{all:unset;cursor:pointer;text-align:center;background:var(--ink);color:var(--bg);min-height:46px;font-size:15px;font-weight:500;box-sizing:border-box;padding:0 10px}
+.go.fin{background:var(--ok)}
+.back{all:unset;cursor:pointer;border:1px solid var(--line);padding:0 12px;font-size:12px;color:var(--muted)}
+.go:focus-visible,.back:focus-visible,.chips button:focus-visible,.flow button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.empty{padding:40px 16px;text-align:center;color:var(--muted)}
+.sync{font-size:11px;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body class="jp">
+<header><span class="logo">大東幼稚園</span><span class="label">Press</span></header>
+
+<form id="login" class="step hidden" novalidate>
+  <h2>圧着作業ページ</h2>
+  <div class="field"><input id="pin" type="password" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="PIN"></div>
+  <p class="hint err hidden" id="lgErr"></p>
+  <div style="margin-top:12px"><button class="btn">開く</button></div>
+</form>
+
+<main id="app" class="hidden">
+  <div class="top">
+    <div class="flow" id="flow"></div>
+    <div class="bar" id="bar"></div>
+    <div class="row2"><div class="field"><input id="q" type="search" placeholder="名前・ふりがな・管理番号" aria-label="検索"></div></div>
+    <div class="chips" id="chips"></div>
+    <div class="sync" id="sync"></div>
+  </div>
+  <div id="list"></div>
+</main>
+<div class="loading hidden" id="loading">読み込み中…</div>
+
+<script>
+/* 申込フォーム共通 */
+const API_URL = "https://script.google.com/macros/s/AKfycbyIdq933bu3X272LiRRpT-6W4dcP5zB88keT2JBWh9n_c5UZNZ_qO8_p5A7sWeiC75mjA/exec"; // GASのウェブアプリURL（/exec）
+const NAVY = "#1F2A44";
+const CLASSES = { himawari: "ひまわり組", yuri: "ゆり組" };
+const PAY = {
+  paypay: { jp: "PayPay", sub: "申込後の確認ページから、PayPayアプリで送金できます", rec: true },
+  square: { jp: "クレジットカード・Apple Pay・Google Pay", sub: "申込後の確認ページから、オンラインで支払えます", rec: true },
+  cash:   { jp: "現金", sub: "運動会当日、Tシャツのお渡し時に担当へお支払いください", rec: false },
+};
+const CASHLESS_NOTE = "当日のお渡しをスムーズにし、現金の受け渡しによる金額違いや紛失を防ぐため、今回はなるべくキャッシュレス（PayPay・カード等）でのお支払いにご協力をお願いします。";
+/* 大人サイズ（cm）：身丈・身幅・肩幅・袖丈 */
+const SIZE_CHART = [["S", 66, 49, 44, 19], ["M", 70, 52, 47, 20], ["L", 74, 55, 50, 22], ["XL", 78, 58, 53, 24], ["2XL", 82, 61, 56, 26], ["3XL", 84, 64, 59, 26]];
+const IMG_BASE = "https://daito-2026.github.io/images/parts/"; // 公開済みの画像を直接参照（どこで開いても表示される）
+const charaImg = n => `${IMG_BASE}a_chara${n}.png`;
+const backImg = cls => `${IMG_BASE}a_back_${cls}.png`;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const yen = n => "¥" + Number(n).toLocaleString("ja-JP");
+
+/* ---------- デモ表示（API未設定の時だけ。送信内容は保存されない） ---------- */
+const DEMO = API_URL.startsWith("__");
+const DEMO_ORDER = { id: "Y-001", status: "有効", cls: "yuri", clsJp: "ゆり組", child: "大東 太郎", kana: "だいとう たろう",
+  items: [{ kind: "adult", size: "L", chara: 3, name: "SORA" }, { kind: "kids", size: "120", chara: 7, name: "Konosuke" }],
+  count: 2, total: 6000, pay: "paypay", payJp: "PayPay送金", paid: "未入金", paidAt: "", createdAt: "10/1 21:00", updatedAt: "10/1 21:00",
+  open: true, paypayUrl: "#demo", squareUrl: "", pickup: "DT1-Y-001-demo123456", pickedAt: "" };
+async function demoApi(action, data) {
+  await new Promise(r => setTimeout(r, 250));
+  const fail = m => { throw new Error(m); };
+  if (action === "config") return { ok: true, open: true };
+  if (action === "get") return { ok: true, order: DEMO_ORDER };
+  if (action === "admin_list") return { ok: true, open: true, orders: [{ ...DEMO_ORDER, note: "" }, { ...DEMO_ORDER, id: "H-001", clsJp: "ひまわり組", child: "桜 はな", kana: "さくら はな", payJp: "現金（当日）", paid: "現金受領", paidAt: "10/3 9:10", count: 1, total: 3000, items: [{ kind: "adult", size: "M", chara: 1, name: "HANA" }] }] };
+  fail("デモ表示のため、送信・変更はできません（本番の設定後に使えます）。");
+}
+function demoBanner() {
+  if (!DEMO) return;
+  const d = document.createElement("div");
+  d.style.cssText = "background:#FFF4CC;color:#5A4500;font-size:12px;padding:8px 16px;border-bottom:1px solid #E6D38A";
+  d.textContent = "デモ表示中：まだ本番の受付につながっていません。送信しても保存されません。";
+  document.body.prepend(d);
+}
+document.addEventListener("DOMContentLoaded", demoBanner);
+
+async function api(action, data = {}) {
+  if (DEMO) return demoApi(action, data);
+  let res;
+  try {
+    res = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action, ...data }) });
+  } catch (e) { throw new Error("通信できませんでした。電波の良いところで再度お試しください。"); }
+  const d = await res.json().catch(() => ({ ok: false, error: "通信エラーが起きました。" }));
+  if (!d.ok) throw new Error(d.error || "エラーが起きました。");
+  return d;
+}
+
+function toast(msg) {
+  const t = document.createElement("div"); t.className = "toast"; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+async function copyText(s) {
+  try { await navigator.clipboard.writeText(s); toast("コピーしました"); }
+  catch (e) { prompt("コピーしてください", s); }
+}
+
+/* 背面の名前プレビュー（デザインA・ネイビー、実寸mm座標）*/
+const SVGNS = "http://www.w3.org/2000/svg";
+function miniBack(cls, name) {
+  const svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("viewBox", "-160 105 320 205");
+  svg.setAttribute("class", "mini");
+  svg.innerHTML = `<rect x="-160" y="105" width="320" height="205" fill="${NAVY}"/>
+    <image href="${backImg(cls || "himawari")}" x="-140" y="125" width="280" height="125.4" preserveAspectRatio="xMidYMid meet"/>`;
+  const t = document.createElementNS(SVGNS, "text");
+  Object.entries({ x: 0, y: 290, "text-anchor": "middle", fill: "#FFFFFF", "font-family": "Krungthep, Oxanium, sans-serif",
+    "font-weight": 800, "font-size": 33.5, "letter-spacing": 0.67, style: "font-synthesis:none", "text-rendering": "geometricPrecision",
+    opacity: name ? 1 : 0.35 }).forEach(([k, v]) => t.setAttribute(k, v));
+  t.textContent = name || "NAME";
+  svg.appendChild(t);
+  requestAnimationFrame(() => { try { if (t.getComputedTextLength() > 280) { t.setAttribute("textLength", 280); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (e) {} });
+  return svg;
+}
+function lineShareUrl(text) { return "https://line.me/R/share?text=" + encodeURIComponent(text); }
+
+/* ---------- Tシャツ全体のプレビュー（デザインA・ネイビー、実寸mm座標。プレビューページと同じ描き方） ---------- */
+const SHIRT_BODY = "M-90 0 Q-160 18 -235 42 L-405 148 L-307 305 Q-276 268 -260 245 L-262 700 L262 700 L260 245 Q276 268 307 305 L405 148 L235 42 Q160 18 90 0 ";
+const SHIRT_NECK = { front: "C88 50 50 75 0 75 C-50 75 -88 50 -90 0", back: "C80 16 40 20 0 20 C-40 20 -80 16 -90 0" };
+const shade = (hex, amt) => { const n = parseInt(hex.slice(1), 16), f = v => Math.max(0, Math.min(255, Math.round(v + amt)));
+  return "#" + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(f).map(v => v.toString(16).padStart(2, "0")).join(""); };
+let _shirtSeq = 0;
+function drawShirt(side, o = {}) {
+  const svg = document.createElementNS(SVGNS, "svg"), id = "sh" + (++_shirtSeq);
+  svg.setAttribute("viewBox", "-440 -40 880 780"); svg.setAttribute("class", "shirtSvg");
+  const mk = (tag, a) => { const e = document.createElementNS(SVGNS, tag); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+  const path = SHIRT_BODY + SHIRT_NECK[side] + " Z", dk = a => shade(NAVY, a);
+  mk("path", { d: path, fill: NAVY });
+  if (side === "front") {
+    mk("path", { d: "M90 0 " + SHIRT_NECK.back + " C-88 50 -50 75 0 75 C50 75 88 50 90 0 Z", fill: dk(-34) });
+    mk("path", { d: "M90 0 " + SHIRT_NECK.back, fill: "none", stroke: dk(-22), "stroke-width": 12 });
+  }
+  mk("path", { d: "M90 0 " + SHIRT_NECK[side], fill: "none", stroke: dk(-8), "stroke-width": 18 });
+  mk("path", { d: "M90 0 " + SHIRT_NECK[side], fill: "none", stroke: dk(-24), "stroke-width": 1.6, transform: "translate(0 9.5)" });
+  const cp = mk("clipPath", { id: id + "c" }); const cpp = document.createElementNS(SVGNS, "path"); cpp.setAttribute("d", path); cp.appendChild(cpp);
+  mk("path", { d: "M90 0 Q160 18 235 42 M-90 0 Q-160 18 -235 42 M235 42 Q252 150 260 245 M-235 42 Q-252 150 -260 245 M384 135 L286 292 M-384 135 L-286 292 M-262 675 L262 675",
+    stroke: dk(-16), "stroke-width": 2.2, fill: "none", "clip-path": `url(#${id}c)` });
+  if (side === "front") {
+    if (o.chara) mk("image", { href: charaImg(o.chara), x: 62.5, y: 180, width: 85, height: 85, preserveAspectRatio: "xMidYMid meet" });
+    else mk("rect", { x: 62.5, y: 180, width: 85, height: 85, fill: "none", stroke: "rgba(255,255,255,.35)", "stroke-dasharray": "6 6", "stroke-width": 2 });
+  } else {
+    mk("image", { href: backImg(o.cls || "himawari"), x: -140, y: 125, width: 280, height: 125.4, preserveAspectRatio: "xMidYMid meet" });
+    const t = mk("text", { x: 0, y: 290, "text-anchor": "middle", fill: "#FFFFFF", "font-family": "Krungthep, Oxanium, sans-serif", "font-weight": 800,
+      "font-size": 33.5, "letter-spacing": 0.67, style: "font-synthesis:none", "text-rendering": "geometricPrecision", opacity: o.name ? 1 : 0.35 });
+    t.textContent = o.name || "NAME";
+    requestAnimationFrame(() => { try { if (t.getComputedTextLength() > 280) { t.setAttribute("textLength", 280); t.setAttribute("lengthAdjust", "spacingAndGlyphs"); } } catch (e) {} });
+  }
+  return svg;
+}
+/* 表と裏を並べた小さなプレビュー */
+function shirtPair(o) {
+  const d = document.createElement("div"); d.className = "pair";
+  [["front", "表"], ["back", "裏"]].forEach(([s, l]) => { const f = document.createElement("figure"); f.appendChild(drawShirt(s, o));
+    const c = document.createElement("figcaption"); c.textContent = l; f.appendChild(c); d.appendChild(f); });
+  return d;
+}
+/* 全画面のプレビュー */
+function openViewer(title, o, meta) {
+  let v = document.getElementById("viewer");
+  if (!v) {
+    v = document.createElement("dialog"); v.id = "viewer"; v.className = "viewer";
+    v.innerHTML = `<div class="vh"><b id="vTitle"></b><button type="button" class="vclose">閉じる ✕</button></div><div class="vb" id="vBody"></div>`;
+    document.body.appendChild(v);
+    v.querySelector(".vclose").onclick = () => v.close();
+    v.addEventListener("click", e => { if (e.target === v) v.close(); });
+  }
+  v.querySelector("#vTitle").textContent = title;
+  const b = v.querySelector("#vBody"); b.innerHTML = "";
+  if (meta) { const m = document.createElement("p"); m.className = "vmeta"; m.textContent = meta; b.appendChild(m); }
+  [["front", "表（左胸のキャラクター）"], ["back", "裏（背面）"]].forEach(([s, l]) => {
+    const f = document.createElement("figure"); const c = document.createElement("figcaption"); c.textContent = l;
+    f.appendChild(c); f.appendChild(drawShirt(s, o)); b.appendChild(f);
+  });
+  const z = document.createElement("figure"); const zc = document.createElement("figcaption"); zc.textContent = "背面のお名前（拡大）";
+  z.appendChild(zc); z.appendChild(miniBack(o.cls, o.name)); b.appendChild(z);
+  const n = document.createElement("p"); n.className = "vnote"; n.textContent = "画面上のイメージです。実際の色味や大きさとは多少異なる場合があります。"; b.appendChild(n);
+  v.showModal(); b.scrollTop = 0;
+}
+</script>
+<script>
+const ST = [["cut", "切る", "切った"], ["press", "圧着", "圧着した"], ["check", "検品", "検品OK"]];
+const VIEWS = [["cut", "切る前"], ["press", "圧着待ち"], ["check", "検品待ち"], ["done", "完了"]];
+const SIZES = ["S", "M", "L", "XL", "2XL", "3XL", "120"];
+let PIN = "", rows = [], view = "cut", size = "all", cls = "all", busy = new Set(), lastSync = null;
+try { PIN = sessionStorage.getItem("daito_press") || ""; } catch (e) {}
+
+const stage = r => !r.cut ? "cut" : !r.press ? "press" : !r.check ? "check" : "done";
+const clsKey = r => r.cls === "ゆり組" ? "y" : r.cls === "ひまわり組" ? "h" : "x";
+
+async function load(silent) {
+  const d = await api("press_list", { pin: PIN });
+  rows = d.rows; lastSync = new Date(); render();
+}
+async function login() {
+  $("loading").classList.remove("hidden");
+  try {
+    await load();
+    try { sessionStorage.setItem("daito_press", PIN); } catch (e) {}
+    $("login").classList.add("hidden"); $("app").classList.remove("hidden");
+  } catch (ex) {
+    try { sessionStorage.removeItem("daito_press"); } catch (e) {}
+    $("login").classList.remove("hidden");
+    if (PIN) { $("lgErr").textContent = ex.message; $("lgErr").classList.remove("hidden"); }
+  } finally { $("loading").classList.add("hidden"); }
+}
+
+function render() {
+  const n = { cut: 0, press: 0, check: 0, done: 0 }; rows.forEach(r => n[stage(r)]++);
+  $("flow").innerHTML = VIEWS.map(([k, l]) => `<button type="button" data-v="${k}" aria-pressed="${view === k}"><b>${n[k]}</b><span>${l}</span></button>`).join("");
+  $("flow").querySelectorAll("[data-v]").forEach(b => b.onclick = () => { view = b.dataset.v; render(); window.scrollTo(0, 0); });
+  const col = { cut: "var(--line)", press: "#E8A500", check: "#2F8FC9", done: "var(--ok)" };
+  $("bar").innerHTML = ["done", "check", "press", "cut"].map(k => `<i style="width:${rows.length ? n[k] / rows.length * 100 : 0}%;background:${col[k]}"></i>`).join("");
+  const cdefs = [["cls", "all", "全クラス"], ["cls", "h", "ひまわり"], ["cls", "y", "ゆり"], ["cls", "x", "先生・特別"], ["size", "all", "全サイズ"], ...SIZES.map(s => ["size", s, s])];
+  $("chips").innerHTML = cdefs.map(([t, v, l]) => `<button type="button" data-t="${t}" data-c="${v}" aria-pressed="${(t === "cls" ? cls : size) === v}">${l}</button>`).join("");
+  $("chips").querySelectorAll("[data-c]").forEach(b => b.onclick = () => { if (b.dataset.t === "cls") cls = b.dataset.c; else size = b.dataset.c; render(); });
+  $("sync").textContent = lastSync ? `全${rows.length}枚・${lastSync.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })} に更新（30秒ごとに自動更新）` : "";
+
+  const q = $("q").value.trim().toLowerCase().replace(/\s/g, "");
+  const hit = rows.filter(r => stage(r) === view && (size === "all" || r.size === size) && (cls === "all" || clsKey(r) === cls)
+    && (!q || [r.fam, r.name, r.kana].join("").toLowerCase().replace(/\s/g, "").includes(q)));
+  if (!hit.length) { $("list").innerHTML = `<p class="empty">${view === "done" ? "完了したTシャツはまだありません" : "この条件のTシャツはありません"}</p>`; return; }
+  const groups = []; hit.forEach(r => { let g = groups[groups.length - 1]; if (!g || g.fam !== r.fam) groups.push(g = { fam: r.fam, kana: r.kana, items: [] }); g.items.push(r); });
+  $("list").innerHTML = groups.map(g => `<section class="fam"><div class="famh"><b>${esc(g.fam)}</b>${esc(g.kana)}・この家庭 ${rows.filter(r => r.fam === g.fam).length}枚</div>${g.items.map(card).join("")}</section>`).join("");
+  $("list").querySelectorAll("[data-go]").forEach(b => b.onclick = () => act(b.dataset.go, true));
+  $("list").querySelectorAll("[data-back]").forEach(b => b.onclick = () => act(b.dataset.back, false));
+}
+function card(r) {
+  const s = stage(r), i = ST.findIndex(x => x[0] === s), prev = i > 0 ? ST[i - 1] : s === "done" ? ST[2] : null;
+  const img = /^[1-9]$/.test(r.chara) ? `<img src="${charaImg(r.chara)}" alt="" loading="lazy" onerror="this.remove()">` : "";
+  const big = r.size === "2XL" || r.size === "3XL";
+  return `<div class="sh ${clsKey(r)} ${s === "done" ? "done" : ""}">
+    <div class="l1">${img}<div class="bn">${esc(r.name)}</div><div class="sz">${esc(r.size)}</div></div>
+    <div class="meta"><span>${esc(r.cls)}</span><span>左胸 ${r.chara ? esc(r.chara) : "なし"}</span>${big ? `<span class="warn">背面は原寸・2回プレス</span>` : ""}${r.note ? `<span>${esc(r.note)}</span>` : ""}</div>
+    <div class="steps">${ST.map(x => `<span class="${r[x[0]] ? "on" : ""}">${x[1]}</span>`).join("")}</div>
+    <div class="acts">${s === "done" ? `<span></span>` : `<button type="button" class="go ${s === "check" ? "fin" : ""}" data-go="${esc(r.key)}" ${busy.has(r.key) ? "disabled" : ""}>${ST[i][2]}</button>`}
+      ${prev ? `<button type="button" class="back" data-back="${esc(r.key)}">1つ戻す</button>` : ""}</div></div>`;
+}
+async function act(key, forward) {
+  if (busy.has(key)) return;
+  const r = rows.find(x => x.key === key); if (!r) return;
+  const before = { cut: r.cut, press: r.press, check: r.check };
+  let st;
+  if (forward) { st = ST.find(x => !r[x[0]])[0]; r[st] = true; }
+  else { st = [...ST].reverse().find(x => r[x[0]])[0]; r[st] = false; }
+  busy.add(key); render();
+  try { const d = await api("press_set", { pin: PIN, key, stage: st, on: forward }); Object.assign(r, d.row); toast(forward ? `${r.name}：${ST.find(x => x[0] === st)[2]}` : `${r.name}：1つ戻しました`); }
+  catch (ex) { Object.assign(r, before); toast(ex.message); }
+  finally { busy.delete(key); render(); }
+}
+$("q").addEventListener("input", render);
+$("login").addEventListener("submit", e => { e.preventDefault(); PIN = $("pin").value.trim(); login(); });
+setInterval(() => { if (!$("app").classList.contains("hidden") && !busy.size && !document.hidden) load(true).catch(() => {}); }, 30000);
+if (PIN) login(); else $("login").classList.remove("hidden");
+</script>
+</body>
+</html>
