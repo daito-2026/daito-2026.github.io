@@ -190,8 +190,9 @@ details.chart p{font-size:11px;color:var(--muted);padding:8px 12px;line-height:1
 .chips button{all:unset;cursor:pointer;flex:none;border:1px solid var(--line);padding:5px 11px;font-size:13px}
 .chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .fam{padding:14px 16px 4px}
-.famh{font-size:12px;color:var(--muted);margin-bottom:6px}
-.famh b{color:var(--ink);font-weight:500;font-size:14px;margin-right:6px}
+.famh{font-size:12px;color:var(--muted);margin-bottom:6px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px}
+.famh b{color:var(--ink);font-weight:500;font-size:14px}
+.famh .kj{color:var(--ink);font-size:24px;font-weight:500;line-height:1.2}
 .sh{border:1px solid var(--line);margin-bottom:8px;padding:10px 12px;border-left:5px solid var(--line)}
 .sh.h{border-left-color:#E8A500}.sh.y{border-left-color:#2F8FC9}.sh.x{border-left-color:var(--navy)}
 .sh.done{background:#EEF6F1}
@@ -420,10 +421,10 @@ function render() {
 
   const q = $("q").value.trim().toLowerCase().replace(/\s/g, "");
   const hit = rows.filter(r => stage(r) === view && (size === "all" || r.size === size) && (cls === "all" || clsKey(r) === cls)
-    && (!q || [r.fam, r.name, r.kana].join("").toLowerCase().replace(/\s/g, "").includes(q)));
+    && (!q || [r.fam, r.name, r.kana, r.child || ""].join("").toLowerCase().replace(/\s/g, "").includes(q)));
   if (!hit.length) { $("list").innerHTML = `<p class="empty">${view === "done" ? "完了したTシャツはまだありません" : "この条件のTシャツはありません"}</p>`; return; }
-  const groups = []; hit.forEach(r => { let g = groups[groups.length - 1]; if (!g || g.fam !== r.fam) groups.push(g = { fam: r.fam, kana: r.kana, items: [] }); g.items.push(r); });
-  $("list").innerHTML = groups.map(g => `<section class="fam"><div class="famh"><b>${esc(g.fam)}</b>${esc(g.kana)}・この家庭 ${rows.filter(r => r.fam === g.fam).length}枚</div>${g.items.map(card).join("")}</section>`).join("");
+  const groups = []; hit.forEach(r => { let g = groups[groups.length - 1]; if (!g || g.fam !== r.fam) groups.push(g = { fam: r.fam, kana: r.kana, child: r.child || "", items: [] }); g.items.push(r); });
+  $("list").innerHTML = groups.map(g => `<section class="fam"><div class="famh"><b>${esc(g.fam)}</b>${g.child ? `<span class="kj">${esc(g.child)}</span>` : ""}<span>${esc(g.kana)}・この家庭 ${rows.filter(r => r.fam === g.fam).length}枚</span></div>${g.items.map(card).join("")}</section>`).join("");
   $("list").querySelectorAll("[data-go]").forEach(b => b.onclick = () => act(b.dataset.go, true));
   $("list").querySelectorAll("[data-back]").forEach(b => b.onclick = () => act(b.dataset.back, false));
 }
